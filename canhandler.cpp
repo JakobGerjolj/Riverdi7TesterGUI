@@ -7,21 +7,86 @@ CanHandler::CanHandler(QObject *parent)
     this -> startCAN();
 
 
-     m_PortRPMbytes.resize(2);
-     m_PortRPMbytes[0] = 0x00;
-     m_PortRPMbytes[1] = 0x00;
+    m_PortRPMbytes.resize(2);
+    m_PortRPMbytes[0] = 0x00;
+    m_PortRPMbytes[1] = 0x00;
 
-     m_PortVoltagebytes.resize(2);
-     m_PortVoltagebytes[0] = 0x00;
-     m_PortVoltagebytes[1] = 0x00;
+    m_PortVoltagebytes.resize(2);
+    m_PortVoltagebytes[0] = 0x00;
+    m_PortVoltagebytes[1] = 0x00;
 
-     m_PortCurrentbytes.resize(2);
-     m_PortCurrentbytes[0] = 0x00;
-     m_PortCurrentbytes[0] = 0x00;
+    m_PortCurrentbytes.resize(2);
+    m_PortCurrentbytes[0] = 0x00;
+    m_PortCurrentbytes[0] = 0x00;
+
+
+    m_StbRPMbytes.resize(2);
+    m_StbRPMbytes[0] = 0x00;
+    m_StbRPMbytes[1] = 0x00;
+
+    m_StbVoltagebytes.resize(2);
+    m_StbVoltagebytes[0] = 0x00;
+    m_StbVoltagebytes[1] = 0x00;
+
+    m_StbCurrentbytes.resize(2);
+    m_StbCurrentbytes[0] = 0x00;
+    m_StbCurrentbytes[1] = 0x00;
+
+    m_Speed.resize(2);
+    m_Speed[0] = 0x00;
+    m_Speed[1] = 0x00;
+
+    m_TimeToEmpty.resize(4);
+    m_TimeToEmpty[0] = 0x00;
+    m_TimeToEmpty[1] = 0x00;
+    m_TimeToEmpty[2] = 0x00;
+    m_TimeToEmpty[3] = 0x00;
+
+    m_DistToEmpty.resize(4);
+    m_DistToEmpty[0] = 0x00;
+    m_DistToEmpty[1] = 0x00;
+    m_DistToEmpty[2] = 0x00;
+    m_DistToEmpty[3] = 0x00;
+
+    m_StbMotorTemp.resize(2);
+    m_StbMotorTemp[0] = 0x00;
+    m_StbMotorTemp[1] = 0x00;
+
+    m_PortMotorTemp.resize(2);
+    m_PortMotorTemp[0] = 0x00;
+    m_PortMotorTemp[1] = 0x00;
+
+    m_HiCellTemp.resize(2);
+    m_HiCellTemp[0] = 0x00;
+    m_HiCellTemp[1] = 0x00;
 
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);
+
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
+    timer2->start(500);
+
+    QTimer *timer3 = new QTimer(this);
+    connect(timer3, &QTimer::timeout, this, &CanHandler::sendSpeedPackage);
+    timer3->start(500);
+
+    QTimer *timer4 = new QTimer(this);
+    connect(timer4, &QTimer::timeout, this, &CanHandler::sendTripPackage);
+    timer4->start(1000);
+
+    QTimer *timer5 = new QTimer(this);
+    connect(timer5, &QTimer::timeout, this, &CanHandler::sendPortMotorTempPackage);
+    timer5->start(1500);
+
+    QTimer *timer6 = new QTimer(this);
+    connect(timer6, &QTimer::timeout, this, &CanHandler::sendStbMotorTempPackage);
+    timer6->start(1500);
+
+    QTimer *timer7 = new QTimer(this);
+    connect(timer7, &QTimer::timeout, this, &CanHandler::sendHiCellPackage);
+    timer7->start(1500);
 
 }
 
@@ -61,6 +126,65 @@ void CanHandler::readAndProcessCANpodatke()
     }
 }
 
+void CanHandler::sendHiCellPackage()
+{
+
+    QCanBusFrame frame1;
+    frame1.setFrameId(0x001DF203);
+    QByteArray payload1;
+    payload1.resize(8);
+
+    payload1[0] = (uint8_t)(tripPackageCounter3 | 0x00);
+    payload1[1] = 0x0f;
+    payload1[2] = 0x00;
+    payload1[3] = 0x00;
+    payload1[4] = 0x00;
+    payload1[5] = 0x00;
+    payload1[6] = m_HiCellTemp[0];
+    payload1[7] = m_HiCellTemp[1];
+    frame1.setPayload(payload1);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x001DF203);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0] = (uint8_t)(tripPackageCounter3 | 0x01);
+    payload2[1] = 0x00;
+    payload2[2] = 0x00;
+    payload2[3] = 0x00;
+    payload2[4] = 0x00;
+    payload2[5] = 0x00;
+    payload2[6] = 0x00;
+    payload2[7] = 0x00;
+    frame2.setPayload(payload2);
+
+    QCanBusFrame frame3;
+    frame3.setFrameId(0x001DF203);
+    QByteArray payload3;
+    payload3.resize(8);
+    payload3[0] = (uint8_t)(tripPackageCounter3 | 0x02);
+    payload3[1] = 0x00;
+    payload3[2] = 0x00;
+    payload3[3] = 0x00;
+    payload3[4] = 0x00;
+    payload3[5] = 0x00;
+    payload3[6] = 0x00;
+    payload3[7] = 0x00;
+    frame3.setPayload(payload3);
+
+    if(areWeSendingHiCellTemp){
+        canDevice -> writeFrame(frame1);
+        canDevice -> writeFrame(frame2);
+        canDevice -> writeFrame(frame3);
+        if(tripPackageCounter3 != 240){
+            tripPackageCounter3+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
+        }else{
+            tripPackageCounter3=0x00;
+        }
+    }
+
+}
+
 void CanHandler::sendPortRPMPackage(){
 
     QCanBusFrame frame;
@@ -77,9 +201,205 @@ void CanHandler::sendPortRPMPackage(){
     payload[7]=m_PortCurrentbytes[1];
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(areWeSendingPortMsg)
+        canDevice -> writeFrame(frame);
 
     //here we will add Current and Voltage from slider
+}
+
+void CanHandler::sendStbRPMPackage()
+{
+
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x15F40200);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x01;
+    payload[1]=0xff;
+    payload[2]=m_StbRPMbytes[0];
+    payload[3]=m_StbRPMbytes[1];
+    payload[4]=m_StbVoltagebytes[0];
+    payload[5]=m_StbVoltagebytes[1];
+    payload[6]=m_StbCurrentbytes[0];
+    payload[7]=m_StbCurrentbytes[1];
+    frame.setPayload(payload);
+
+    if(areWeSendingStbMsg)
+        canDevice -> writeFrame(frame);
+
+
+}
+
+void CanHandler::sendSpeedPackage()
+{
+
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x15F80200);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0xff;
+    payload[1]=0xff;
+    payload[2]=0xff;
+    payload[3]=0xff;
+    payload[4]=m_Speed[0];
+    payload[5]=m_Speed[1];
+    payload[6]=0xff;
+    payload[7]=0xff;
+    frame.setPayload(payload);
+
+    if(areWeSendingSpeedMsg)
+        canDevice -> writeFrame(frame);
+
+}
+
+void CanHandler::sendTripPackage()
+{
+
+    QCanBusFrame frame1;
+    frame1.setFrameId(0x015F208);
+    QByteArray payload1;
+    payload1.resize(8);
+
+    payload1[0] = (uint8_t)(tripPackageCounter | 0x00);
+    payload1[1] = 0x0e;
+    payload1[2] = m_TimeToEmpty[0];
+    payload1[3] = m_TimeToEmpty[1];
+    payload1[4] = m_TimeToEmpty[2];
+    payload1[5] = m_TimeToEmpty[3];
+    payload1[6] = m_DistToEmpty[0];
+    payload1[7] = m_DistToEmpty[1];
+    frame1.setPayload(payload1);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x015F208);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0] = (uint8_t)(tripPackageCounter | 0x01);
+    payload2[1] = m_DistToEmpty[2];
+    payload2[2] = m_DistToEmpty[3];
+    payload2[3] = 0x00;
+    payload2[4] = 0x00;
+    payload2[5] = 0x00;
+    payload2[6] = 0x00;
+    payload2[7] = 0x00;
+    frame2.setPayload(payload2);
+
+    QCanBusFrame frame3;
+    frame3.setFrameId(0x015F208);
+    QByteArray payload3;
+    payload3.resize(8);
+    payload3[0] = (uint8_t)(tripPackageCounter | 0x02);
+    payload3[1] = 0x00;
+    payload3[2] = 0x00;
+    payload3[3] = 0x00;
+    payload3[4] = 0x00;
+    payload3[5] = 0x00;
+    payload3[6] = 0x00;
+    payload3[7] = 0x00;
+    frame3.setPayload(payload3);
+
+    if(areWeSendingTripMsg){
+        canDevice -> writeFrame(frame1);
+        canDevice -> writeFrame(frame2);
+        canDevice -> writeFrame(frame3);
+        if(tripPackageCounter != 240){
+            tripPackageCounter+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
+        }else{
+            tripPackageCounter=0x00;
+        }
+    }
+}
+
+void CanHandler::sendPortMotorTempPackage()
+{
+
+    QCanBusFrame frame1;
+    frame1.setFrameId(0x5f20200);
+    QByteArray payload1;
+    payload1.resize(8);
+
+    payload1[0] = (uint8_t)(tripPackageCounter2 | 0x00);
+    payload1[1] = 0x0b;
+    payload1[2] = 0x00;
+    payload1[3] = 0x00;
+    payload1[4] = m_PortMotorTemp[0];
+    payload1[5] = m_PortMotorTemp[1];
+    payload1[6] = 0x00;
+    payload1[7] = 0x00;
+    frame1.setPayload(payload1);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x5f20200);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0] = (uint8_t)(tripPackageCounter2 | 0x01);
+    payload2[1] = 0x00;
+    payload2[2] = 0x00;
+    payload2[3] = 0x00;
+    payload2[4] = 0x00;
+    payload2[5] = 0x00;
+    payload2[6] = 0x00;
+    payload2[7] = 0x00;
+    frame2.setPayload(payload2);
+
+    if(areWeSendingPortMotorTemp){
+        canDevice -> writeFrame(frame1);
+        canDevice -> writeFrame(frame2);
+        if(tripPackageCounter2 != 240){
+            tripPackageCounter2+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
+        }else{
+            tripPackageCounter2=0x00;
+        }
+    }
+
+
+}
+
+void CanHandler::sendStbMotorTempPackage()
+{
+
+    QCanBusFrame frame1;
+    frame1.setFrameId(0x5f20200);
+    QByteArray payload1;
+    payload1.resize(8);
+
+    payload1[0] = (uint8_t)(tripPackageCounter4 | 0x00);
+    payload1[1] = 0x0b;
+    payload1[2] = 0x01;
+    payload1[3] = 0x00;
+    payload1[4] = m_StbMotorTemp[0];
+    payload1[5] = m_StbMotorTemp[1];
+    payload1[6] = 0x00;
+    payload1[7] = 0x00;
+    frame1.setPayload(payload1);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x5f20200);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0] = (uint8_t)(tripPackageCounter4 | 0x01);
+    payload2[1] = 0x00;
+    payload2[2] = 0x00;
+    payload2[3] = 0x00;
+    payload2[4] = 0x00;
+    payload2[5] = 0x00;
+    payload2[6] = 0x00;
+    payload2[7] = 0x00;
+    frame2.setPayload(payload2);
+
+    if(areWeSendingStbMotorTemp){
+        canDevice -> writeFrame(frame1);
+        canDevice -> writeFrame(frame2);
+        if(tripPackageCounter4 != 240){
+            tripPackageCounter4+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
+        }else{
+            tripPackageCounter4=0x00;
+        }
+    }
+
+
 }
 
 void CanHandler::setPortRPM(uint16_t rpm){
@@ -117,4 +437,178 @@ void CanHandler::setPortCurrent(uint16_t current)
     bytes[1] =  static_cast<char>((current >> 8) & 0xFF);
 
     m_PortCurrentbytes = bytes;
+}
+
+void CanHandler::toggleSendingHiCellTemp()
+{
+
+    if(areWeSendingHiCellTemp){
+        areWeSendingHiCellTemp=false;
+    }else areWeSendingHiCellTemp = true;
+
+}
+
+void CanHandler::toggleSendingStbTempMessage()
+{
+
+    if(areWeSendingStbMotorTemp){
+        areWeSendingStbMotorTemp = false;
+    }else{
+        areWeSendingStbMotorTemp = true;
+    }
+
+}
+
+void CanHandler::toggleSendingPortTempMessage()
+{
+
+    if(areWeSendingPortMotorTemp){
+        areWeSendingPortMotorTemp = false;
+    }else areWeSendingPortMotorTemp = true;
+
+}
+
+void CanHandler::toggleSendingPortMessage()
+{
+    if(areWeSendingPortMsg){
+        areWeSendingPortMsg = false;
+    }else areWeSendingPortMsg = true;
+}
+
+void CanHandler::toggleSendingStbMessage()
+{
+
+    if(areWeSendingStbMsg){
+        areWeSendingStbMsg = false;
+    }else areWeSendingStbMsg = true;
+}
+
+void CanHandler::toggleSendingSpeedMessage()
+{
+    if(areWeSendingSpeedMsg){
+        areWeSendingSpeedMsg = false;
+    }else areWeSendingSpeedMsg = true;
+
+}
+
+void CanHandler::toggleSendingTripMessage()
+{
+
+    if(areWeSendingTripMsg){
+        areWeSendingTripMsg = false;
+    }else areWeSendingTripMsg = true;
+
+}
+
+
+void CanHandler::setStbRPM(uint16_t rpm)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>(rpm & 0xFF);
+    bytes[1] = static_cast<char>((rpm >> 8) & 0xFF);
+
+    m_StbRPMbytes = bytes;
+
+}
+
+void CanHandler::setStbVoltage(uint16_t voltage)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+
+    bytes[0] = 0x12;
+
+    bytes[0] = static_cast<char>(voltage & 0xFF);
+    bytes[1] = static_cast<char>((voltage >> 8) & 0xFF);
+
+    m_StbVoltagebytes = bytes;
+
+}
+
+void CanHandler::setStbCurrent(uint16_t current)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(current & 0xFF));
+    bytes[1] =  static_cast<char>((current >> 8) & 0xFF);
+
+    m_StbCurrentbytes = bytes;
+
+}
+
+void CanHandler::setDistToEmpty(uint32_t dist)
+{
+    QByteArray bytes;
+    bytes.resize(4);
+    bytes[0] = static_cast<char>(dist & 0xFF);
+    bytes[1] = static_cast<char>((dist >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((dist >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((dist >> 24) & 0xFF);
+
+    m_DistToEmpty = bytes;
+
+}
+
+void CanHandler::setTimeToEmpty(uint32_t time)
+{
+    QByteArray bytes;
+    bytes.resize(4);
+    bytes[0] = static_cast<char>(time & 0xFF);
+    bytes[1] = static_cast<char>((time >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((time >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((time >> 24) & 0xFF);
+
+    m_TimeToEmpty = bytes;
+
+}
+
+void CanHandler::setStbMotorTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] = static_cast<char>((temp >> 8) & 0xFF);
+
+    m_StbMotorTemp = bytes;
+
+}
+
+void CanHandler::setPortMotorTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
+
+    m_PortMotorTemp = bytes;
+
+}
+
+void CanHandler::setSpeed(uint16_t speed){
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(speed & 0xFF));
+    bytes[1] =  static_cast<char>((speed >> 8) & 0xFF);
+
+    m_Speed = bytes;
+
+}
+
+void CanHandler::setHiCellTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
+
+    m_HiCellTemp = bytes;
+
 }
