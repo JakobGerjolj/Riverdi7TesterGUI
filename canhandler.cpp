@@ -52,13 +52,37 @@ CanHandler::CanHandler(QObject *parent)
     m_StbMotorTemp[0] = 0x00;
     m_StbMotorTemp[1] = 0x00;
 
+    m_StbInverterTemp.resize(2);
+    m_StbInverterTemp[0] = 0x00;
+    m_StbInverterTemp[1] = 0x00;
+
     m_PortMotorTemp.resize(2);
     m_PortMotorTemp[0] = 0x00;
     m_PortMotorTemp[1] = 0x00;
 
+    m_PortInverterTemp.resize(2);
+    m_PortInverterTemp[0] = 0x00;
+    m_PortInverterTemp[1] = 0x00;
+
     m_HiCellTemp.resize(2);
     m_HiCellTemp[0] = 0x00;
     m_HiCellTemp[1] = 0x00;
+
+    m_SOC.resize(1);
+    m_SOC[0] = 0x00;
+
+    m_BatVoltage.resize(2);
+    m_BatVoltage[0] = 0x00;
+    m_BatVoltage[1] = 0x00;
+
+    m_BatCurrent.resize(2);
+    m_BatCurrent[0] = 0x00;
+    m_BatCurrent[1] = 0x00;
+
+    m_LoCellTemp.resize(2);
+    m_LoCellTemp[0] = 0x00;
+    m_LoCellTemp[1] = 0x00;
+
 
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
@@ -87,6 +111,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer7 = new QTimer(this);
     connect(timer7, &QTimer::timeout, this, &CanHandler::sendHiCellPackage);
     timer7->start(1500);
+
+    QTimer *timer8 = new QTimer(this);
+    connect(timer8, &QTimer::timeout, this, &CanHandler::sendBatInfoPackage);
+    timer8->start(500);
 
 }
 
@@ -137,7 +165,7 @@ void CanHandler::sendHiCellPackage()
     payload1[0] = (uint8_t)(tripPackageCounter3 | 0x00);
     payload1[1] = 0x0f;
     payload1[2] = 0x00;
-    payload1[3] = 0x00;
+    payload1[3] = m_SOC[0];
     payload1[4] = 0x00;
     payload1[5] = 0x00;
     payload1[6] = m_HiCellTemp[0];
@@ -149,8 +177,8 @@ void CanHandler::sendHiCellPackage()
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter3 | 0x01);
-    payload2[1] = 0x00;
-    payload2[2] = 0x00;
+    payload2[1] = m_LoCellTemp[0];
+    payload2[2] = m_LoCellTemp[1];
     payload2[3] = 0x00;
     payload2[4] = 0x00;
     payload2[5] = 0x00;
@@ -326,8 +354,8 @@ void CanHandler::sendPortMotorTempPackage()
     payload1[3] = 0x00;
     payload1[4] = m_PortMotorTemp[0];
     payload1[5] = m_PortMotorTemp[1];
-    payload1[6] = 0x00;
-    payload1[7] = 0x00;
+    payload1[6] = m_PortInverterTemp[0];
+    payload1[7] = m_PortInverterTemp[1];
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
@@ -371,8 +399,8 @@ void CanHandler::sendStbMotorTempPackage()
     payload1[3] = 0x00;
     payload1[4] = m_StbMotorTemp[0];
     payload1[5] = m_StbMotorTemp[1];
-    payload1[6] = 0x00;
-    payload1[7] = 0x00;
+    payload1[6] = m_StbInverterTemp[0];
+    payload1[7] = m_StbInverterTemp[1];
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
@@ -399,6 +427,28 @@ void CanHandler::sendStbMotorTempPackage()
         }
     }
 
+
+}
+
+void CanHandler::sendBatInfoPackage()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x15F40300);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0xff;
+    payload[1]=0xff;
+    payload[2]=m_BatVoltage[0];
+    payload[3]=m_BatVoltage[1];
+    payload[4]=m_BatCurrent[0];
+    payload[5]=m_BatCurrent[1];
+    payload[6]=0xff;
+    payload[7]=0xff;
+    frame.setPayload(payload);
+
+    if(areWeSendingBatInfo)
+        canDevice -> writeFrame(frame);
 
 }
 
@@ -429,14 +479,35 @@ void CanHandler::setPortVoltage(uint16_t voltage)
 
 }
 
-void CanHandler::setPortCurrent(uint16_t current)
+void CanHandler::setPortCurrent(int16_t current)
 {
+
     QByteArray bytes;
     bytes.resize(2);
-    bytes[0] = static_cast<char>((uint8_t)(current & 0xFF));
-    bytes[1] =  static_cast<char>((current >> 8) & 0xFF);
+    bytes[0] = static_cast<char>((current & 0xFF));
+    bytes[1] = static_cast<char>((current >> 8) & 0xFF);
 
+    // qint16_le value = current
+
+    //int16_t hh = (int16_t)((uint16_t)(bytes[0] >> 8) | (uint16_t)(bytes[1] << 8));
+
+
+
+    //int16_t full = bytes[0] | bytes[1] << 8;// I dont know maybe problems here, for now I will just leave it
+    //int16_t afterProcess = static_cast<int16_t>(((uint16_t)bytes[0] << 8) | (uint16_t)bytes[1]);
+
+    //qDebug() <<"Processed value: "<< full;
     m_PortCurrentbytes = bytes;
+
+}
+
+void CanHandler::toggleSendingBatInfoMessage()
+{
+
+    if(areWeSendingBatInfo){
+        areWeSendingBatInfo=false;
+    }else areWeSendingBatInfo = true;
+
 }
 
 void CanHandler::toggleSendingHiCellTemp()
@@ -528,7 +599,7 @@ void CanHandler::setStbVoltage(uint16_t voltage)
 
 }
 
-void CanHandler::setStbCurrent(uint16_t current)
+void CanHandler::setStbCurrent(int16_t current)
 {
 
     QByteArray bytes;
@@ -578,6 +649,19 @@ void CanHandler::setStbMotorTemp(uint16_t temp)
 
 }
 
+void CanHandler::setStbInverterTemp(uint16_t temp)
+{
+
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] = static_cast<char>((temp >> 8) & 0xFF);
+
+    m_StbInverterTemp = bytes;
+
+}
+
 void CanHandler::setPortMotorTemp(uint16_t temp)
 {
 
@@ -587,6 +671,18 @@ void CanHandler::setPortMotorTemp(uint16_t temp)
     bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
 
     m_PortMotorTemp = bytes;
+
+}
+
+void CanHandler::setPortInverterTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
+
+    m_PortInverterTemp = bytes;
 
 }
 
@@ -610,5 +706,51 @@ void CanHandler::setHiCellTemp(uint16_t temp)
     bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
 
     m_HiCellTemp = bytes;
+
+}
+
+void CanHandler::setLoCellTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
+
+    m_LoCellTemp = bytes;
+
+}
+
+void CanHandler::setSOC(uint8_t soc)
+{
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = soc;
+
+    m_SOC = bytes;
+
+}
+
+void CanHandler::setBatVoltage(uint16_t volt)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(volt & 0xFF));
+    bytes[1] =  static_cast<char>((volt >> 8) & 0xFF);
+
+    m_BatVoltage = bytes;
+
+}
+
+void CanHandler::setBatCurrent(int16_t volt)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(volt & 0xFF));
+    bytes[1] =  static_cast<char>((volt >> 8) & 0xFF);
+
+    m_BatCurrent = bytes;
 
 }

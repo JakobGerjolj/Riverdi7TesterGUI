@@ -8,7 +8,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_CanHandler = new CanHandler;
 
-
+    ui -> sendingStatus -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> stbStatus -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> speedSendingStatus -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> tripSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PortMotorTempLabel -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> StbMotorText -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> TempPackageLabel -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : red; }");
 
 }
 
@@ -38,7 +45,9 @@ void MainWindow::on_voltagePort_sliderMoved(int position)
 void MainWindow::on_currentPort_sliderMoved(int position)
 {
 
-    m_CanHandler -> setPortCurrent(position);
+    qDebug()<<"Raw from slider: "<<position;
+    m_CanHandler -> setPortCurrent(static_cast<int16_t>(position));
+
 }
 
 
@@ -81,7 +90,7 @@ void MainWindow::on_rpmStarboardVoltage_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbCurrent(position);
+    m_CanHandler -> setStbCurrent((int16_t)position);
 
 }
 
@@ -120,10 +129,12 @@ void MainWindow::on_pushButton_3_clicked()
 
         areWeSendingSpeedMsg = true;
         ui -> speedSendingStatus -> setText("Sending packages");
+        ui -> speedSendingStatus -> setStyleSheet("QLabel { background-color : green; }");
     }else{
 
         areWeSendingSpeedMsg = false;
         ui -> speedSendingStatus -> setText("Not sending packages");
+        ui -> speedSendingStatus -> setStyleSheet("QLabel { background-color : red; }");
     }
 }
 
@@ -145,9 +156,11 @@ void MainWindow::on_pushButton_4_clicked()
 
         areWeSendingTripMsg = true;
         ui->tripSendingLabel->setText("Sending messages");
+        ui->tripSendingLabel->setStyleSheet("QLabel { background-color : green; }");
     }else{
         areWeSendingTripMsg = false;
         ui->tripSendingLabel->setText("Not sending");
+        ui->tripSendingLabel->setStyleSheet("QLabel { background-color : red; }");
 
     }
 
@@ -185,10 +198,12 @@ void MainWindow::on_pushButton_5_clicked()
     if(!areWeSendingPortMotorTemp){
         areWeSendingPortMotorTemp = true;
         ui -> PortMotorTempLabel -> setText("Sending messages");
+        ui -> PortMotorTempLabel -> setStyleSheet("QLabel { background-color : green; }");
     }else
     {
         areWeSendingPortMotorTemp = false;
         ui -> PortMotorTempLabel -> setText("Not sending messages");
+        ui -> PortMotorTempLabel -> setStyleSheet("QLabel { background-color : red; }");
     }
 }
 
@@ -199,9 +214,11 @@ void MainWindow::on_pushButton_6_clicked()
     if(!areWeSendingStbMotorTemp){
         areWeSendingStbMotorTemp = true;
         ui -> StbMotorText -> setText("Sending packages");
+        ui -> StbMotorText -> setStyleSheet("QLabel { background-color : green; }");
     }else{
         areWeSendingStbMotorTemp = false;
         ui -> StbMotorText -> setText("Not sending");
+        ui -> StbMotorText -> setStyleSheet("QLabel { background-color : red; }");
     }
 
 }
@@ -224,10 +241,71 @@ void MainWindow::on_pushButton_7_clicked()
     if(areWeSendingHiCellTemp){
         areWeSendingHiCellTemp = false;
         ui -> TempPackageLabel -> setText("Not sending");
+        ui -> TempPackageLabel -> setStyleSheet("QLabel { background-color : red; }");
     }else{
         areWeSendingHiCellTemp = true;
         ui -> TempPackageLabel -> setText("Sending messages");
+        ui -> TempPackageLabel -> setStyleSheet("QLabel { background-color : green; }");
     }
 
+}
+
+
+void MainWindow::on_speedSlider_7_sliderMoved(int position)
+{
+
+    m_CanHandler -> setSOC(position);
+
+}
+
+
+void MainWindow::on_speedSlider_8_sliderMoved(int position)
+{
+
+    m_CanHandler -> setStbInverterTemp(position);
+
+}
+
+
+void MainWindow::on_speedSlider_9_sliderMoved(int position)
+{
+    m_CanHandler -> setPortInverterTemp(position);
+}
+
+
+void MainWindow::on_speedSlider_10_sliderMoved(int position)
+{
+
+    m_CanHandler -> setBatVoltage(position);
+
+}
+
+
+void MainWindow::on_pushButton_8_clicked()
+{
+
+    m_CanHandler -> toggleSendingBatInfoMessage();
+    if(areWeSendingBatInfo){
+        areWeSendingBatInfo = false;
+        ui -> PortBatInfoLabel -> setText("Not sending");
+        ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingBatInfo = true;
+        ui -> PortBatInfoLabel -> setText("Sending messages");
+        ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
+}
+
+
+void MainWindow::on_speedSlider_11_sliderMoved(int position)
+{
+    m_CanHandler -> setBatCurrent((int16_t)position);
+}
+
+
+void MainWindow::on_speedSlider_12_sliderMoved(int position)
+{
+    m_CanHandler -> setLoCellTemp(position);
 }
 

@@ -60,7 +60,22 @@ private slots:
 
     void on_pushButton_7_clicked();
 
+    void on_speedSlider_7_sliderMoved(int position);
+
+    void on_speedSlider_8_sliderMoved(int position);
+
+    void on_speedSlider_9_sliderMoved(int position);
+
+    void on_speedSlider_10_sliderMoved(int position);
+
+    void on_pushButton_8_clicked();
+
+    void on_speedSlider_11_sliderMoved(int position);
+
+    void on_speedSlider_12_sliderMoved(int position);
+
 private:
+    bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
     bool areWeSendingSpeedMsg{false};
     bool areWeSendingStbMsg{false};

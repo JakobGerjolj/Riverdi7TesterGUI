@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QByteArray>
+#include <QtEndian>
 
 class CanHandler : public QObject
 {
@@ -17,7 +18,9 @@ public:
     ~CanHandler();
     void setPortRPM(uint16_t rpm);
     void setPortVoltage(uint16_t voltage);
-    void setPortCurrent(uint16_t current);
+    void setPortCurrent(int16_t current);
+
+    void toggleSendingBatInfoMessage();
 
     void toggleSendingHiCellTemp();
 
@@ -35,20 +38,29 @@ public:
 
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
-    void setStbCurrent(uint16_t current);
+    void setStbCurrent(int16_t current);
 
     void setDistToEmpty(uint32_t dist);
     void setTimeToEmpty(uint32_t time);
 
     void setStbMotorTemp(uint16_t temp);
+    void setStbInverterTemp(uint16_t temp);
+
     void setPortMotorTemp(uint16_t temp);
+    void setPortInverterTemp(uint16_t temp);
 
     void setSpeed(uint16_t speed);
 
     void setHiCellTemp(uint16_t temp);
+    void setLoCellTemp(uint16_t temp);
+    void setSOC(uint8_t soc);
+
+    void setBatVoltage(uint16_t volt);
+    void setBatCurrent(int16_t volt);
 signals:
 
 private:
+    bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
     bool areWeSendingPortMotorTemp{false};
     bool areWeSendingStbMotorTemp{false};
@@ -67,6 +79,7 @@ private:
     void sendTripPackage();
     void sendPortMotorTempPackage();
     void sendStbMotorTempPackage();
+    void sendBatInfoPackage();
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -82,9 +95,18 @@ private:
     QByteArray m_DistToEmpty;
 
     QByteArray m_StbMotorTemp;
+    QByteArray m_StbInverterTemp;
+
     QByteArray m_PortMotorTemp;
+    QByteArray m_PortInverterTemp;
 
     QByteArray m_HiCellTemp;
+    QByteArray m_LoCellTemp;
+    QByteArray m_SOC;
+
+    QByteArray m_BatVoltage;
+    QByteArray m_BatCurrent;
+
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};
     uint8_t tripPackageCounter3{0x00};
