@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> StbMotorText -> setStyleSheet("QLabel { background-color : red; }");
     ui -> TempPackageLabel -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
 
 }
 
@@ -307,5 +308,41 @@ void MainWindow::on_speedSlider_11_sliderMoved(int position)
 void MainWindow::on_speedSlider_12_sliderMoved(int position)
 {
     m_CanHandler -> setLoCellTemp(position);
+}
+
+
+void MainWindow::on_speedSlider_13_sliderMoved(int position)
+{
+
+    int64_t fullValue = (int64_t)(position*10e11);
+
+    m_CanHandler -> setLat(fullValue);
+
+}
+
+
+void MainWindow::on_speedSlider_14_sliderMoved(int position)
+{
+    int64_t fullValue = (int64_t)(position*10e11);
+
+    m_CanHandler -> setLon(fullValue);
+}
+
+
+void MainWindow::on_pushButton_9_clicked()
+{
+
+
+    m_CanHandler -> toggleSendingPositionPackage();
+    if(areWeSendingBatInfo){
+        areWeSendingBatInfo = false;
+        ui -> PositionSendingLabel -> setText("Not sending");
+        ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingBatInfo = true;
+        ui -> PositionSendingLabel -> setText("Sending messages");
+        ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
 }
 

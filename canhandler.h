@@ -20,6 +20,8 @@ public:
     void setPortVoltage(uint16_t voltage);
     void setPortCurrent(int16_t current);
 
+    void toggleSendingPositionPackage();
+
     void toggleSendingBatInfoMessage();
 
     void toggleSendingHiCellTemp();
@@ -57,9 +59,15 @@ public:
 
     void setBatVoltage(uint16_t volt);
     void setBatCurrent(int16_t volt);
+
+    void setLat(int64_t value);
+    void setLon(int64_t value);
+
+
 signals:
 
 private:
+    bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
     bool areWeSendingPortMotorTemp{false};
@@ -80,6 +88,7 @@ private:
     void sendPortMotorTempPackage();
     void sendStbMotorTempPackage();
     void sendBatInfoPackage();
+    void sendPositionPackage();
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -107,10 +116,14 @@ private:
     QByteArray m_BatVoltage;
     QByteArray m_BatCurrent;
 
+    QByteArray m_Lat;
+    QByteArray m_Lon;
+
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};
     uint8_t tripPackageCounter3{0x00};
     uint8_t tripPackageCounter4{0x00};
+    uint8_t tripPackageCounter5{0x00};
 
 };
 

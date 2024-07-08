@@ -74,6 +74,12 @@ private slots:
 
     void on_speedSlider_12_sliderMoved(int position);
 
+    void on_speedSlider_13_sliderMoved(int position);
+
+    void on_speedSlider_14_sliderMoved(int position);
+
+    void on_pushButton_9_clicked();
+
 private:
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};

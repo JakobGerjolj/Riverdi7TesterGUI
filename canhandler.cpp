@@ -83,6 +83,25 @@ CanHandler::CanHandler(QObject *parent)
     m_LoCellTemp[0] = 0x00;
     m_LoCellTemp[1] = 0x00;
 
+    m_Lat.resize(8);
+    m_Lat[0] = 0x00;
+    m_Lat[1] = 0x00;
+    m_Lat[2] = 0x00;
+    m_Lat[3] = 0x00;
+    m_Lat[4] = 0x00;
+    m_Lat[5] = 0x00;
+    m_Lat[6] = 0x00;
+    m_Lat[7] = 0x00;
+
+    m_Lon.resize(8);
+    m_Lon[0] = 0x00;
+    m_Lon[1] = 0x00;
+    m_Lon[2] = 0x00;
+    m_Lon[3] = 0x00;
+    m_Lon[4] = 0x00;
+    m_Lon[5] = 0x00;
+    m_Lon[6] = 0x00;
+    m_Lon[7] = 0x00;
 
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
@@ -115,6 +134,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer8 = new QTimer(this);
     connect(timer8, &QTimer::timeout, this, &CanHandler::sendBatInfoPackage);
     timer8->start(500);
+
+    QTimer *timer9 = new QTimer(this);
+    connect(timer9, &QTimer::timeout, this, &CanHandler::sendPositionPackage);
+    timer9->start(1000);
 
 }
 
@@ -452,6 +475,127 @@ void CanHandler::sendBatInfoPackage()
 
 }
 
+void CanHandler::sendPositionPackage()
+{
+
+    QCanBusFrame frame1;
+    frame1.setFrameId(0x0DF80500);
+    QByteArray payload1;
+    payload1.resize(8);
+
+    payload1[0] = (uint8_t)(tripPackageCounter | 0x00);
+    payload1[1] = 0x0e;
+    payload1[2] = 0x00;
+    payload1[3] = 0x00;
+    payload1[4] = 0x00;
+    payload1[5] = 0x00;
+    payload1[6] = 0x00;
+    payload1[7] = 0x00;
+    frame1.setPayload(payload1);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x0DF80500);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0] = (uint8_t)(tripPackageCounter | 0x01);
+    payload2[1] = 0x00;
+    payload2[2] = m_Lat[0];
+    payload2[3] = m_Lat[1];
+    payload2[4] = m_Lat[2];
+    payload2[5] = m_Lat[3];
+    payload2[6] = m_Lat[4];
+    payload2[7] = m_Lat[5];
+    frame2.setPayload(payload2);
+
+    QCanBusFrame frame3;
+    frame3.setFrameId(0x0DF80500);
+    QByteArray payload3;
+    payload3.resize(8);
+    payload3[0] = (uint8_t)(tripPackageCounter | 0x02);
+    payload3[1] = m_Lat[6];
+    payload3[2] = m_Lat[7];
+    payload3[3] = m_Lon[0];
+    payload3[4] = m_Lon[1];
+    payload3[5] = m_Lon[2];
+    payload3[6] = m_Lon[3];
+    payload3[7] = m_Lon[4];
+    frame3.setPayload(payload3);
+
+    QCanBusFrame frame4;
+    frame4.setFrameId(0x0DF80500);
+    QByteArray payload4;
+    payload4.resize(8);
+    payload4[0] = (uint8_t)(tripPackageCounter | 0x03);
+    payload4[1] = m_Lon[5];
+    payload4[2] = m_Lon[6];
+    payload4[3] = m_Lon[7];
+    payload4[4] = 0x00;
+    payload4[5] = 0x00;
+    payload4[6] = 0x00;
+    payload4[7] = 0x00;
+    frame4.setPayload(payload4);
+
+    QCanBusFrame frame5;
+    frame5.setFrameId(0x0DF80500);
+    QByteArray payload5;
+    payload5.resize(8);
+    payload5[0] = (uint8_t)(tripPackageCounter | 0x04);
+    payload5[1] = 0x00;
+    payload5[2] = 0x00;
+    payload5[3] = 0x00;
+    payload5[4] = 0x00;
+    payload5[5] = 0x00;
+    payload5[6] = 0x00;
+    payload5[7] = 0x00;
+    frame5.setPayload(payload5);
+
+    QCanBusFrame frame6;
+    frame6.setFrameId(0x0DF80500);
+    QByteArray payload6;
+    payload6.resize(8);
+    payload6[0] = (uint8_t)(tripPackageCounter | 0x05);
+    payload6[1] = 0x00;
+    payload6[2] = 0x00;
+    payload6[3] = 0x00;
+    payload6[4] = 0x00;
+    payload6[5] = 0x00;
+    payload6[6] = 0x00;
+    payload6[7] = 0x00;
+    frame6.setPayload(payload6);
+
+    QCanBusFrame frame7;
+    frame7.setFrameId(0x0DF80500);
+    QByteArray payload7;
+    payload7.resize(8);
+    payload7[0] = (uint8_t)(tripPackageCounter | 0x06);
+    payload7[1] = 0x00;
+    payload7[2] = 0x00;
+    payload7[3] = 0x00;
+    payload7[4] = 0x00;
+    payload7[5] = 0x00;
+    payload7[6] = 0x00;
+    payload7[7] = 0x00;
+    frame7.setPayload(payload7);
+
+    //Here we might have to add another package so that it is 7 like in the standard pdf and just not detect the last on stm
+
+    if(areWeSendingPosition){
+        canDevice -> writeFrame(frame1);
+        canDevice -> writeFrame(frame2);
+        canDevice -> writeFrame(frame3);
+        canDevice -> writeFrame(frame4);
+        canDevice -> writeFrame(frame5);
+        canDevice -> writeFrame(frame6);
+        canDevice -> writeFrame(frame7);
+        if(tripPackageCounter5 != 240){
+            tripPackageCounter5+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
+        }else{
+            tripPackageCounter5=0x00;
+        }
+    }
+
+}
+
 void CanHandler::setPortRPM(uint16_t rpm){
 
     QByteArray bytes;
@@ -498,6 +642,17 @@ void CanHandler::setPortCurrent(int16_t current)
 
     //qDebug() <<"Processed value: "<< full;
     m_PortCurrentbytes = bytes;
+
+}
+
+void CanHandler::toggleSendingPositionPackage()
+{
+
+    if(areWeSendingPosition){
+        areWeSendingPosition = false;
+    }else{
+        areWeSendingPosition = true;
+    }
 
 }
 
@@ -752,5 +907,43 @@ void CanHandler::setBatCurrent(int16_t volt)
     bytes[1] =  static_cast<char>((volt >> 8) & 0xFF);
 
     m_BatCurrent = bytes;
+
+}
+
+void CanHandler::setLat(int64_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(8);
+
+    bytes[0] = static_cast<char>((value >> 0) & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((value >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((value >> 24) & 0xFF);
+    bytes[4] = static_cast<char>((value >> 32) & 0xFF);
+    bytes[5] = static_cast<char>((value >> 40) & 0xFF);
+    bytes[6] = static_cast<char>((value >> 48) & 0xFF);
+    bytes[7] = static_cast<char>((value >> 56) & 0xFF);
+
+    m_Lat = bytes;
+
+}
+
+void CanHandler::setLon(int64_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(8);
+
+    bytes[0] = static_cast<char>((value >> 0) & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((value >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((value >> 24) & 0xFF);
+    bytes[4] = static_cast<char>((value >> 32) & 0xFF);
+    bytes[5] = static_cast<char>((value >> 40) & 0xFF);
+    bytes[6] = static_cast<char>((value >> 48) & 0xFF);
+    bytes[7] = static_cast<char>((value >> 56) & 0xFF);
+
+    m_Lon = bytes;
 
 }
