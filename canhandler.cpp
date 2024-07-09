@@ -105,7 +105,7 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
-    timer->start(500);
+    timer->start(100);
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
