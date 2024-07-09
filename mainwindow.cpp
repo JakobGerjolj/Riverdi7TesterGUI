@@ -334,12 +334,12 @@ void MainWindow::on_pushButton_9_clicked()
 
 
     m_CanHandler -> toggleSendingPositionPackage();
-    if(areWeSendingBatInfo){
-        areWeSendingBatInfo = false;
+    if(areWeSendingPosition){
+        areWeSendingPosition = false;
         ui -> PositionSendingLabel -> setText("Not sending");
         ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
     }else{
-        areWeSendingBatInfo = true;
+        areWeSendingPosition = true;
         ui -> PositionSendingLabel -> setText("Sending messages");
         ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : green; }");
     }

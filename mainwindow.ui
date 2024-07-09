@@ -1219,6 +1219,9 @@
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
+    <property name="invertedAppearance">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QSlider" name="speedSlider_14">
     <property name="geometry">

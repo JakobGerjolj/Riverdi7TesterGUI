@@ -81,6 +81,7 @@ private slots:
     void on_pushButton_9_clicked();
 
 private:
+    bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
     bool areWeSendingSpeedMsg{false};
