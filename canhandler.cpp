@@ -105,7 +105,7 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
-    timer->start(100);
+    timer->start(50);
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
@@ -113,23 +113,23 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer3 = new QTimer(this);
     connect(timer3, &QTimer::timeout, this, &CanHandler::sendSpeedPackage);
-    timer3->start(100);
+    timer3->start(100); //Prob diffrent in normal conditions
 
     QTimer *timer4 = new QTimer(this);
     connect(timer4, &QTimer::timeout, this, &CanHandler::sendTripPackage);
-    timer4->start(1000);
+    timer4->start(100);
 
     QTimer *timer5 = new QTimer(this);
     connect(timer5, &QTimer::timeout, this, &CanHandler::sendPortMotorTempPackage);
-    timer5->start(1500);
+    timer5->start(100);
 
     QTimer *timer6 = new QTimer(this);
     connect(timer6, &QTimer::timeout, this, &CanHandler::sendStbMotorTempPackage);
-    timer6->start(1500);
+    timer6->start(100);
 
     QTimer *timer7 = new QTimer(this);
     connect(timer7, &QTimer::timeout, this, &CanHandler::sendHiCellPackage);
-    timer7->start(1500);
+    timer7->start(100);
 
     QTimer *timer8 = new QTimer(this);
     connect(timer8, &QTimer::timeout, this, &CanHandler::sendBatInfoPackage);
@@ -137,7 +137,7 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer9 = new QTimer(this);
     connect(timer9, &QTimer::timeout, this, &CanHandler::sendPositionPackage);
-    timer9->start(1000);
+    timer9->start(100);
 
 }
 
@@ -288,7 +288,7 @@ void CanHandler::sendHiCellPackage()
 {
 
     QCanBusFrame frame1;
-    frame1.setFrameId(0x001DF203);
+    frame1.setFrameId(0x1DF20300);
     QByteArray payload1;
     payload1.resize(8);
 
@@ -303,7 +303,7 @@ void CanHandler::sendHiCellPackage()
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
-    frame2.setFrameId(0x001DF203);
+    frame2.setFrameId(0x1DF20300);
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter3 | 0x01);
@@ -317,7 +317,7 @@ void CanHandler::sendHiCellPackage()
     frame2.setPayload(payload2);
 
     QCanBusFrame frame3;
-    frame3.setFrameId(0x001DF203);
+    frame3.setFrameId(0x1DF20300);
     QByteArray payload3;
     payload3.resize(8);
     payload3[0] = (uint8_t)(tripPackageCounter3 | 0x02);
@@ -423,7 +423,7 @@ void CanHandler::sendTripPackage()
 {
 
     QCanBusFrame frame1;
-    frame1.setFrameId(0x015F208);
+    frame1.setFrameId(0x15F20800);
     QByteArray payload1;
     payload1.resize(8);
 
@@ -438,7 +438,7 @@ void CanHandler::sendTripPackage()
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
-    frame2.setFrameId(0x015F208);
+    frame2.setFrameId(0x15F20800);
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter | 0x01);
@@ -452,7 +452,7 @@ void CanHandler::sendTripPackage()
     frame2.setPayload(payload2);
 
     QCanBusFrame frame3;
-    frame3.setFrameId(0x015F208);
+    frame3.setFrameId(0x15F20800);
     QByteArray payload3;
     payload3.resize(8);
     payload3[0] = (uint8_t)(tripPackageCounter | 0x02);

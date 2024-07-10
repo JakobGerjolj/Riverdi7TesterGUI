@@ -134,7 +134,7 @@ void MainWindow::on_pushButton_3_clicked()
     }else{
 
         areWeSendingSpeedMsg = false;
-        ui -> speedSendingStatus -> setText("Not sending packages");
+        ui -> speedSendingStatus -> setText("Not sending");
         ui -> speedSendingStatus -> setStyleSheet("QLabel { background-color : red; }");
     }
 }

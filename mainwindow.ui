@@ -505,7 +505,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>9900</number>
+     <number>100000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -547,7 +547,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>99000</number>
+     <number>10000000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -621,7 +621,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>25000</number>
+     <number>50000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -714,7 +714,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>25000</number>
+     <number>50000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
