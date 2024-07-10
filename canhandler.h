@@ -9,6 +9,10 @@
 #include <QTimer>
 #include <QByteArray>
 #include <QtEndian>
+#include <QSerialPortInfo>
+#include <QSerialPort>
+#include <cstdint>
+#include <QByteArray>
 
 class CanHandler : public QObject
 {
@@ -63,10 +67,33 @@ public:
     void setLat(int64_t value);
     void setLon(int64_t value);
 
+    //Testing CL2000
+
+    void testingData();
+
+    void transformCanPackage(QCanBusFrame const& frame, QByteArray &packedFrame);
+
+    void sendToCL2000(const QCanBusFrame &frame);
+
+
+    enum struct CRC16Type {
+        CRC_16_IBM
+    };
+
+
+
+    uint16_t calculateCRC16(QByteArray data, CRC16Type crc16Type = CRC16Type::CRC_16_IBM);
 
 signals:
 
 private:
+
+    //Testing
+
+    QSerialPort* port;
+
+
+    //End testing
     bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};

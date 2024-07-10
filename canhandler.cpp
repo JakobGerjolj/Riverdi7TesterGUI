@@ -109,11 +109,11 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
-    timer2->start(500);
+    timer2->start(100);
 
     QTimer *timer3 = new QTimer(this);
     connect(timer3, &QTimer::timeout, this, &CanHandler::sendSpeedPackage);
-    timer3->start(500);
+    timer3->start(100);
 
     QTimer *timer4 = new QTimer(this);
     connect(timer4, &QTimer::timeout, this, &CanHandler::sendTripPackage);
@@ -151,7 +151,114 @@ CanHandler::~CanHandler()
 
 void CanHandler::startCAN(){
 
-    const QString pluginName = "virtualcan";
+    //clx000can
+
+    // QList<QCanBusDeviceInfo> result;
+
+    // static QString const description("CLX000");
+
+    //ssh with rasp solution?
+
+    // Find all available USB-CDC devices.
+    // auto allAvailablePorts = QSerialPortInfo::availablePorts();
+
+    // for(auto const& portInfo: allAvailablePorts) {
+    //     // Remove all non-CDC ports.
+    //     if(!portInfo.hasVendorIdentifier() || !portInfo.hasProductIdentifier()) {
+    //         continue;
+    //     }
+
+    //     // Take only devices matching the USB identifier of the CLX000 CDC mode.
+    //     if( (portInfo.vendorIdentifier() != quint16(0x1CBEu)) ||
+    //         (portInfo.productIdentifier() != quint16(0x021Au)) ) {
+    //         continue;
+    //     }
+
+
+    //     qDebug() << "CLX000CanBus - found device" << portInfo.portName() << portInfo.serialNumber();
+
+    // }
+
+    //QSerialPort port("COM9");
+    port = new QSerialPort("COM9");
+    // port->setBaudRate(QSerialPort::Baud115200);
+    // port->setDataBits(QSerialPort::Data8);
+    //port->setStopBits(QSerialPort::OneStop);
+    //port->setFlowControl(QSerialPort::NoFlowControl);
+    // port->setReadBufferSize(1024*1024*10);
+
+    // port->setBaudRate(QSerialPort::Baud115200);
+    // port->setDataBits(QSerialPort::Data8);
+    //port->setStopBits(QSerialPort::OneStop);
+    //port->setFlowControl(QSerialPort::NoFlowControl);
+    // port->setReadBufferSize(1024*1024*10);
+
+
+    if(!port->open(QSerialPort::OpenModeFlag::ReadWrite)){
+        qDebug() << "Failed to open port" << port->portName() << ", error:" << port->errorString();
+
+    }
+
+
+
+
+    //connect(port,SIGNAL(readyRead()), this, SLOT(testingData));
+
+    // QCanBusFrame frame1;
+    // frame1.setFrameId(0x1DF20300);
+    // QByteArray payload1;
+    // payload1.resize(8);
+
+    // payload1[0] = 0x12;
+    // payload1[1] = 0x0f;
+    // payload1[2] = 0x00;
+    // payload1[3] = 0x34;
+    // payload1[4] = 0x00;
+    // payload1[5] = 0x00;
+    // payload1[6] = 0x56;
+    // payload1[7] = 0x78;
+    // frame1.setPayload(payload1);
+
+    // for(int i=0;i<5;i++){
+    //     qDebug()<<"Writting package number: " << i;
+    //     sendToCL2000(frame1);}
+
+    // QByteArray test;
+
+
+
+    // test.resize(24);
+    // test[0] = 0x7e;
+    // test[1] = 0x01;
+    // test[2] = 0x66;
+    // test[3] = 0x8d;
+    // test[4] = 0x05;
+    // test[5] = 0x7a;
+    // test[6] = 0x03;
+    // test[7] = 0x22;
+    // test[8] = 0x29;
+    // test[9] = 0xf5; //7e 01 66 8d 05 7a 03 22 29 f5 03 00 08 01 fc ff ff 00 00 ff ff 6f f8 7e
+    // test[10] = 0x03;
+    // test[11] = 0x00;
+    // test[12] = 0x08;
+    // test[13] = 0x01;
+    // test[14] = 0xfc;
+    // test[15] = 0xff;
+    // test[16] = 0xff;
+    // test[17] = 0x00;
+    // test[18] = 0x00;
+    // test[19] = 0xff;
+    // test[20] = 0xff;
+    // test[21] = 0x6f;
+    // test[22] = 0xf8;
+    // test[23] = 0x7e;
+
+    // port->write(test);
+
+
+    qDebug() << "Written something to serial, lets try";
+    //Above we experiment with cl2000
+    const QString pluginName = "virtualcan"; //clx000can
 
     canDevice = QCanBus::instance()->createDevice(pluginName, "can0");
     if (canDevice && canDevice->connectDevice()) {
@@ -227,6 +334,10 @@ void CanHandler::sendHiCellPackage()
         canDevice -> writeFrame(frame1);
         canDevice -> writeFrame(frame2);
         canDevice -> writeFrame(frame3);
+
+        sendToCL2000(frame1);
+        sendToCL2000(frame2);
+        sendToCL2000(frame3);
         if(tripPackageCounter3 != 240){
             tripPackageCounter3+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
@@ -252,8 +363,10 @@ void CanHandler::sendPortRPMPackage(){
     payload[7]=m_PortCurrentbytes[1];
     frame.setPayload(payload);
 
-    if(areWeSendingPortMsg)
+    if(areWeSendingPortMsg){
         canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+    }
 
     //here we will add Current and Voltage from slider
 }
@@ -276,9 +389,9 @@ void CanHandler::sendStbRPMPackage()
     payload[7]=m_StbCurrentbytes[1];
     frame.setPayload(payload);
 
-    if(areWeSendingStbMsg)
+    if(areWeSendingStbMsg){
         canDevice -> writeFrame(frame);
-
+        sendToCL2000(frame);    }
 
 }
 
@@ -300,9 +413,10 @@ void CanHandler::sendSpeedPackage()
     payload[7]=0xff;
     frame.setPayload(payload);
 
-    if(areWeSendingSpeedMsg)
+    if(areWeSendingSpeedMsg){
         canDevice -> writeFrame(frame);
-
+        sendToCL2000(frame);
+    }
 }
 
 void CanHandler::sendTripPackage()
@@ -355,6 +469,10 @@ void CanHandler::sendTripPackage()
         canDevice -> writeFrame(frame1);
         canDevice -> writeFrame(frame2);
         canDevice -> writeFrame(frame3);
+
+        sendToCL2000(frame1);
+        sendToCL2000(frame2);
+        sendToCL2000(frame3);
         if(tripPackageCounter != 240){
             tripPackageCounter+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
@@ -398,6 +516,9 @@ void CanHandler::sendPortMotorTempPackage()
     if(areWeSendingPortMotorTemp){
         canDevice -> writeFrame(frame1);
         canDevice -> writeFrame(frame2);
+
+        sendToCL2000(frame1);
+        sendToCL2000(frame2);
         if(tripPackageCounter2 != 240){
             tripPackageCounter2+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
@@ -443,6 +564,9 @@ void CanHandler::sendStbMotorTempPackage()
     if(areWeSendingStbMotorTemp){
         canDevice -> writeFrame(frame1);
         canDevice -> writeFrame(frame2);
+
+        sendToCL2000(frame1);
+        sendToCL2000(frame2);
         if(tripPackageCounter4 != 240){
             tripPackageCounter4+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
@@ -470,8 +594,10 @@ void CanHandler::sendBatInfoPackage()
     payload[7]=0xff;
     frame.setPayload(payload);
 
-    if(areWeSendingBatInfo)
+    if(areWeSendingBatInfo){
         canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+    }
 
 }
 
@@ -483,7 +609,7 @@ void CanHandler::sendPositionPackage()
     QByteArray payload1;
     payload1.resize(8);
 
-    payload1[0] = (uint8_t)(tripPackageCounter | 0x00);
+    payload1[0] = (uint8_t)(tripPackageCounter5 | 0x00);
     payload1[1] = 0x0e;
     payload1[2] = 0x00;
     payload1[3] = 0x00;
@@ -497,7 +623,7 @@ void CanHandler::sendPositionPackage()
     frame2.setFrameId(0x0DF80500);
     QByteArray payload2;
     payload2.resize(8);
-    payload2[0] = (uint8_t)(tripPackageCounter | 0x01);
+    payload2[0] = (uint8_t)(tripPackageCounter5 | 0x01);
     payload2[1] = 0x00;
     payload2[2] = m_Lat[0];
     payload2[3] = m_Lat[1];
@@ -511,7 +637,7 @@ void CanHandler::sendPositionPackage()
     frame3.setFrameId(0x0DF80500);
     QByteArray payload3;
     payload3.resize(8);
-    payload3[0] = (uint8_t)(tripPackageCounter | 0x02);
+    payload3[0] = (uint8_t)(tripPackageCounter5 | 0x02);
     payload3[1] = m_Lat[6];
     payload3[2] = m_Lat[7];
     payload3[3] = m_Lon[0];
@@ -525,7 +651,7 @@ void CanHandler::sendPositionPackage()
     frame4.setFrameId(0x0DF80500);
     QByteArray payload4;
     payload4.resize(8);
-    payload4[0] = (uint8_t)(tripPackageCounter | 0x03);
+    payload4[0] = (uint8_t)(tripPackageCounter5 | 0x03);
     payload4[1] = m_Lon[5];
     payload4[2] = m_Lon[6];
     payload4[3] = m_Lon[7];
@@ -539,7 +665,7 @@ void CanHandler::sendPositionPackage()
     frame5.setFrameId(0x0DF80500);
     QByteArray payload5;
     payload5.resize(8);
-    payload5[0] = (uint8_t)(tripPackageCounter | 0x04);
+    payload5[0] = (uint8_t)(tripPackageCounter5 | 0x04);
     payload5[1] = 0x00;
     payload5[2] = 0x00;
     payload5[3] = 0x00;
@@ -553,7 +679,7 @@ void CanHandler::sendPositionPackage()
     frame6.setFrameId(0x0DF80500);
     QByteArray payload6;
     payload6.resize(8);
-    payload6[0] = (uint8_t)(tripPackageCounter | 0x05);
+    payload6[0] = (uint8_t)(tripPackageCounter5 | 0x05);
     payload6[1] = 0x00;
     payload6[2] = 0x00;
     payload6[3] = 0x00;
@@ -567,7 +693,7 @@ void CanHandler::sendPositionPackage()
     frame7.setFrameId(0x0DF80500);
     QByteArray payload7;
     payload7.resize(8);
-    payload7[0] = (uint8_t)(tripPackageCounter | 0x06);
+    payload7[0] = (uint8_t)(tripPackageCounter5 | 0x06);
     payload7[1] = 0x00;
     payload7[2] = 0x00;
     payload7[3] = 0x00;
@@ -587,6 +713,14 @@ void CanHandler::sendPositionPackage()
         canDevice -> writeFrame(frame5);
         canDevice -> writeFrame(frame6);
         canDevice -> writeFrame(frame7);
+
+        sendToCL2000(frame1);
+        sendToCL2000(frame2);
+        sendToCL2000(frame3);
+        sendToCL2000(frame4);
+        sendToCL2000(frame5);
+        sendToCL2000(frame6);
+        sendToCL2000(frame7);
         if(tripPackageCounter5 != 240){
             tripPackageCounter5+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
@@ -947,3 +1081,97 @@ void CanHandler::setLon(int64_t value)
     m_Lon = bytes;
 
 }
+
+void CanHandler::testingData()
+{
+
+    auto const data = port->read(1024);
+
+    qDebug()<<"Here is data: "<<data;
+
+}
+
+void CanHandler::transformCanPackage(const QCanBusFrame &frame, QByteArray &packedFrame)
+{
+
+    QByteArray payloadArray;
+    QDataStream payloadStream(&payloadArray, QIODevice::ReadWrite);
+    payloadStream.setByteOrder(QDataStream::ByteOrder::BigEndian);
+
+    payloadStream << static_cast<quint8>(0x03);
+
+    /* Write CAN ID (Big endian) */
+    quint32 canID = frame.frameId() & 0x1FFFFFFF;
+    if( frame.hasExtendedFrameFormat() ) {
+        canID |= 0x20000000;
+    }
+    payloadStream << canID;
+
+    int dataLength = frame.payload().length();
+    if(0 <= dataLength && dataLength <= 8) {
+        auto DLC = static_cast<quint8>(dataLength);
+        payloadStream << DLC;
+    }
+
+    payloadStream.writeRawData(frame.payload().data(), dataLength);
+
+    /* Calculate checksum */
+    quint16 checksum = calculateCRC16(payloadArray);
+
+    /* Write checksum */
+    payloadStream << checksum;
+
+    /* Escape any 0x7E sequences */
+    packedFrame.append(0x07E);
+    for (char const& byteValue: payloadArray) {
+        if( byteValue == 0x7E ) {
+            packedFrame.append(static_cast<quint8>(0x7D));
+            packedFrame.append(static_cast<quint8>(byteValue ^ 0b00100000) );
+        } else {
+            packedFrame.append(byteValue );
+        }
+    }
+    packedFrame.append(0x07E);
+
+}
+
+void CanHandler::sendToCL2000(const QCanBusFrame &frame)
+{
+
+
+
+    QByteArray packedFrame;
+    transformCanPackage(frame, packedFrame);
+
+    port->write(packedFrame);
+
+}
+
+uint16_t CanHandler::calculateCRC16(QByteArray data, CRC16Type crc16Type)
+{
+    uint16_t const initial = 0x0000u;
+    uint16_t const polynomial = 0xA001;
+    uint16_t const final = 0x0000;
+
+    uint16_t crc = initial;
+
+    for(char const& value: data) {
+        // Reinterpret from signed to unsigned.
+        uint8_t d = value;
+
+        crc ^= d;
+
+        for(auto i = 0; i < 8; ++i) {
+            if (crc & 0x0001u) {
+                crc >>= 1;
+                crc ^= polynomial;
+            } else {
+                crc >>= 1;
+            }
+        }
+    }
+
+    return crc ^ final;
+}
+
+
