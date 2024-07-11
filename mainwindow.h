@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QTextStream>
 #include "canhandler.h"
 
 QT_BEGIN_NAMESPACE

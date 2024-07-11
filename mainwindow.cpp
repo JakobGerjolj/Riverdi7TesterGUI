@@ -47,8 +47,12 @@ void MainWindow::on_currentPort_sliderMoved(int position)
 {
 
     qDebug()<<"Raw from slider: "<<position;
-    m_CanHandler -> setPortCurrent(static_cast<int16_t>(position));
+    int16_t temp = static_cast<int16_t>(position);
+    m_CanHandler -> setPortCurrent(temp);
 
+    qDebug()<<"After cast: "<<temp;
+    qDebug()<<"Number written in hex after casting to int16_t: "<<QString::asprintf("%x", temp & 0xffff);
+    qDebug()<<"Number before casting in hex: "<<QString::asprintf("%x", position & 0xffff);
 }
 
 
@@ -91,7 +95,7 @@ void MainWindow::on_rpmStarboardVoltage_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbCurrent((int16_t)position);
+    m_CanHandler -> setStbCurrent(static_cast<int16_t>(position));
 
 }
 

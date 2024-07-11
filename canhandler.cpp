@@ -762,19 +762,23 @@ void CanHandler::setPortCurrent(int16_t current)
 
     QByteArray bytes;
     bytes.resize(2);
-    bytes[0] = static_cast<char>((current & 0xFF));
-    bytes[1] = static_cast<char>((current >> 8) & 0xFF);
+    bytes[0] = (char)((current & 0xFF));
+    bytes[1] = (char)((current >> 8) & 0xFF);
 
     // qint16_le value = current
 
-    //int16_t hh = (int16_t)((uint16_t)(bytes[0] >> 8) | (uint16_t)(bytes[1] << 8));
+    //Need to compare to the actual value somehow
+    qDebug() << "Byte on the 0 spot: "<< QString::asprintf("%x", bytes[0] & 0xff);
+    qDebug() << "Byte on the 1 spot: "<< QString::asprintf("%x", bytes[1] & 0xff);
+
+    int16_t hh = (int16_t)(((uint16_t)bytes[0] | (((uint16_t)bytes[1]) << 8)));
 
 
 
     //int16_t full = bytes[0] | bytes[1] << 8;// I dont know maybe problems here, for now I will just leave it
     //int16_t afterProcess = static_cast<int16_t>(((uint16_t)bytes[0] << 8) | (uint16_t)bytes[1]);
 
-    //qDebug() <<"Processed value: "<< full;
+    qDebug() <<"Processed value: "<< QString::asprintf("%x", hh & 0xFFFF);
     m_PortCurrentbytes = bytes;
 
 }
