@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> TempPackageLabel -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PortBatInfoLabel_2 -> setStyleSheet("QLabel { background-color : red; }");
 
 }
 
@@ -346,6 +347,39 @@ void MainWindow::on_pushButton_9_clicked()
         areWeSendingPosition = true;
         ui -> PositionSendingLabel -> setText("Sending messages");
         ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
+}
+
+
+void MainWindow::on_speedSlider_16_sliderMoved(int position)
+{
+
+    m_CanHandler -> setHiVoltage(position);
+
+}
+
+
+void MainWindow::on_speedSlider_17_sliderMoved(int position)
+{
+
+    m_CanHandler -> setLoVoltage(position);
+
+}
+
+
+void MainWindow::on_pushButton_11_clicked()
+{
+
+    m_CanHandler -> toggleSendingCellVoltagePackage();
+    if(areWeSendingCellVoltage){
+        areWeSendingCellVoltage = false;
+        ui -> PortBatInfoLabel_2 -> setText("Not sending");
+        ui -> PortBatInfoLabel_2 -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingCellVoltage = true;
+        ui -> PortBatInfoLabel_2 -> setText("Sending messages");
+        ui -> PortBatInfoLabel_2 -> setStyleSheet("QLabel { background-color : green; }");
     }
 
 }

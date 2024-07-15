@@ -24,6 +24,8 @@ public:
     void setPortVoltage(uint16_t voltage);
     void setPortCurrent(int16_t current);
 
+    void toggleSendingCellVoltagePackage();
+
     void toggleSendingPositionPackage();
 
     void toggleSendingBatInfoMessage();
@@ -67,6 +69,9 @@ public:
     void setLat(int64_t value);
     void setLon(int64_t value);
 
+    void setHiVoltage(uint16_t value);
+    void setLoVoltage(uint16_t value);
+
     //Testing CL2000
 
     void testingData();
@@ -94,6 +99,7 @@ private:
 
 
     //End testing
+    bool areWeSendingCellVoltage{false};
     bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
@@ -107,6 +113,7 @@ private:
     void readAndProcessCANpodatke();
     QCanBusDevice *canDevice;
 
+    void sendCellVoltage();
     void sendHiCellPackage();
     void sendPortRPMPackage();
     void sendStbRPMPackage();
@@ -145,6 +152,9 @@ private:
 
     QByteArray m_Lat;
     QByteArray m_Lon;
+
+    QByteArray m_HiCellVoltage;
+    QByteArray m_LoCellVoltage;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

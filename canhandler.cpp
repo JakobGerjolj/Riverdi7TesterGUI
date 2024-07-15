@@ -103,6 +103,14 @@ CanHandler::CanHandler(QObject *parent)
     m_Lon[6] = 0x00;
     m_Lon[7] = 0x00;
 
+    m_HiCellVoltage.resize(2);
+    m_HiCellVoltage[0] = 0x00;
+    m_HiCellVoltage[1] = 0x00;
+
+    m_LoCellVoltage.resize(2);
+    m_LoCellVoltage[0] = 0x00;
+    m_LoCellVoltage[1] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(50);
@@ -129,7 +137,7 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer7 = new QTimer(this);
     connect(timer7, &QTimer::timeout, this, &CanHandler::sendHiCellPackage);
-    timer7->start(100);
+    timer7->start(200);
 
     QTimer *timer8 = new QTimer(this);
     connect(timer8, &QTimer::timeout, this, &CanHandler::sendBatInfoPackage);
@@ -138,6 +146,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer9 = new QTimer(this);
     connect(timer9, &QTimer::timeout, this, &CanHandler::sendPositionPackage);
     timer9->start(100);
+
+    QTimer *timer10 = new QTimer(this);
+    connect(timer10, &QTimer::timeout, this, &CanHandler::sendCellVoltage);
+    timer10->start(500);
 
 }
 
@@ -282,6 +294,30 @@ void CanHandler::readAndProcessCANpodatke()
         qDebug() << "Received a CAN package";
 
     }
+}
+
+void CanHandler::sendCellVoltage()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF92F3);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_HiCellVoltage[0];
+    payload[2]=m_HiCellVoltage[1];
+    payload[3]=m_LoCellVoltage[0];
+    payload[4]=m_LoCellVoltage[1];
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingCellVoltage){
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+    }
+
 }
 
 void CanHandler::sendHiCellPackage()
@@ -783,6 +819,17 @@ void CanHandler::setPortCurrent(int16_t current)
 
 }
 
+void CanHandler::toggleSendingCellVoltagePackage()
+{
+
+    if(areWeSendingCellVoltage){
+        areWeSendingCellVoltage=false;
+    }else{
+        areWeSendingCellVoltage=true;
+    }
+
+}
+
 void CanHandler::toggleSendingPositionPackage()
 {
 
@@ -1086,6 +1133,30 @@ void CanHandler::setLon(int64_t value)
 
 }
 
+void CanHandler::setHiVoltage(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_HiCellVoltage = bytes;
+
+}
+
+void CanHandler::setLoVoltage(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_LoCellVoltage = bytes;
+
+}
+
 void CanHandler::testingData()
 {
 
@@ -1177,5 +1248,6 @@ uint16_t CanHandler::calculateCRC16(QByteArray data, CRC16Type crc16Type)
 
     return crc ^ final;
 }
+
 
 

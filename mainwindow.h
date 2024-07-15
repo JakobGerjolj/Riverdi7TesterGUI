@@ -81,7 +81,14 @@ private slots:
 
     void on_pushButton_9_clicked();
 
+    void on_speedSlider_16_sliderMoved(int position);
+
+    void on_speedSlider_17_sliderMoved(int position);
+
+    void on_pushButton_11_clicked();
+
 private:
+    bool areWeSendingCellVoltage{false};
     bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
     bool areWeSendingHiCellTemp{false};
