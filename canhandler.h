@@ -24,6 +24,10 @@ public:
     void setPortVoltage(uint16_t voltage);
     void setPortCurrent(int16_t current);
 
+    void toggleSendingDepthInfo();
+
+    void toggleSendingChargerInfo();
+
     void toggleSendingCellVoltagePackage();
 
     void toggleSendingPositionPackage();
@@ -62,6 +66,7 @@ public:
     void setHiCellTemp(uint16_t temp);
     void setLoCellTemp(uint16_t temp);
     void setSOC(uint8_t soc);
+    void setTimeToFull(int16_t time);
 
     void setBatVoltage(uint16_t volt);
     void setBatCurrent(int16_t volt);
@@ -71,6 +76,17 @@ public:
 
     void setHiVoltage(uint16_t value);
     void setLoVoltage(uint16_t value);
+
+    void setChargerTemp(int16_t value);
+    void setChargerVoltage(uint16_t value);
+    void setChargerCurrent(int16_t);
+
+    void setDepth(uint32_t);
+
+
+    void sendAlarmPackage(QByteArray data);
+    void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
+
 
     //Testing CL2000
 
@@ -99,6 +115,7 @@ private:
 
 
     //End testing
+    bool areWeSendingChargerInfo{false};
     bool areWeSendingCellVoltage{false};
     bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};
@@ -113,6 +130,9 @@ private:
     void readAndProcessCANpodatke();
     QCanBusDevice *canDevice;
 
+    bool areWeSendingDepthMsg{false};
+
+    void sendChargerInfo();
     void sendCellVoltage();
     void sendHiCellPackage();
     void sendPortRPMPackage();
@@ -123,6 +143,8 @@ private:
     void sendStbMotorTempPackage();
     void sendBatInfoPackage();
     void sendPositionPackage();
+    void sendDepthPositionPackage();
+
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -146,6 +168,7 @@ private:
     QByteArray m_HiCellTemp;
     QByteArray m_LoCellTemp;
     QByteArray m_SOC;
+    QByteArray m_TimeToFull;
 
     QByteArray m_BatVoltage;
     QByteArray m_BatCurrent;
@@ -155,6 +178,12 @@ private:
 
     QByteArray m_HiCellVoltage;
     QByteArray m_LoCellVoltage;
+
+    QByteArray m_ChargerTemp;
+    QByteArray m_ChargerVoltage;
+    QByteArray m_ChargerCurrent;
+
+    QByteArray m_Depth;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

@@ -18,11 +18,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> PortBatInfoLabel -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PositionSendingLabel -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel_2 -> setStyleSheet("QLabel { background-color : red; }");
-
+    ui -> stbStatus_2 -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PortBatInfoLabel_3 -> setText("Not sending");
+    ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
 }
 
 MainWindow::~MainWindow()
 {
+    delete m_CanHandler;
     delete ui;
 }
 
@@ -319,7 +322,7 @@ void MainWindow::on_speedSlider_12_sliderMoved(int position)
 void MainWindow::on_speedSlider_13_sliderMoved(int position)
 {
 
-    int64_t fullValue = (int64_t)(position*10e11);
+    int64_t fullValue = static_cast<int64_t>(position*10e11);
 
     m_CanHandler -> setLat(fullValue);
 
@@ -328,7 +331,7 @@ void MainWindow::on_speedSlider_13_sliderMoved(int position)
 
 void MainWindow::on_speedSlider_14_sliderMoved(int position)
 {
-    int64_t fullValue = (int64_t)(position*10e11);
+    int64_t fullValue = static_cast<int64_t>(position*10e11);
 
     m_CanHandler -> setLon(fullValue);
 }
@@ -382,5 +385,177 @@ void MainWindow::on_pushButton_11_clicked()
         ui -> PortBatInfoLabel_2 -> setStyleSheet("QLabel { background-color : green; }");
     }
 
+}
+
+
+void MainWindow::on_rpmStarboardSlider_2_sliderMoved(int position)
+{
+    m_CanHandler -> setChargerTemp(static_cast<int16_t>(position));
+}
+
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    m_CanHandler -> toggleSendingChargerInfo();
+    if(areWeSendingChargerInfo){
+        areWeSendingChargerInfo = false;
+        ui -> stbStatus_2 -> setText("Not sending");
+        ui -> stbStatus_2 -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingChargerInfo = true;
+        ui -> stbStatus_2 -> setText("Sending messages");
+        ui -> stbStatus_2 -> setStyleSheet("QLabel { background-color : green; }");
+    }
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_2_sliderMoved(int position)
+{
+    m_CanHandler -> setChargerVoltage(position);
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_2_sliderMoved(int position)
+{
+    m_CanHandler -> setChargerCurrent(position);
+}
+
+
+void MainWindow::on_speedSlider_18_sliderMoved(int position)
+{
+    m_CanHandler -> setTimeToFull((int16_t)position);
+}
+
+
+void MainWindow::on_pushButton_13_clicked()
+{
+
+    QString type = ui -> textEdit -> toPlainText();
+
+    QString id = ui -> textEdit_2 -> toPlainText();
+
+    QString name = ui -> textEdit_3 -> toPlainText();
+
+    QString desc = ui -> textEdit_4 -> toPlainText();
+
+
+
+
+
+
+
+    QString completeString = "t:" + type + ";i:" + id + ";n:" + name + ";d:" + desc + ";";
+
+    QByteArray byteArray = completeString.toUtf8();
+
+    qDebug()<<"\nWe are sending: \n" << completeString;
+
+    m_CanHandler -> sendAlarmPackage(byteArray);
+
+    int tempNumber = ui -> textEdit_2 -> toPlainText().toInt();
+
+    tempNumber++;
+
+    ui -> textEdit_2 -> setText(QString::number(tempNumber));
+
+    ui -> textEdit_3 -> setText("BMS" + QString::number(tempNumber));
+
+
+
+    //qDebug() << byteArray.size();
+
+    //Put it into can handler, and send it
+
+}
+
+
+void MainWindow::on_pushButton_14_clicked()
+{
+
+    QString type = ui -> textEdit_5 -> toPlainText();
+    QString id = ui -> textEdit_6 -> toPlainText();
+
+    uint8_t typeInint = (uint8_t)type.toInt();
+
+    uint16_t idInInt = (uint16_t)id.toInt();
+
+    m_CanHandler -> sendAlarmNotActivePackage(typeInint, idInInt);
+    //Send not active
+}
+
+
+void MainWindow::on_speedSlider_19_sliderMoved(int position)
+{
+
+    m_CanHandler -> setDepth(static_cast<uint32_t>(position));
+
+}
+
+
+void MainWindow::on_pushButton_15_clicked()
+{
+
+    m_CanHandler -> toggleSendingDepthInfo();
+    if(areWeSendingDepthData){
+        areWeSendingDepthData = false;
+        ui -> PortBatInfoLabel_3 -> setText("Not sending");
+        ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingDepthData = true;
+        ui -> PortBatInfoLabel_3 -> setText("Sending messages");
+        ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
+}
+
+
+void MainWindow::on_pushButton_16_clicked()
+{
+
+    QString type = ui -> textEdit -> toPlainText();
+
+    QString id = ui -> textEdit_2 -> toPlainText();
+
+    QString name = ui -> textEdit_3 -> toPlainText();
+
+    QString desc = ui -> textEdit_4 -> toPlainText();
+
+
+    QString completeString = "t:" + type + ";i:" + id + ";n:" + name + ";d:" + desc + ";";
+
+    QByteArray byteArray = completeString.toUtf8();
+
+
+
+    for(int i = 1; i < 46; i++){
+
+        QString asciiString = QString::number(i);
+
+        completeString = "t:" + type + ";i:" + asciiString + ";n:" + name + ";d:" + desc + ";";
+
+        qDebug() << "\nString sent: " << completeString << "\n";
+
+        byteArray = completeString.toUtf8();
+
+        bool isWait = true;
+
+        // QTimer::singleShot(500, this, [&](){
+        //     isWait = false;
+        // });
+
+        // while(isWait){};
+
+
+        m_CanHandler -> sendAlarmPackage(byteArray);
+        //send 50 call here
+
+
+        // std::chrono::this_thread::sleep_for(std::chrono::senconds(1));
+
+        //sleep(1);
+
+        // QThread::msleep(500); // Blocking delay
+
+    }
 }
 

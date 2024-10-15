@@ -5,6 +5,9 @@
 #include <QTimer>
 #include <QTextStream>
 #include "canhandler.h"
+#include <QThread>
+#include <chrono>
+#include <unistd.h>  // For sleep
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -87,7 +90,29 @@ private slots:
 
     void on_pushButton_11_clicked();
 
+    void on_rpmStarboardSlider_2_sliderMoved(int position);
+
+    void on_pushButton_12_clicked();
+
+    void on_rpmStarboardVoltage_2_sliderMoved(int position);
+
+    void on_CurrentStarboardSlider_2_sliderMoved(int position);
+
+    void on_speedSlider_18_sliderMoved(int position);
+
+    void on_pushButton_13_clicked();
+
+    void on_pushButton_14_clicked();
+
+    void on_speedSlider_19_sliderMoved(int position);
+
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_16_clicked();
+
 private:
+    bool areWeSendingDepthData{false};
+    bool areWeSendingChargerInfo{false};
     bool areWeSendingCellVoltage{false};
     bool areWeSendingPosition{false};
     bool areWeSendingBatInfo{false};

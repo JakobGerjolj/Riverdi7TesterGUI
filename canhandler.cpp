@@ -1,4 +1,5 @@
 #include "canhandler.h"
+#include <QDebug>
 
 CanHandler::CanHandler(QObject *parent)
     : QObject{parent}
@@ -111,33 +112,55 @@ CanHandler::CanHandler(QObject *parent)
     m_LoCellVoltage[0] = 0x00;
     m_LoCellVoltage[1] = 0x00;
 
+    m_ChargerTemp.resize(2);
+    m_ChargerTemp[0] = 0x00;
+    m_ChargerTemp[1] = 0x00;
+
+    m_ChargerVoltage.resize(2);
+    m_ChargerVoltage[0] = 0x00;
+    m_ChargerVoltage[1] = 0x00;
+
+    m_ChargerCurrent.resize(2);
+    m_ChargerCurrent[0] = 0x00;
+    m_ChargerCurrent[1] = 0x00;
+
+    m_TimeToFull.resize(2);
+    m_TimeToFull[0] = 0x00;
+    m_TimeToFull[1] = 0x00;
+
+    m_Depth.resize(4);
+    m_Depth[0] = 0x00;
+    m_Depth[1] = 0x00;
+    m_Depth[2] = 0x00;
+    m_Depth[3] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
-    timer->start(50);
+    timer->start(500);
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
-    timer2->start(100);
+    timer2->start(500);
 
     QTimer *timer3 = new QTimer(this);
     connect(timer3, &QTimer::timeout, this, &CanHandler::sendSpeedPackage);
-    timer3->start(100); //Prob diffrent in normal conditions
+    timer3->start(250); //Prob diffrent in normal conditions
 
     QTimer *timer4 = new QTimer(this);
     connect(timer4, &QTimer::timeout, this, &CanHandler::sendTripPackage);
-    timer4->start(100);
+    timer4->start(1000);
 
     QTimer *timer5 = new QTimer(this);
     connect(timer5, &QTimer::timeout, this, &CanHandler::sendPortMotorTempPackage);
-    timer5->start(100);
+    timer5->start(1500);
 
     QTimer *timer6 = new QTimer(this);
     connect(timer6, &QTimer::timeout, this, &CanHandler::sendStbMotorTempPackage);
-    timer6->start(100);
+    timer6->start(1500);
 
     QTimer *timer7 = new QTimer(this);
     connect(timer7, &QTimer::timeout, this, &CanHandler::sendHiCellPackage);
-    timer7->start(200);
+    timer7->start(1500);
 
     QTimer *timer8 = new QTimer(this);
     connect(timer8, &QTimer::timeout, this, &CanHandler::sendBatInfoPackage);
@@ -145,11 +168,19 @@ CanHandler::CanHandler(QObject *parent)
 
     QTimer *timer9 = new QTimer(this);
     connect(timer9, &QTimer::timeout, this, &CanHandler::sendPositionPackage);
-    timer9->start(100);
+    timer9->start(1000);
 
     QTimer *timer10 = new QTimer(this);
     connect(timer10, &QTimer::timeout, this, &CanHandler::sendCellVoltage);
     timer10->start(500);
+
+    QTimer *timer11 = new QTimer(this);
+    connect(timer11, &QTimer::timeout, this, &CanHandler::sendChargerInfo);
+    timer11->start(100);
+
+    QTimer *timer12 = new QTimer(this);
+    connect(timer12, &QTimer::timeout, this, &CanHandler::sendDepthPositionPackage);
+    timer12->start(500);
 
 }
 
@@ -296,6 +327,30 @@ void CanHandler::readAndProcessCANpodatke()
     }
 }
 
+void CanHandler::sendChargerInfo()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9149);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_ChargerTemp[0];
+    payload[2]=m_ChargerTemp[1];
+    payload[3]=m_ChargerVoltage[0];
+    payload[4]=m_ChargerVoltage[1];
+    payload[5]=m_ChargerCurrent[0];
+    payload[6]=m_ChargerCurrent[1];
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingChargerInfo){
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+    }
+
+}
+
 void CanHandler::sendCellVoltage()
 {
 
@@ -332,8 +387,8 @@ void CanHandler::sendHiCellPackage()
     payload1[1] = 0x0f;
     payload1[2] = 0x00;
     payload1[3] = m_SOC[0];
-    payload1[4] = 0x00;
-    payload1[5] = 0x00;
+    payload1[4] = m_TimeToFull[0];
+    payload1[5] = m_TimeToFull[1];
     payload1[6] = m_HiCellTemp[0];
     payload1[7] = m_HiCellTemp[1];
     frame1.setPayload(payload1);
@@ -436,7 +491,7 @@ void CanHandler::sendSpeedPackage()
 
 
     QCanBusFrame frame;
-    frame.setFrameId(0x15F80200);
+    frame.setFrameId(0x09F80200);
     QByteArray payload;
     payload.resize(8);
     payload[0]=0xff;
@@ -648,11 +703,11 @@ void CanHandler::sendPositionPackage()
     payload1[0] = (uint8_t)(tripPackageCounter5 | 0x00);
     payload1[1] = 0x0e;
     payload1[2] = 0x00;
-    payload1[3] = 0x00;
-    payload1[4] = 0x00;
+    payload1[3] = 0x26;
+    payload1[4] = 0x4e;
     payload1[5] = 0x00;
-    payload1[6] = 0x00;
-    payload1[7] = 0x00;
+    payload1[6] = 0xc2;
+    payload1[7] = 0xeb;
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
@@ -660,7 +715,7 @@ void CanHandler::sendPositionPackage()
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter5 | 0x01);
-    payload2[1] = 0x00;
+    payload2[1] = 0x0b;
     payload2[2] = m_Lat[0];
     payload2[3] = m_Lat[1];
     payload2[4] = m_Lat[2];
@@ -757,11 +812,35 @@ void CanHandler::sendPositionPackage()
         sendToCL2000(frame5);
         sendToCL2000(frame6);
         sendToCL2000(frame7);
-        if(tripPackageCounter5 != 240){
+        if(tripPackageCounter5 != 192){
             tripPackageCounter5+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
             tripPackageCounter5=0x00;
         }
+    }
+
+}
+
+void CanHandler::sendDepthPositionPackage()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x0DF50B00);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0xff;
+    payload[1]=m_Depth[0];
+    payload[2]=m_Depth[1];
+    payload[3]=m_Depth[2];
+    payload[4]=m_Depth[3];
+    payload[5]=0xff;
+    payload[6]=0xff;
+    payload[7]=0xff;
+    frame.setPayload(payload);
+
+    if(areWeSendingDepthMsg){
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
     }
 
 }
@@ -816,6 +895,31 @@ void CanHandler::setPortCurrent(int16_t current)
 
     qDebug() <<"Processed value: "<< QString::asprintf("%x", hh & 0xFFFF);
     m_PortCurrentbytes = bytes;
+
+}
+
+void CanHandler::toggleSendingDepthInfo()
+{
+    if(areWeSendingDepthMsg){
+
+        areWeSendingDepthMsg = false;
+    }else {
+
+        areWeSendingDepthMsg = true;
+    }
+
+}
+
+void CanHandler::toggleSendingChargerInfo()
+{
+
+    if(areWeSendingChargerInfo){
+        areWeSendingChargerInfo = false;
+
+    }else {
+        areWeSendingChargerInfo = true;
+
+    }
 
 }
 
@@ -1071,6 +1175,17 @@ void CanHandler::setSOC(uint8_t soc)
 
 }
 
+void CanHandler::setTimeToFull(int16_t time)
+{
+    qDebug() << time << "\n";
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(time & 0xFF));
+    bytes[1] =  static_cast<char>((time >> 8) & 0xFF);
+    m_TimeToFull = bytes;
+
+}
+
 void CanHandler::setBatVoltage(uint16_t volt)
 {
 
@@ -1157,6 +1272,105 @@ void CanHandler::setLoVoltage(uint16_t value)
 
 }
 
+void CanHandler::setChargerTemp(int16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_ChargerTemp = bytes;
+
+}
+
+void CanHandler::setChargerVoltage(uint16_t value)
+{
+    qDebug() << "voltage" << value << "\n";
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_ChargerVoltage = bytes;
+
+}
+
+void CanHandler::setChargerCurrent(int16_t value)
+{
+    qDebug() << "current" << value << "\n";
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_ChargerCurrent = bytes;
+
+}
+
+void CanHandler::setDepth(uint32_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(4);
+    bytes[0] = static_cast<char>(value & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((value >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((value >> 24) & 0xFF);
+
+    m_Depth = bytes;
+
+}
+
+void CanHandler::sendAlarmPackage(QByteArray data)
+{
+    const int FIRST_PAYLOAD_SIZE = 6;
+    const int SUBSEQUENT_PAYLOAD_SIZE = 7;
+
+    qDebug() << "\nData size: "<<data.size()<<"\n";
+    int totalSize = static_cast<uint8_t>(data.size());
+    int remainingSize = totalSize - FIRST_PAYLOAD_SIZE;
+    int numSubsequentFrames = (remainingSize + SUBSEQUENT_PAYLOAD_SIZE - 1) / SUBSEQUENT_PAYLOAD_SIZE; // Ceiling division
+
+    // Handle the first 6 bytes
+    QByteArray firstPayload(FIRST_PAYLOAD_SIZE + 2, 0); // 6 bytes + 2 for headers
+    firstPayload[0] = 0x00 | 0x00; // Example header for the first frame
+    firstPayload[1] = totalSize; // Example header value
+    for (int i = 0; i < FIRST_PAYLOAD_SIZE; ++i) {
+        firstPayload[i + 2] = data[i];
+    }
+
+    QCanBusFrame firstFrame;
+    firstFrame.setFrameId(0x14FFA000);
+    firstFrame.setPayload(firstPayload);
+    sendToCL2000(firstFrame); // Placeholder for actual sending logic
+    //qDebug() << "Sent first frame with payload:" << firstPayload.toHex();
+
+    // Handle the remaining bytes in chunks of 7 bytes
+    for (int i = 0; i < numSubsequentFrames; ++i) {
+        QCanBusFrame frame;
+        frame.setFrameId(0x14FFA000);
+        QByteArray payload(SUBSEQUENT_PAYLOAD_SIZE + 1, 0); // 7 bytes + 1 for header
+
+        int offset = FIRST_PAYLOAD_SIZE + i * SUBSEQUENT_PAYLOAD_SIZE;
+        int chunkSize = qMin(SUBSEQUENT_PAYLOAD_SIZE, totalSize - offset);
+
+        payload[0] = 0x00 | (((i + 1)) & 0x0F); // Example header for subsequent frames
+        for (int j = 0; j < chunkSize; ++j) {
+            payload[j + 1] = data[offset + j];
+        }
+
+        frame.setPayload(payload);
+        sendToCL2000(frame); // Placeholder for actual sending logic
+        //qDebug() << "Sent subsequent frame" << i << "with payload:" << payload.toHex();
+
+
+    }
+
+}
+
+
+
 void CanHandler::testingData()
 {
 
@@ -1213,8 +1427,6 @@ void CanHandler::transformCanPackage(const QCanBusFrame &frame, QByteArray &pack
 void CanHandler::sendToCL2000(const QCanBusFrame &frame)
 {
 
-
-
     QByteArray packedFrame;
     transformCanPackage(frame, packedFrame);
 
@@ -1249,5 +1461,37 @@ uint16_t CanHandler::calculateCRC16(QByteArray data, CRC16Type crc16Type)
     return crc ^ final;
 }
 
+void CanHandler::sendAlarmNotActivePackage(uint8_t type, uint16_t id){
 
+    QByteArray bytesType;
+    bytesType.resize(1);
+
+    bytesType[0] = static_cast<char>(type);
+
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(id & 0xFF));
+    bytes[1] =  static_cast<char>((id >> 8) & 0xFF);
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x14FFA100);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=bytesType[0];
+    payload[1]=bytes[0];
+    payload[2]=bytes[1];
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+
+}
 

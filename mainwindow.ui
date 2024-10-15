@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>800</height>
+    <height>1000</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -148,7 +148,7 @@
       </rect>
      </property>
      <property name="maximum">
-      <number>4000</number>
+      <number>40000</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -205,7 +205,7 @@
       <number>-1000</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -362,6 +362,27 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
+    <zorder>label_2</zorder>
+    <zorder>rpmPortSlider</zorder>
+    <zorder>label</zorder>
+    <zorder>rpmStarboardSlider</zorder>
+    <zorder>label_3</zorder>
+    <zorder>sendingStatus</zorder>
+    <zorder>voltagePort</zorder>
+    <zorder>label_4</zorder>
+    <zorder>label_5</zorder>
+    <zorder>currentPort</zorder>
+    <zorder>rpmStarboardVoltage</zorder>
+    <zorder>label_6</zorder>
+    <zorder>CurrentStarboardSlider</zorder>
+    <zorder>label_7</zorder>
+    <zorder>line</zorder>
+    <zorder>line_2</zorder>
+    <zorder>label_8</zorder>
+    <zorder>pushButton_2</zorder>
+    <zorder>stbStatus</zorder>
+    <zorder>line_10</zorder>
+    <zorder>pushButton</zorder>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
@@ -456,7 +477,7 @@
       <x>550</x>
       <y>0</y>
       <width>21</width>
-      <height>661</height>
+      <height>851</height>
      </rect>
     </property>
     <property name="orientation">
@@ -505,7 +526,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>100000</number>
+     <number>100000000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -589,7 +610,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>310</y>
+      <y>370</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -602,7 +623,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>280</y>
+      <y>340</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -615,7 +636,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>340</y>
+      <y>400</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -631,7 +652,7 @@
     <property name="geometry">
      <rect>
       <x>710</x>
-      <y>280</y>
+      <y>340</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -644,7 +665,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>310</y>
+      <y>370</y>
       <width>221</width>
       <height>31</height>
      </rect>
@@ -663,7 +684,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>470</y>
+      <y>510</y>
       <width>261</width>
       <height>20</height>
      </rect>
@@ -839,7 +860,7 @@
       <x>810</x>
       <y>0</y>
       <width>21</width>
-      <height>661</height>
+      <height>791</height>
      </rect>
     </property>
     <property name="orientation">
@@ -850,7 +871,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>260</y>
+      <y>320</y>
       <width>261</width>
       <height>20</height>
      </rect>
@@ -933,7 +954,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>420</y>
+      <y>480</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -949,7 +970,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>380</y>
+      <y>440</y>
       <width>261</width>
       <height>31</height>
      </rect>
@@ -968,7 +989,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>580</y>
+      <y>620</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -987,7 +1008,7 @@
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>490</y>
+      <y>530</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -1000,7 +1021,7 @@
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>520</y>
+      <y>560</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -1013,7 +1034,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>510</y>
+      <y>550</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -1032,7 +1053,7 @@
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>490</y>
+      <y>530</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -1045,7 +1066,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>540</y>
+      <y>580</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -1061,7 +1082,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>620</y>
+      <y>660</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -1080,7 +1101,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>650</y>
+      <y>690</y>
       <width>261</width>
       <height>20</height>
      </rect>
@@ -1251,7 +1272,7 @@
       <x>1080</x>
       <y>0</y>
       <width>21</width>
-      <height>661</height>
+      <height>681</height>
      </rect>
     </property>
     <property name="orientation">
@@ -1478,6 +1499,529 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_35">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>620</y>
+      <width>271</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>CURRENT</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="rpmStarboardSlider_2">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>540</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-2000</number>
+    </property>
+    <property name="maximum">
+     <number>2000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_36">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>490</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Charger status msg</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_12">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>490</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON/OFF</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_37">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>560</y>
+      <width>251</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>VOLTAGE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_38">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>510</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TEMP</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="rpmStarboardVoltage_2">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>590</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>10000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="CurrentStarboardSlider_2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>650</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-1000</number>
+    </property>
+    <property name="maximum">
+     <number>1000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="stbStatus_2">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>520</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Not sending</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_16">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>670</y>
+      <width>271</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_39">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>260</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TIME TO EMPTY</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="speedSlider_18">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>290</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>-32000</number>
+    </property>
+    <property name="maximum">
+     <number>32000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>570</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_40">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>580</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>t:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>610</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_41">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>620</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>i:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>650</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_42">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>660</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>n:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_43">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>700</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>d:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_4">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>690</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="Line" name="line_17">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>730</y>
+      <width>561</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_13">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>570</y>
+      <width>111</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND 
+PACKAGE</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_14">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>750</y>
+      <width>111</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND  NOT ACTIVE
+PACKAGE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_44">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>770</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>t:</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>760</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit_6">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>800</y>
+      <width>301</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_45">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>810</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>i:</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_18">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>840</y>
+      <width>561</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_15">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>710</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON/OFF</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_46">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>710</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Depth package</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="speedSlider_19">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>760</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>40000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PortBatInfoLabel_3">
+    <property name="geometry">
+     <rect>
+      <x>730</x>
+      <y>740</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Not sending</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_47">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>730</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>DEPTH</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_19">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>780</y>
+      <width>261</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_16">
+    <property name="geometry">
+     <rect>
+      <x>409</x>
+      <y>670</y>
+      <width>111</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND 45</string>
     </property>
    </widget>
   </widget>
