@@ -211,7 +211,7 @@ void MainWindow::on_pushButton_5_clicked()
     }else
     {
         areWeSendingPortMotorTemp = false;
-        ui -> PortMotorTempLabel -> setText("Not sending messages");
+        ui -> PortMotorTempLabel -> setText("Not sending");
         ui -> PortMotorTempLabel -> setStyleSheet("QLabel { background-color : red; }");
     }
 }
