@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_2 -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel_3 -> setText("Not sending");
     ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
+
+    ui -> radioButton -> setChecked(true);
 }
 
 MainWindow::~MainWindow()
@@ -557,5 +559,67 @@ void MainWindow::on_pushButton_16_clicked()
         // QThread::msleep(500); // Blocking delay
 
     }
+}
+
+
+void MainWindow::on_radioButton_clicked() //DCDC status OK pressed
+{
+
+    m_CanHandler -> setDCDCStatus(1);
+
+}
+
+
+void MainWindow::on_radioButton_3_clicked() //DCDC status WARNING pressed
+{
+
+    m_CanHandler -> setDCDCStatus(2);
+
+}
+
+
+void MainWindow::on_radioButton_2_clicked() //DCDC status FAULT pressed
+{
+
+    m_CanHandler -> setDCDCStatus(3);
+
+}
+
+
+void MainWindow::on_speedSlider_20_sliderMoved(int position)
+{
+
+    m_CanHandler -> setDCDCVoltage(static_cast<uint16_t>(position));
+
+}
+
+
+void MainWindow::on_speedSlider_21_sliderMoved(int position)
+{
+
+    m_CanHandler -> setDCDCCurrent(static_cast<int16_t>(position));
+
+}
+
+
+void MainWindow::on_pushButton_17_clicked()
+{
+
+    m_CanHandler -> toggleSendingDCDCMessage();
+
+    if(areWeSendingDCDCData){
+        areWeSendingDCDCData = false;
+        ui -> PortBatInfoLabel_4 -> setText("Not sending");
+        ui -> PortBatInfoLabel_4 -> setStyleSheet("QLabel { background-color: red; }");
+        // ui -> PortBatInfoLabel_3 -> setText("Not sending");
+        // ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingDCDCData = true;
+        ui -> PortBatInfoLabel_4 -> setText("Sending messages");
+        ui -> PortBatInfoLabel_4 -> setStyleSheet("QLabel { background-color: green; }");
+        // ui -> PortBatInfoLabel_3 -> setText("Sending messages");
+        // ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
 }
 

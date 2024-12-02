@@ -110,7 +110,20 @@ private slots:
 
     void on_pushButton_16_clicked();
 
+    void on_radioButton_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_2_clicked();
+
+    void on_speedSlider_20_sliderMoved(int position);
+
+    void on_speedSlider_21_sliderMoved(int position);
+
+    void on_pushButton_17_clicked();
+
 private:
+    bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};
     bool areWeSendingChargerInfo{false};
     bool areWeSendingCellVoltage{false};

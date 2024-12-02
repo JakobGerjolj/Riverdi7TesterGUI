@@ -134,6 +134,17 @@ CanHandler::CanHandler(QObject *parent)
     m_Depth[2] = 0x00;
     m_Depth[3] = 0x00;
 
+    m_DCDCStatus.resize(1);
+    m_DCDCStatus[0] = 0x01;
+
+    m_DCDCVoltage.resize(2);
+    m_DCDCVoltage[0] = 0x00;
+    m_DCDCVoltage[1] = 0x00;
+
+    m_DCDCCurrent.resize(2);
+    m_DCDCCurrent[0] = 0x00;
+    m_DCDCCurrent[1] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);
@@ -181,6 +192,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer12 = new QTimer(this);
     connect(timer12, &QTimer::timeout, this, &CanHandler::sendDepthPositionPackage);
     timer12->start(500);
+
+    QTimer *timer13 = new QTimer(this);
+    connect(timer13, &QTimer::timeout, this, &CanHandler::sendDCDCInfoPackage);
+    timer13 -> start(500);
 
 }
 
@@ -1015,6 +1030,14 @@ void CanHandler::toggleSendingTripMessage()
 
 }
 
+void CanHandler::toggleSendingDCDCMessage()
+{
+
+    if(areWeSendingDCDCInfo){
+        areWeSendingDCDCInfo = false;
+    }else areWeSendingDCDCInfo = true;
+
+}
 
 void CanHandler::setStbRPM(uint16_t rpm)
 {
@@ -1495,3 +1518,72 @@ void CanHandler::sendAlarmNotActivePackage(uint8_t type, uint16_t id){
 
 }
 
+void CanHandler::sendDCDCInfoPackage(){
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF961A);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_DCDCStatus[0];
+    payload[2]=m_DCDCVoltage[0];
+    payload[3]=m_DCDCVoltage[1];
+    payload[4]=m_DCDCCurrent[0];
+    payload[5]=m_DCDCCurrent[1];
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingDCDCInfo){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
+void CanHandler::setDCDCStatus(int status){
+
+    switch(status){
+
+    case 1:
+        m_DCDCStatus[0] = 0x01;
+        break;
+
+    case 2:
+        m_DCDCStatus[0] = 0x02;
+        break;
+
+    case 3:
+        m_DCDCStatus[0] = 0x03;
+        break;
+
+    default:
+        m_DCDCStatus[0] = 0x01;
+        break;
+
+    }
+
+}
+
+void CanHandler::setDCDCVoltage(uint16_t value){
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>(value & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+
+    m_DCDCVoltage = bytes;
+
+}
+
+void CanHandler::setDCDCCurrent(int16_t value){
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+    m_DCDCCurrent = bytes;
+
+}

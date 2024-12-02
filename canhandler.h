@@ -48,6 +48,8 @@ public:
 
     void toggleSendingTripMessage();
 
+    void toggleSendingDCDCMessage();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -83,6 +85,9 @@ public:
 
     void setDepth(uint32_t);
 
+    void setDCDCStatus(int status);
+    void setDCDCVoltage(uint16_t value);
+    void setDCDCCurrent(int16_t value);
 
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
@@ -115,6 +120,7 @@ private:
 
 
     //End testing
+    bool areWeSendingDCDCInfo{false};
     bool areWeSendingChargerInfo{false};
     bool areWeSendingCellVoltage{false};
     bool areWeSendingPosition{false};
@@ -144,6 +150,7 @@ private:
     void sendBatInfoPackage();
     void sendPositionPackage();
     void sendDepthPositionPackage();
+    void sendDCDCInfoPackage();
 
 
     QByteArray m_PortRPMbytes;
@@ -184,6 +191,10 @@ private:
     QByteArray m_ChargerCurrent;
 
     QByteArray m_Depth;
+
+    QByteArray m_DCDCStatus;
+    QByteArray m_DCDCVoltage;
+    QByteArray m_DCDCCurrent;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};
