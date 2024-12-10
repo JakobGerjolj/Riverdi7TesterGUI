@@ -46,6 +46,11 @@ void MainWindow::on_voltagePort_sliderMoved(int position)
 
     m_CanHandler -> setPortVoltage(position);
 
+
+
+    int power = (position/10) * ((ui -> currentPort -> value()) / 10);
+    ui -> calculatedPower -> setText(QString::number(power));
+
 }
 
 
@@ -59,6 +64,12 @@ void MainWindow::on_currentPort_sliderMoved(int position)
     qDebug()<<"After cast: "<<temp;
     qDebug()<<"Number written in hex after casting to int16_t: "<<QString::asprintf("%x", temp & 0xffff);
     qDebug()<<"Number before casting in hex: "<<QString::asprintf("%x", position & 0xffff);
+
+
+    int power = (position/10) * ((ui -> voltagePort -> value()) / 10);
+    ui -> calculatedPower -> setText(QString::number(power));
+
+
 }
 
 
