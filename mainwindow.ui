@@ -400,6 +400,44 @@
       <string>X</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_52">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>520</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>POWER: </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="calculatedPowerStb">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>520</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
     <zorder>label_2</zorder>
     <zorder>rpmPortSlider</zorder>
     <zorder>label</zorder>
@@ -423,6 +461,8 @@
     <zorder>pushButton</zorder>
     <zorder>label_51</zorder>
     <zorder>calculatedPower</zorder>
+    <zorder>label_52</zorder>
+    <zorder>calculatedPowerStb</zorder>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">

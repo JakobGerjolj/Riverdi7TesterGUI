@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_2 -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel_3 -> setText("Not sending");
     ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
+    ui -> PortBatInfoLabel_4 -> setText("Not sending");
+    ui -> PortBatInfoLabel_4 -> setStyleSheet("QLabel { background-color: red; }");
 
     ui -> radioButton -> setChecked(true);
 }
@@ -106,6 +108,9 @@ void MainWindow::on_rpmStarboardVoltage_sliderMoved(int position)
 
     m_CanHandler -> setStbVoltage(position);
 
+    int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    ui -> calculatedPowerStb -> setText(QString::number(power));
+
 }
 
 
@@ -113,6 +118,9 @@ void MainWindow::on_CurrentStarboardSlider_sliderMoved(int position)
 {
 
     m_CanHandler -> setStbCurrent(static_cast<int16_t>(position));
+
+    int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    ui -> calculatedPowerStb -> setText(QString::number(power));
 
 }
 

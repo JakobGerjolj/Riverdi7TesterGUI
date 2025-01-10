@@ -690,14 +690,14 @@ void CanHandler::sendBatInfoPackage()
     frame.setFrameId(0x15F40300);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0xff;
-    payload[1]=0xff;
+    payload[0]=0x00; //Instance has to be 0
+    payload[1]=0x00;
     payload[2]=m_BatVoltage[0];
     payload[3]=m_BatVoltage[1];
     payload[4]=m_BatCurrent[0];
     payload[5]=m_BatCurrent[1];
-    payload[6]=0xff;
-    payload[7]=0xff;
+    payload[6]=0x00;
+    payload[7]=0x00;
     frame.setPayload(payload);
 
     if(areWeSendingBatInfo){
@@ -711,12 +711,13 @@ void CanHandler::sendPositionPackage()
 {
 
     QCanBusFrame frame1;
-    frame1.setFrameId(0x0DF80500);
+    frame1.setFrameId(0x0DF80500); //Where did we get 0D prio from, maybe riverdi should just check PGNs
+    //frame1.setFrameId(0x19F805FE);
     QByteArray payload1;
     payload1.resize(8);
 
     payload1[0] = (uint8_t)(tripPackageCounter5 | 0x00);
-    payload1[1] = 0x0e;
+    payload1[1] = 0x00;
     payload1[2] = 0x00;
     payload1[3] = 0x26;
     payload1[4] = 0x4e;
@@ -727,6 +728,7 @@ void CanHandler::sendPositionPackage()
 
     QCanBusFrame frame2;
     frame2.setFrameId(0x0DF80500);
+    //frame2.setFrameId(0x19F805FE);
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter5 | 0x01);
@@ -741,6 +743,7 @@ void CanHandler::sendPositionPackage()
 
     QCanBusFrame frame3;
     frame3.setFrameId(0x0DF80500);
+    //frame3.setFrameId(0x19F805FE);
     QByteArray payload3;
     payload3.resize(8);
     payload3[0] = (uint8_t)(tripPackageCounter5 | 0x02);
@@ -755,6 +758,7 @@ void CanHandler::sendPositionPackage()
 
     QCanBusFrame frame4;
     frame4.setFrameId(0x0DF80500);
+    //frame4.setFrameId(0x19F805FE);
     QByteArray payload4;
     payload4.resize(8);
     payload4[0] = (uint8_t)(tripPackageCounter5 | 0x03);
@@ -769,6 +773,7 @@ void CanHandler::sendPositionPackage()
 
     QCanBusFrame frame5;
     frame5.setFrameId(0x0DF80500);
+    //frame5.setFrameId(0x19F805FE);
     QByteArray payload5;
     payload5.resize(8);
     payload5[0] = (uint8_t)(tripPackageCounter5 | 0x04);
@@ -776,13 +781,14 @@ void CanHandler::sendPositionPackage()
     payload5[2] = 0x00;
     payload5[3] = 0x00;
     payload5[4] = 0x00;
-    payload5[5] = 0x00;
-    payload5[6] = 0x00;
+    payload5[5] = 0x01; //GNSS fix
+    payload5[6] = 0x7f;
     payload5[7] = 0x00;
     frame5.setPayload(payload5);
 
     QCanBusFrame frame6;
     frame6.setFrameId(0x0DF80500);
+    //frame6.setFrameId(0x19F805FE);
     QByteArray payload6;
     payload6.resize(8);
     payload6[0] = (uint8_t)(tripPackageCounter5 | 0x05);
@@ -797,6 +803,7 @@ void CanHandler::sendPositionPackage()
 
     QCanBusFrame frame7;
     frame7.setFrameId(0x0DF80500);
+    //frame7.setFrameId(0x19F805FE);
     QByteArray payload7;
     payload7.resize(8);
     payload7[0] = (uint8_t)(tripPackageCounter5 | 0x06);
@@ -809,6 +816,21 @@ void CanHandler::sendPositionPackage()
     payload7[7] = 0x00;
     frame7.setPayload(payload7);
 
+    QCanBusFrame frame8;
+    frame8.setFrameId(0x0DF80500);
+    //frame8.setFrameId(0x19F805FE);
+    QByteArray payload8;
+    payload8.resize(8);
+    payload8[0] = (uint8_t)(tripPackageCounter5 | 0x07);
+    payload8[1] = 0x00;
+    payload8[2] = 0x00;
+    payload8[3] = 0x00;
+    payload8[4] = 0x00;
+    payload8[5] = 0x00;
+    payload8[6] = 0x00;
+    payload8[7] = 0x00;
+    frame8.setPayload(payload8);
+
     //Here we might have to add another package so that it is 7 like in the standard pdf and just not detect the last on stm
 
     if(areWeSendingPosition){
@@ -819,6 +841,7 @@ void CanHandler::sendPositionPackage()
         canDevice -> writeFrame(frame5);
         canDevice -> writeFrame(frame6);
         canDevice -> writeFrame(frame7);
+        //canDevice -> writeFrame(frame8);
 
         sendToCL2000(frame1);
         sendToCL2000(frame2);
@@ -827,6 +850,7 @@ void CanHandler::sendPositionPackage()
         sendToCL2000(frame5);
         sendToCL2000(frame6);
         sendToCL2000(frame7);
+        //sendToCL2000(frame8);
         if(tripPackageCounter5 != 192){
             tripPackageCounter5+=0x20; //but we want it in hex 0x00 0x20 0x40 0x60 0x80 ..
         }else{
