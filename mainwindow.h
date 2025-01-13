@@ -122,6 +122,12 @@ private slots:
 
     void on_pushButton_17_clicked();
 
+    void on_pushButton_18_clicked();
+
+    void on_radioButton_4_clicked();
+
+    void on_radioButton_5_clicked();
+
 private:
     bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};
@@ -136,6 +142,7 @@ private:
     bool areWeSendingTripMsg{false};
     bool areWeSendingPortMotorTemp{false};
     bool areWeSendingStbMotorTemp{false};
+    bool areWeSendingVCU{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };

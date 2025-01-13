@@ -145,6 +145,9 @@ CanHandler::CanHandler(QObject *parent)
     m_DCDCCurrent[0] = 0x00;
     m_DCDCCurrent[1] = 0x00;
 
+    m_VCUStatus.resize(1);
+    m_VCUStatus[0] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);
@@ -196,6 +199,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer13 = new QTimer(this);
     connect(timer13, &QTimer::timeout, this, &CanHandler::sendDCDCInfoPackage);
     timer13 -> start(500);
+
+    QTimer *timer14 = new QTimer(this);
+    connect(timer14, &QTimer::timeout, this, &CanHandler::sendVCUPackage);
+    timer14 -> start(1000);
 
 }
 
@@ -1063,6 +1070,15 @@ void CanHandler::toggleSendingDCDCMessage()
 
 }
 
+void CanHandler::toggleSendingVCUMessage()
+{
+
+    if(areWeSendingVCUMsg){
+        areWeSendingVCUMsg = false;
+    }else areWeSendingVCUMsg = true;
+
+}
+
 void CanHandler::setStbRPM(uint16_t rpm)
 {
 
@@ -1567,6 +1583,33 @@ void CanHandler::sendDCDCInfoPackage(){
 
 }
 
+void CanHandler::sendVCUPackage()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9A27);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_VCUStatus[0];
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingVCUMsg){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+
+}
+
 void CanHandler::setDCDCStatus(int status){
 
     switch(status){
@@ -1609,5 +1652,12 @@ void CanHandler::setDCDCCurrent(int16_t value){
     bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
     bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
     m_DCDCCurrent = bytes;
+
+}
+
+void CanHandler::setVCUStatus(int status)
+{
+
+    m_VCUStatus[0] = status;
 
 }

@@ -50,6 +50,8 @@ public:
 
     void toggleSendingDCDCMessage();
 
+    void toggleSendingVCUMessage();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -88,6 +90,8 @@ public:
     void setDCDCStatus(int status);
     void setDCDCVoltage(uint16_t value);
     void setDCDCCurrent(int16_t value);
+
+    void setVCUStatus(int status);
 
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
@@ -132,6 +136,7 @@ private:
     bool areWeSendingStbMsg{false};
     bool areWeSendingPortMsg{false};
     bool areWeSendingSpeedMsg{false};
+    bool areWeSendingVCUMsg{false};
     void startCAN();
     void readAndProcessCANpodatke();
     QCanBusDevice *canDevice;
@@ -151,6 +156,7 @@ private:
     void sendPositionPackage();
     void sendDepthPositionPackage();
     void sendDCDCInfoPackage();
+    void sendVCUPackage();
 
 
     QByteArray m_PortRPMbytes;
@@ -195,6 +201,8 @@ private:
     QByteArray m_DCDCStatus;
     QByteArray m_DCDCVoltage;
     QByteArray m_DCDCCurrent;
+
+    QByteArray m_VCUStatus;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

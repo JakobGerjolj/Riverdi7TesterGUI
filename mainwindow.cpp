@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
     ui -> PortBatInfoLabel_4 -> setText("Not sending");
     ui -> PortBatInfoLabel_4 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> PortBatInfoLabel_5 -> setText("Not sending");
+    ui -> PortBatInfoLabel_5 -> setStyleSheet("QLabel { background-color: red; }");
 
     ui -> radioButton -> setChecked(true);
 }
@@ -639,6 +641,44 @@ void MainWindow::on_pushButton_17_clicked()
         // ui -> PortBatInfoLabel_3 -> setText("Sending messages");
         // ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : green; }");
     }
+
+}
+
+
+void MainWindow::on_pushButton_18_clicked()
+{
+
+    m_CanHandler -> toggleSendingVCUMessage();
+
+    if(areWeSendingVCU){
+        areWeSendingVCU = false;
+        ui -> PortBatInfoLabel_5 -> setText("Not sending");
+        ui -> PortBatInfoLabel_5 -> setStyleSheet("QLabel { background-color: red; }");
+        // ui -> PortBatInfoLabel_3 -> setText("Not sending");
+        // ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : red; }");
+    }else{
+        areWeSendingVCU = true;
+        ui -> PortBatInfoLabel_5 -> setText("Sending messages");
+        ui -> PortBatInfoLabel_5 -> setStyleSheet("QLabel { background-color: green; }");
+        // ui -> PortBatInfoLabel_3 -> setText("Sending messages");
+        // ui -> PortBatInfoLabel_3 -> setStyleSheet("QLabel { background-color : green; }");
+    }
+
+}
+
+
+void MainWindow::on_radioButton_4_clicked()
+{
+
+    m_CanHandler -> setVCUStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_5_clicked()
+{
+
+    m_CanHandler -> setVCUStatus(1);
 
 }
 
