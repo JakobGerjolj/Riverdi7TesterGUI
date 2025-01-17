@@ -148,6 +148,36 @@ CanHandler::CanHandler(QObject *parent)
     m_VCUStatus.resize(1);
     m_VCUStatus[0] = 0x00;
 
+    m_ChargerInputVoltageL1.resize(2);
+    m_ChargerInputVoltageL1[0] = 0x00;
+    m_ChargerInputVoltageL1[1] = 0x00;
+
+    m_ChargerInputVoltageL2.resize(2);
+    m_ChargerInputVoltageL2[0] = 0x00;
+    m_ChargerInputVoltageL2[1] = 0x00;
+
+    m_ChargerInputVoltageL3.resize(2);
+    m_ChargerInputVoltageL3[0] = 0x00;
+    m_ChargerInputVoltageL3[1] = 0x00;
+
+    m_ChargerTemperature1.resize(1);
+    m_ChargerTemperature1[0] = 0x00;
+
+    m_ChargerInputCurrentL1.resize(2);
+    m_ChargerInputCurrentL1[0] = 0x00;
+    m_ChargerInputCurrentL1[1] = 0x00;
+
+    m_ChargerInputCurrentL2.resize(2);
+    m_ChargerInputCurrentL2[0] = 0x00;
+    m_ChargerInputCurrentL2[1] = 0x00;
+
+    m_ChargerInputCurrentL3.resize(2);
+    m_ChargerInputCurrentL3[0] = 0x00;
+    m_ChargerInputCurrentL3[1] = 0x00;
+
+    m_PortMotorStatus.resize(1);
+    m_PortMotorStatus[0] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);
@@ -203,6 +233,18 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer14 = new QTimer(this);
     connect(timer14, &QTimer::timeout, this, &CanHandler::sendVCUPackage);
     timer14 -> start(1000);
+
+    QTimer *timer15 = new QTimer(this);
+    connect(timer15, &QTimer::timeout, this, &CanHandler::sendChargerInfo2);
+    timer15 -> start(500);
+
+    QTimer *timer16 = new QTimer(this);
+    connect(timer16, &QTimer::timeout, this, &CanHandler::sendChargerInfo3);
+    timer16 -> start(500);
+
+    QTimer *timer17 = new QTimer(this);
+    connect(timer17, &QTimer::timeout, this, &CanHandler::sendPortMotorInfo);
+    timer17 -> start(500);
 
 }
 
@@ -1079,6 +1121,33 @@ void CanHandler::toggleSendingVCUMessage()
 
 }
 
+void CanHandler::toggleSendingCharger2Message()
+{
+
+    if(areWeSendingChargerMsg2){
+        areWeSendingChargerMsg2 = false;
+    }else areWeSendingChargerMsg2 = true;
+
+}
+
+void CanHandler::toggleSendingCharger3Message()
+{
+
+    if(areWeSendingChargerMsg3){
+        areWeSendingChargerMsg3 = false;
+    }else areWeSendingChargerMsg3 = true;
+
+}
+
+void CanHandler::toggleSendingPortMotorStatus()
+{
+
+    if(areWeSendingPortMotorStatus){
+        areWeSendingPortMotorStatus = false;
+    }else areWeSendingPortMotorStatus = true;
+
+}
+
 void CanHandler::setStbRPM(uint16_t rpm)
 {
 
@@ -1371,6 +1440,131 @@ void CanHandler::setChargerCurrent(int16_t value)
 
 }
 
+void CanHandler::setCharger2VoltageL1(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x10 && bytes[1] == 0x27){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputVoltageL1 = bytes;
+
+}
+
+void CanHandler::setCharger2VoltageL2(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x10 && bytes[1] == 0x27){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputVoltageL2 = bytes;
+
+}
+
+void CanHandler::setCharger2VoltageL3(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x10 && bytes[1] == 0x27){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputVoltageL3 = bytes;
+
+}
+
+void CanHandler::setCharger2Temperature1(uint8_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = static_cast<char>(value);
+
+    m_ChargerTemperature1 = bytes;
+
+}
+
+void CanHandler::setCharger3CurrentL1(int16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x40 && bytes[1] == 0x1F){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputCurrentL1 = bytes;
+
+}
+
+void CanHandler::setCharger3CurrentL2(int16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x40 && bytes[1] == 0x1F){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputCurrentL2 = bytes;
+
+}
+
+void CanHandler::setCharger3CurrentL3(int16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    if(bytes[0] == 0x40 && bytes[1] == 0x1F){
+
+        bytes[0] = 0xFF;
+        bytes[1] = 0xFF;
+
+    }
+
+    m_ChargerInputCurrentL3 = bytes;
+
+}
+
 void CanHandler::setDepth(uint32_t value)
 {
 
@@ -1607,6 +1801,84 @@ void CanHandler::sendVCUPackage()
 
     }
 
+
+}
+
+void CanHandler::sendChargerInfo2()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9249);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_ChargerInputVoltageL1[0];
+    payload[2]=m_ChargerInputVoltageL1[1];
+    payload[3]=m_ChargerInputVoltageL2[0];
+    payload[4]=m_ChargerInputVoltageL2[1];
+    payload[5]=m_ChargerInputVoltageL3[0];
+    payload[6]=m_ChargerInputVoltageL3[1];
+    payload[7]=m_ChargerTemperature1[0];
+    frame.setPayload(payload);
+
+    if(areWeSendingChargerMsg2){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
+void CanHandler::sendChargerInfo3()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9349);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_ChargerInputCurrentL1[0];
+    payload[2]=m_ChargerInputCurrentL1[1];
+    payload[3]=m_ChargerInputCurrentL2[0];
+    payload[4]=m_ChargerInputCurrentL2[1];
+    payload[5]=m_ChargerInputCurrentL3[0];
+    payload[6]=m_ChargerInputCurrentL3[1];
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingChargerMsg3){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
+void CanHandler::sendPortMotorInfo()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9700);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=m_PortMotorStatus[0];
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingChargerMsg3){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
 
 }
 

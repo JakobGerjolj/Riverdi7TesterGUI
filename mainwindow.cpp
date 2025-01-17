@@ -25,6 +25,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> PortBatInfoLabel_4 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> PortBatInfoLabel_5 -> setText("Not sending");
     ui -> PortBatInfoLabel_5 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_3 -> setText("Not sending");
+    ui -> stbStatus_3 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_4 -> setText("Not sending");
+    ui -> stbStatus_4 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_5 -> setText("Not sending");
+    ui -> stbStatus_5 -> setStyleSheet("QLabel { background-color: red; }");
 
     ui -> radioButton -> setChecked(true);
 }
@@ -670,7 +676,7 @@ void MainWindow::on_pushButton_18_clicked()
 void MainWindow::on_radioButton_4_clicked()
 {
 
-    m_CanHandler -> setVCUStatus(0);
+    m_CanHandler -> setVCUStatus(1);
 
 }
 
@@ -678,7 +684,124 @@ void MainWindow::on_radioButton_4_clicked()
 void MainWindow::on_radioButton_5_clicked()
 {
 
-    m_CanHandler -> setVCUStatus(1);
+    m_CanHandler -> setVCUStatus(0);
+
+}
+
+
+void MainWindow::on_pushButton_19_clicked()
+{
+
+    m_CanHandler -> toggleSendingCharger2Message();
+
+    if(areWeSendingChargerInfo2){
+        areWeSendingChargerInfo2 = false;
+        ui -> stbStatus_3 -> setText("Not sending");
+        ui -> stbStatus_3 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingChargerInfo2 = true;
+        ui -> stbStatus_3 -> setText("Sending messages");
+        ui -> stbStatus_3 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+}
+
+
+void MainWindow::on_rpmStarboardSlider_3_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger2VoltageL1((uint16_t)position);
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_3_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger2VoltageL2((uint16_t)position);
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_3_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger2VoltageL3((uint16_t)position);
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_4_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger2Temperature1((uint8_t)position);
+
+}
+
+
+void MainWindow::on_pushButton_20_clicked()
+{
+
+    m_CanHandler -> toggleSendingCharger3Message();
+
+    if(areWeSendingChargerInfo3){
+        areWeSendingChargerInfo3 = false;
+        ui -> stbStatus_4 -> setText("Not sending");
+        ui -> stbStatus_4 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingChargerInfo3 = true;
+        ui -> stbStatus_4 -> setText("Sending messages");
+        ui -> stbStatus_4 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+}
+
+
+void MainWindow::on_rpmStarboardSlider_4_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger3CurrentL1((int16_t)position);
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_4_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger3CurrentL2((int16_t)position);
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_5_sliderMoved(int position)
+{
+
+    m_CanHandler -> setCharger3CurrentL3((int16_t)position);
+
+}
+
+
+void MainWindow::on_pushButton_21_clicked()
+{
+
+    m_CanHandler -> toggleSendingPortMotorStatus();
+
+    if(areWeSendingPortMotorInfo){
+        areWeSendingPortMotorInfo = false;
+        ui -> stbStatus_5 -> setText("Not sending");
+        ui -> stbStatus_5 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingPortMotorInfo = true;
+        ui -> stbStatus_5 -> setText("Sending messages");
+        ui -> stbStatus_5 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
 
 }
 

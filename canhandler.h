@@ -52,6 +52,12 @@ public:
 
     void toggleSendingVCUMessage();
 
+    void toggleSendingCharger2Message();
+
+    void toggleSendingCharger3Message();
+
+    void toggleSendingPortMotorStatus();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -84,6 +90,15 @@ public:
     void setChargerTemp(int16_t value);
     void setChargerVoltage(uint16_t value);
     void setChargerCurrent(int16_t);
+
+    void setCharger2VoltageL1(uint16_t value);
+    void setCharger2VoltageL2(uint16_t value);
+    void setCharger2VoltageL3(uint16_t value);
+    void setCharger2Temperature1(uint8_t value);
+
+    void setCharger3CurrentL1(int16_t value);
+    void setCharger3CurrentL2(int16_t value);
+    void setCharger3CurrentL3(int16_t value);
 
     void setDepth(uint32_t);
 
@@ -137,6 +152,10 @@ private:
     bool areWeSendingPortMsg{false};
     bool areWeSendingSpeedMsg{false};
     bool areWeSendingVCUMsg{false};
+    bool areWeSendingChargerMsg2{false};
+    bool areWeSendingChargerMsg3{false};
+    bool areWeSendingPortMotorStatus{false};
+
     void startCAN();
     void readAndProcessCANpodatke();
     QCanBusDevice *canDevice;
@@ -157,7 +176,9 @@ private:
     void sendDepthPositionPackage();
     void sendDCDCInfoPackage();
     void sendVCUPackage();
-
+    void sendChargerInfo2();
+    void sendChargerInfo3();
+    void sendPortMotorInfo();
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -203,6 +224,17 @@ private:
     QByteArray m_DCDCCurrent;
 
     QByteArray m_VCUStatus;
+
+    QByteArray m_PortMotorStatus;
+
+    QByteArray m_ChargerInputVoltageL1;
+    QByteArray m_ChargerInputVoltageL2;
+    QByteArray m_ChargerInputVoltageL3;
+    QByteArray m_ChargerTemperature1;
+
+    QByteArray m_ChargerInputCurrentL1;
+    QByteArray m_ChargerInputCurrentL2;
+    QByteArray m_ChargerInputCurrentL3;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

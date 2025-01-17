@@ -128,6 +128,24 @@ private slots:
 
     void on_radioButton_5_clicked();
 
+    void on_pushButton_19_clicked();
+
+    void on_rpmStarboardSlider_3_sliderMoved(int position);
+
+    void on_rpmStarboardVoltage_3_sliderMoved(int position);
+
+    void on_CurrentStarboardSlider_3_sliderMoved(int position);
+
+    void on_CurrentStarboardSlider_4_sliderMoved(int position);
+
+    void on_pushButton_20_clicked();
+
+    void on_rpmStarboardSlider_4_sliderMoved(int position);
+
+    void on_rpmStarboardVoltage_4_sliderMoved(int position);
+
+    void on_CurrentStarboardSlider_5_sliderMoved(int position);
+
 private:
     bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};
@@ -143,6 +161,9 @@ private:
     bool areWeSendingPortMotorTemp{false};
     bool areWeSendingStbMotorTemp{false};
     bool areWeSendingVCU{false};
+    bool areWeSendingChargerInfo2{false};
+    bool areWeSendingChargerInfo3{false};
+    bool areWeSendingPortMotorInfo{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };
