@@ -86,10 +86,12 @@ public:
 
     void setHiVoltage(uint16_t value);
     void setLoVoltage(uint16_t value);
+    void setBMSStatus(uint8_t value);
 
     void setChargerTemp(int16_t value);
     void setChargerVoltage(uint16_t value);
     void setChargerCurrent(int16_t);
+    void setChargerStatus(uint8_t status);
 
     void setCharger2VoltageL1(uint16_t value);
     void setCharger2VoltageL2(uint16_t value);
@@ -106,10 +108,14 @@ public:
     void setDCDCVoltage(uint16_t value);
     void setDCDCCurrent(int16_t value);
 
+    void setMotorStatus(int status);
+
     void setVCUStatus(int status);
 
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
+
+
 
 
     //Testing CL2000
@@ -212,10 +218,12 @@ private:
 
     QByteArray m_HiCellVoltage;
     QByteArray m_LoCellVoltage;
+    QByteArray m_BMSStatus;
 
     QByteArray m_ChargerTemp;
     QByteArray m_ChargerVoltage;
     QByteArray m_ChargerCurrent;
+    QByteArray m_ChargerStatus;
 
     QByteArray m_Depth;
 

@@ -112,6 +112,9 @@ CanHandler::CanHandler(QObject *parent)
     m_LoCellVoltage[0] = 0x00;
     m_LoCellVoltage[1] = 0x00;
 
+    m_BMSStatus.resize(1);
+    m_BMSStatus[0] = 0x00;
+
     m_ChargerTemp.resize(2);
     m_ChargerTemp[0] = 0x00;
     m_ChargerTemp[1] = 0x00;
@@ -123,6 +126,9 @@ CanHandler::CanHandler(QObject *parent)
     m_ChargerCurrent.resize(2);
     m_ChargerCurrent[0] = 0x00;
     m_ChargerCurrent[1] = 0x00;
+
+    m_ChargerStatus.resize(1);
+    m_ChargerStatus[0] = 0x00;
 
     m_TimeToFull.resize(2);
     m_TimeToFull[0] = 0x00;
@@ -398,13 +404,13 @@ void CanHandler::sendChargerInfo()
     frame.setFrameId(0x18FF9149);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x00;
-    payload[1]=m_ChargerTemp[0];
-    payload[2]=m_ChargerTemp[1];
-    payload[3]=m_ChargerVoltage[0];
-    payload[4]=m_ChargerVoltage[1];
-    payload[5]=m_ChargerCurrent[0];
-    payload[6]=m_ChargerCurrent[1];
+    payload[0]=0x00; //node id
+    payload[1]=m_ChargerStatus[0]; //here we set status of Charger
+    payload[2]=m_ChargerVoltage[0];
+    payload[3]=m_ChargerVoltage[1];
+    payload[4]=m_ChargerCurrent[0];
+    payload[5]=m_ChargerCurrent[1];
+    payload[6]=0x00;
     payload[7]=0x00;
     frame.setPayload(payload);
 
@@ -419,7 +425,7 @@ void CanHandler::sendCellVoltage()
 {
 
     QCanBusFrame frame;
-    frame.setFrameId(0x18FF92F3);
+    frame.setFrameId(0x18FF95F3);
     QByteArray payload;
     payload.resize(8);
     payload[0]=0x00;
@@ -427,7 +433,7 @@ void CanHandler::sendCellVoltage()
     payload[2]=m_HiCellVoltage[1];
     payload[3]=m_LoCellVoltage[0];
     payload[4]=m_LoCellVoltage[1];
-    payload[5]=0x00;
+    payload[5]=m_BMSStatus[0]; //This is going to be status
     payload[6]=0x00;
     payload[7]=0x00;
     frame.setPayload(payload);
@@ -1404,6 +1410,17 @@ void CanHandler::setLoVoltage(uint16_t value)
 
 }
 
+void CanHandler::setBMSStatus(uint8_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = static_cast<char>(value);
+
+    m_BMSStatus = bytes;
+
+}
+
 void CanHandler::setChargerTemp(int16_t value)
 {
 
@@ -1437,6 +1454,17 @@ void CanHandler::setChargerCurrent(int16_t value)
     bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
 
     m_ChargerCurrent = bytes;
+
+}
+
+void CanHandler::setChargerStatus(uint8_t status)
+{
+
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = static_cast<char>(status);
+
+    m_ChargerStatus = bytes;
 
 }
 
@@ -1873,7 +1901,7 @@ void CanHandler::sendPortMotorInfo()
     payload[7]=0x00;
     frame.setPayload(payload);
 
-    if(areWeSendingChargerMsg3){
+    if(areWeSendingPortMotorStatus){
 
         canDevice -> writeFrame(frame);
         sendToCL2000(frame);
@@ -1924,6 +1952,17 @@ void CanHandler::setDCDCCurrent(int16_t value){
     bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
     bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
     m_DCDCCurrent = bytes;
+
+}
+
+void CanHandler::setMotorStatus(int status)
+{
+
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = static_cast<char>(status);
+
+    m_PortMotorStatus = bytes;
 
 }
 

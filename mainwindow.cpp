@@ -592,7 +592,7 @@ void MainWindow::on_pushButton_16_clicked()
 void MainWindow::on_radioButton_clicked() //DCDC status OK pressed
 {
 
-    m_CanHandler -> setDCDCStatus(1);
+    m_CanHandler -> setDCDCStatus(0);
 
 }
 
@@ -802,6 +802,114 @@ void MainWindow::on_pushButton_21_clicked()
 
     }
 
+
+}
+
+
+void MainWindow::on_radioButton_6_clicked()
+{
+
+    m_CanHandler -> setMotorStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_7_clicked()
+{
+
+    m_CanHandler -> setMotorStatus(1);
+
+}
+
+
+void MainWindow::on_radioButton_8_clicked()
+{
+
+    m_CanHandler -> setMotorStatus(2);
+
+}
+
+
+void MainWindow::on_radioButton_9_clicked()
+{
+
+    m_CanHandler -> setMotorStatus(3);
+
+}
+
+
+void MainWindow::on_radioButton_10_clicked()
+{
+
+    m_CanHandler -> setDCDCStatus(1);
+
+}
+
+
+void MainWindow::on_radioButton_15_clicked()
+{
+
+    m_CanHandler -> setBMSStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_16_clicked()
+{
+
+    m_CanHandler -> setBMSStatus(1);
+
+}
+
+
+void MainWindow::on_radioButton_17_clicked()
+{
+
+    m_CanHandler -> setBMSStatus(2);
+
+}
+
+
+void MainWindow::on_radioButton_18_clicked()
+{
+
+    m_CanHandler -> setBMSStatus(3);
+
+}
+
+
+void MainWindow::on_radioButton_11_clicked()
+{
+
+    m_CanHandler -> setChargerStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_12_clicked()
+{
+
+    m_CanHandler -> setChargerStatus(1);
+
+}
+
+
+
+
+void MainWindow::on_radioButton_13_clicked()
+{
+
+    m_CanHandler -> setChargerStatus(2);
+
+}
+
+
+
+
+void MainWindow::on_radioButton_14_clicked()
+{
+
+    m_CanHandler -> setChargerStatus(3);
 
 }
 
