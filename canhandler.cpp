@@ -141,7 +141,7 @@ CanHandler::CanHandler(QObject *parent)
     m_Depth[3] = 0x00;
 
     m_DCDCStatus.resize(1);
-    m_DCDCStatus[0] = 0x01;
+    m_DCDCStatus[0] = 0x00;
 
     m_DCDCVoltage.resize(2);
     m_DCDCVoltage[0] = 0x00;
@@ -1912,25 +1912,12 @@ void CanHandler::sendPortMotorInfo()
 
 void CanHandler::setDCDCStatus(int status){
 
-    switch(status){
+    QByteArray bytes;
+    bytes.resize(1);
+    bytes[0] = (uint8_t)status;
 
-    case 1:
-        m_DCDCStatus[0] = 0x01;
-        break;
+    m_DCDCStatus = bytes;
 
-    case 2:
-        m_DCDCStatus[0] = 0x02;
-        break;
-
-    case 3:
-        m_DCDCStatus[0] = 0x03;
-        break;
-
-    default:
-        m_DCDCStatus[0] = 0x01;
-        break;
-
-    }
 
 }
 
