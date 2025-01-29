@@ -174,6 +174,22 @@ private slots:
 
     void on_radioButton_14_clicked();
 
+    void on_pushButton_22_clicked();
+
+    void on_pushButton_23_clicked();
+
+    void on_speedSlider_22_sliderMoved(int position);
+
+    void on_pushButton_24_clicked();
+
+    void on_speedSlider_23_sliderMoved(int position);
+
+    void on_pushButton_25_clicked();
+
+    void on_pushButton_26_clicked();
+
+    void on_pushButton_27_clicked();
+
 private:
     bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};

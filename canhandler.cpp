@@ -1780,6 +1780,144 @@ void CanHandler::sendAlarmNotActivePackage(uint8_t type, uint16_t id){
 
 }
 
+void CanHandler::sendMotorDirectionLeft()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x02;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x01;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendMotorDirectionRight()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x02;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x02;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendMotorContinousRPM(uint16_t rpm)
+{
+
+    uint8_t highByte = (rpm >> 8) & 0xFF;
+    uint8_t lowByte = rpm & 0xFF;
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x03;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=lowByte;
+    payload[7]=highByte;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendMotorPeakRPM(uint16_t rpm)
+{
+
+    uint8_t highByte = (rpm >> 8) & 0xFF;
+    uint8_t lowByte = rpm & 0xFF;
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x04;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=lowByte;
+    payload[7]=highByte;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendLeverNFCEnabled()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x03;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x01;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendLeverNFCDisabled()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=0x03;
+    payload[2]=0x02;
+    payload[3]=0x03;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
 void CanHandler::sendDCDCInfoPackage(){
 
     QCanBusFrame frame;

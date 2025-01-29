@@ -115,6 +115,16 @@ public:
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
 
+    void sendMotorDirectionLeft();
+    void sendMotorDirectionRight();
+
+    void sendMotorContinousRPM(uint16_t rpm);
+    void sendMotorPeakRPM(uint16_t rpm);
+
+    void sendLeverNFCEnabled();
+    void sendLeverNFCDisabled();
+
+
 
 
 

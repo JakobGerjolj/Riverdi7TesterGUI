@@ -31,6 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_4 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> stbStatus_5 -> setText("Not sending");
     ui -> stbStatus_5 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> label_67 -> setText(QString::number(0) + " RPM");
+    ui -> label_68 -> setText(QString::number(0) + " RPM");
 
     ui -> radioButton -> setChecked(true);
 }
@@ -910,6 +912,67 @@ void MainWindow::on_radioButton_14_clicked()
 {
 
     m_CanHandler -> setChargerStatus(3);
+
+}
+
+
+void MainWindow::on_pushButton_22_clicked()
+{
+
+    m_CanHandler -> sendMotorDirectionLeft();
+
+}
+
+void MainWindow::on_pushButton_23_clicked()
+{
+
+    m_CanHandler -> sendMotorDirectionRight();
+
+}
+
+
+void MainWindow::on_speedSlider_22_sliderMoved(int position)
+{
+
+    ui -> label_67 -> setText(QString::number(position) + " RPM");
+
+}
+
+
+void MainWindow::on_pushButton_24_clicked()
+{
+
+    m_CanHandler -> sendMotorContinousRPM(ui -> speedSlider_22 -> value());
+
+}
+
+
+void MainWindow::on_speedSlider_23_sliderMoved(int position)
+{
+
+    ui -> label_68 -> setText(QString::number(position) + " RPM");
+
+}
+
+
+void MainWindow::on_pushButton_25_clicked()
+{
+
+    m_CanHandler -> sendMotorPeakRPM(ui -> speedSlider_23 -> value());
+
+}
+
+void MainWindow::on_pushButton_26_clicked() //Disabled NFC lock button
+{
+
+    m_CanHandler -> sendLeverNFCDisabled();
+
+}
+
+void MainWindow::on_pushButton_27_clicked() //Enabled NFC unlock button
+{
+
+    m_CanHandler -> sendLeverNFCEnabled();
 
 }
 
