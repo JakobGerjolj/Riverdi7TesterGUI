@@ -190,6 +190,10 @@ private slots:
 
     void on_pushButton_27_clicked();
 
+    void on_pushButton_28_clicked();
+
+    void on_pushButton_29_clicked();
+
 private:
     bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};

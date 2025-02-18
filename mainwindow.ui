@@ -506,7 +506,7 @@
      </rect>
     </property>
     <property name="maximum">
-     <number>5000</number>
+     <number>10000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -3222,7 +3222,7 @@ PACKAGE</string>
       <x>1620</x>
       <y>0</y>
       <width>21</width>
-      <height>461</height>
+      <height>611</height>
      </rect>
     </property>
     <property name="orientation">
@@ -3286,6 +3286,84 @@ PACKAGE</string>
      <rect>
       <x>1360</x>
       <y>450</y>
+      <width>271</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_71">
+    <property name="geometry">
+     <rect>
+      <x>1390</x>
+      <y>470</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Send VCU response</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_72">
+    <property name="geometry">
+     <rect>
+      <x>1390</x>
+      <y>540</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Send ECU response</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_28">
+    <property name="geometry">
+     <rect>
+      <x>1400</x>
+      <y>500</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_29">
+    <property name="geometry">
+     <rect>
+      <x>1400</x>
+      <y>570</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_31">
+    <property name="geometry">
+     <rect>
+      <x>1360</x>
+      <y>520</y>
+      <width>271</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_32">
+    <property name="geometry">
+     <rect>
+      <x>1360</x>
+      <y>600</y>
       <width>271</width>
       <height>20</height>
      </rect>

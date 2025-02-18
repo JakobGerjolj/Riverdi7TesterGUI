@@ -124,6 +124,9 @@ public:
     void sendLeverNFCEnabled();
     void sendLeverNFCDisabled();
 
+    void sendVCUResponse();
+    void sendECUResponse();
+
 
 
 

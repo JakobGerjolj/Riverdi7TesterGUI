@@ -483,13 +483,13 @@ void MainWindow::on_pushButton_13_clicked()
 
     m_CanHandler -> sendAlarmPackage(byteArray);
 
-    int tempNumber = ui -> textEdit_2 -> toPlainText().toInt();
+    //int tempNumber = ui -> textEdit_2 -> toPlainText().toInt();
 
-    tempNumber++;
+    //tempNumber++;
 
-    ui -> textEdit_2 -> setText(QString::number(tempNumber));
+    //ui -> textEdit_2 -> setText(QString::number(tempNumber));
 
-    ui -> textEdit_3 -> setText("BMS" + QString::number(tempNumber));
+    //ui -> textEdit_3 -> setText("BMS" + QString::number(tempNumber));
 
 
 
@@ -973,6 +973,22 @@ void MainWindow::on_pushButton_27_clicked() //Enabled NFC unlock button
 {
 
     m_CanHandler -> sendLeverNFCEnabled();
+
+}
+
+
+void MainWindow::on_pushButton_28_clicked()
+{
+
+    m_CanHandler -> sendVCUResponse();
+
+}
+
+
+void MainWindow::on_pushButton_29_clicked()
+{
+
+    m_CanHandler -> sendECUResponse();
 
 }
 

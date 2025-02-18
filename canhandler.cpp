@@ -772,13 +772,13 @@ void CanHandler::sendPositionPackage()
     payload1.resize(8);
 
     payload1[0] = (uint8_t)(tripPackageCounter5 | 0x00);
-    payload1[1] = 0x00;
+    payload1[1] = 0x00;//How many bytes we are sending
     payload1[2] = 0x00;
-    payload1[3] = 0x26;
-    payload1[4] = 0x4e;
-    payload1[5] = 0x00;
-    payload1[6] = 0xc2;
-    payload1[7] = 0xeb;
+    payload1[3] = 0x26;//Date low byte
+    payload1[4] = 0x4e;//Date high byte
+    payload1[5] = 0x00;//Position time byte1
+    payload1[6] = 0xc2;//Position time byte2
+    payload1[7] = 0xeb;//Position time byte3
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
@@ -787,7 +787,7 @@ void CanHandler::sendPositionPackage()
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter5 | 0x01);
-    payload2[1] = 0x0b;
+    payload2[1] = 0x0b;//Position time byte4
     payload2[2] = m_Lat[0];
     payload2[3] = m_Lat[1];
     payload2[4] = m_Lat[2];
@@ -1918,10 +1918,55 @@ void CanHandler::sendLeverNFCDisabled()
 
 }
 
+void CanHandler::sendVCUResponse()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9BD0);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x20;
+    payload[1]=0x03;
+    payload[2]=0x00; //DRV byte 0
+    payload[3]=0x00; //DRV byte 1
+    payload[4]=0x00; //DRV byte 2
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendECUResponse()
+{
+
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9BD0);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=0x03;
+    payload[2]=0x00; //DRV byte 0
+    payload[3]=0x00; //DRV byte 1
+    payload[4]=0x00; //DRV byte 2
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
 void CanHandler::sendDCDCInfoPackage(){
 
     QCanBusFrame frame;
-    frame.setFrameId(0x18FF961A);
+    frame.setFrameId(0x18FF96D0);
     QByteArray payload;
     payload.resize(8);
     payload[0]=0x00;
