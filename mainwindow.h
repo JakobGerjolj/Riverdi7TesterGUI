@@ -194,7 +194,135 @@ private slots:
 
     void on_pushButton_29_clicked();
 
+    void moveAllSliders();
+
+    void on_pushButton_30_clicked();
+
+    void on_pushButton_31_clicked();
+
+    void on_rpmPortSlider_valueChanged(int value);
+
+    void on_voltagePort_valueChanged(int value);
+
+    void on_currentPort_valueChanged(int value);
+
+    void on_rpmStarboardSlider_valueChanged(int value);
+
+    void on_rpmStarboardVoltage_valueChanged(int value);
+
+    void on_CurrentStarboardSlider_valueChanged(int value);
+
+    void on_speedSlider_valueChanged(int value);
+
+    void on_speedSlider_2_valueChanged(int value);
+
+    void on_speedSlider_3_windowIconTextChanged(const QString &iconText);
+
+    void on_speedSlider_3_valueChanged(int value);
+
+    void on_speedSlider_5_valueChanged(int value);
+
+    void on_speedSlider_8_valueChanged(int value);
+
+    void on_speedSlider_6_valueChanged(int value);
+
+    void on_speedSlider_12_valueChanged(int value);
+
+    void on_speedSlider_7_valueChanged(int value);
+
+    void on_speedSlider_18_valueChanged(int value);
+
+    void on_speedSlider_4_valueChanged(int value);
+
+    void on_speedSlider_9_valueChanged(int value);
+
+    void on_speedSlider_10_valueChanged(int value);
+
+    void on_speedSlider_11_valueChanged(int value);
+
+    void on_speedSlider_19_valueChanged(int value);
+
+    void on_speedSlider_13_valueChanged(int value);
+
+    void on_speedSlider_14_valueChanged(int value);
+
+    void on_speedSlider_15_sliderMoved(int position);
+
+    void on_speedSlider_16_valueChanged(int value);
+
+    void on_speedSlider_17_valueChanged(int value);
+
+    void on_rpmStarboardVoltage_2_valueChanged(int value);
+
+    void on_CurrentStarboardSlider_2_valueChanged(int value);
+
+    void on_rpmStarboardSlider_3_valueChanged(int value);
+
+    void on_rpmStarboardVoltage_3_valueChanged(int value);
+
+    void on_CurrentStarboardSlider_3_valueChanged(int value);
+
+    void on_CurrentStarboardSlider_4_valueChanged(int value);
+
+    void on_rpmStarboardSlider_4_valueChanged(int value);
+
+    void on_rpmStarboardVoltage_4_valueChanged(int value);
+
+    void on_CurrentStarboardSlider_5_valueChanged(int value);
+
+    void on_speedSlider_20_valueChanged(int value);
+
+    void on_speedSlider_21_valueChanged(int value);
+
+    void on_pushButton_32_clicked();
+
+    void on_pushButton_33_clicked();
+
+    void on_radioButton_19_clicked();
+
+    void on_radioButton_21_clicked();
+
+    void on_radioButton_20_clicked();
+
+    void on_radioButton_22_clicked();
+
+    void on_radioButton_23_clicked();
+
+    void on_pushButton_34_clicked();
+
+    void on_radioButton_24_clicked();
+
+    void on_radioButton_25_clicked();
+
+    void on_pushButton_35_clicked();
+
+    void on_radioButton_26_clicked();
+
+    void on_radioButton_27_clicked();
+
+    void on_checkBox_3_stateChanged(int arg1);
+
+    void on_checkBox_4_stateChanged(int arg1);
+
+    void on_checkBox_5_stateChanged(int arg1);
+
+    void on_checkBox_6_stateChanged(int arg1);
+
+    void on_checkBox_7_stateChanged(int arg1);
+
+    void on_checkBox_8_stateChanged(int arg1);
+
+    void on_checkBox_4_clicked();
+
+    void on_checkBox_9_stateChanged(int arg1);
+
+    void on_checkBox_10_stateChanged(int arg1);
+
 private:
+    int sliderMover{0};
+
+    QTimer *timer;
+
     bool areWeSendingDCDCData{false};
     bool areWeSendingDepthData{false};
     bool areWeSendingChargerInfo{false};
@@ -212,6 +340,8 @@ private:
     bool areWeSendingChargerInfo2{false};
     bool areWeSendingChargerInfo3{false};
     bool areWeSendingPortMotorInfo{false};
+    bool areWeSendingThrottle1Status{false};
+    bool areWeSendingThrottle2Status{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };

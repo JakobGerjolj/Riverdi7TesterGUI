@@ -31,10 +31,19 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_4 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> stbStatus_5 -> setText("Not sending");
     ui -> stbStatus_5 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_6 -> setText("Not sending");
+    ui -> stbStatus_6 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_7 -> setText("Not sending");
+    ui -> stbStatus_7 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
 
     ui -> radioButton -> setChecked(true);
+
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::moveAllSliders);
+    //timer -> start();
+
 }
 
 MainWindow::~MainWindow()
@@ -46,7 +55,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_rpmPortSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setPortRPM(position);
+    //m_CanHandler -> setPortRPM(position);
 
 }
 
@@ -56,12 +65,12 @@ void MainWindow::on_rpmPortSlider_sliderMoved(int position)
 void MainWindow::on_voltagePort_sliderMoved(int position)
 {
 
-    m_CanHandler -> setPortVoltage(position);
+    // m_CanHandler -> setPortVoltage(position);
 
 
 
-    int power = (position/10) * ((ui -> currentPort -> value()) / 10);
-    ui -> calculatedPower -> setText(QString::number(power));
+    // int power = (position/10) * ((ui -> currentPort -> value()) / 10);
+    // ui -> calculatedPower -> setText(QString::number(power));
 
 }
 
@@ -69,17 +78,17 @@ void MainWindow::on_voltagePort_sliderMoved(int position)
 void MainWindow::on_currentPort_sliderMoved(int position)
 {
 
-    qDebug()<<"Raw from slider: "<<position;
-    int16_t temp = static_cast<int16_t>(position);
-    m_CanHandler -> setPortCurrent(temp);
+    // qDebug()<<"Raw from slider: "<<position;
+    // int16_t temp = static_cast<int16_t>(position);
+    // m_CanHandler -> setPortCurrent(temp);
 
-    qDebug()<<"After cast: "<<temp;
-    qDebug()<<"Number written in hex after casting to int16_t: "<<QString::asprintf("%x", temp & 0xffff);
-    qDebug()<<"Number before casting in hex: "<<QString::asprintf("%x", position & 0xffff);
+    // qDebug()<<"After cast: "<<temp;
+    // qDebug()<<"Number written in hex after casting to int16_t: "<<QString::asprintf("%x", temp & 0xffff);
+    // qDebug()<<"Number before casting in hex: "<<QString::asprintf("%x", position & 0xffff);
 
 
-    int power = (position/10) * ((ui -> voltagePort -> value()) / 10);
-    ui -> calculatedPower -> setText(QString::number(power));
+    // int power = (position/10) * ((ui -> voltagePort -> value()) / 10);
+    // ui -> calculatedPower -> setText(QString::number(power));
 
 
 }
@@ -108,7 +117,7 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_rpmStarboardSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbRPM(position);
+    // m_CanHandler -> setStbRPM(position);
 
 }
 
@@ -116,10 +125,10 @@ void MainWindow::on_rpmStarboardSlider_sliderMoved(int position)
 void MainWindow::on_rpmStarboardVoltage_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbVoltage(position);
+    // m_CanHandler -> setStbVoltage(position);
 
-    int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
-    ui -> calculatedPowerStb -> setText(QString::number(power));
+    // int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    // ui -> calculatedPowerStb -> setText(QString::number(power));
 
 }
 
@@ -127,10 +136,10 @@ void MainWindow::on_rpmStarboardVoltage_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbCurrent(static_cast<int16_t>(position));
+    // m_CanHandler -> setStbCurrent(static_cast<int16_t>(position));
 
-    int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
-    ui -> calculatedPowerStb -> setText(QString::number(power));
+    // int power = (position/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    // ui -> calculatedPowerStb -> setText(QString::number(power));
 
 }
 
@@ -156,7 +165,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_speedSlider_sliderMoved(int position)
 {
 
-    m_CanHandler -> setSpeed(position);
+    // m_CanHandler -> setSpeed(position);
 
 }
 
@@ -183,7 +192,7 @@ void MainWindow::on_speedSlider_2_sliderMoved(int position)
 {
 
 
-    m_CanHandler -> setDistToEmpty(position);
+    // m_CanHandler -> setDistToEmpty(position);
 
 }
 
@@ -210,7 +219,7 @@ void MainWindow::on_pushButton_4_clicked()
 void MainWindow::on_speedSlider_3_sliderMoved(int position)
 {
 
-    m_CanHandler -> setTimeToEmpty(position);
+    // m_CanHandler -> setTimeToEmpty(position);
 
 }
 
@@ -218,7 +227,7 @@ void MainWindow::on_speedSlider_3_sliderMoved(int position)
 void MainWindow::on_speedSlider_5_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbMotorTemp(position);
+    // m_CanHandler -> setStbMotorTemp(position);
 
 }
 
@@ -226,7 +235,7 @@ void MainWindow::on_speedSlider_5_sliderMoved(int position)
 void MainWindow::on_speedSlider_4_sliderMoved(int position)
 {
 
-    m_CanHandler -> setPortMotorTemp(position);
+    // m_CanHandler -> setPortMotorTemp(position);
 
 }
 
@@ -267,7 +276,7 @@ void MainWindow::on_pushButton_6_clicked()
 void MainWindow::on_speedSlider_6_sliderMoved(int position)
 {
 
-    m_CanHandler -> setHiCellTemp(position);
+    // m_CanHandler -> setHiCellTemp(position);
 
 }
 
@@ -294,7 +303,7 @@ void MainWindow::on_pushButton_7_clicked()
 void MainWindow::on_speedSlider_7_sliderMoved(int position)
 {
 
-    m_CanHandler -> setSOC(position);
+    // m_CanHandler -> setSOC(position);
 
 }
 
@@ -302,21 +311,21 @@ void MainWindow::on_speedSlider_7_sliderMoved(int position)
 void MainWindow::on_speedSlider_8_sliderMoved(int position)
 {
 
-    m_CanHandler -> setStbInverterTemp(position);
+    // m_CanHandler -> setStbInverterTemp(position);
 
 }
 
 
 void MainWindow::on_speedSlider_9_sliderMoved(int position)
 {
-    m_CanHandler -> setPortInverterTemp(position);
+    // m_CanHandler -> setPortInverterTemp(position);
 }
 
 
 void MainWindow::on_speedSlider_10_sliderMoved(int position)
 {
 
-    m_CanHandler -> setBatVoltage(position);
+    // m_CanHandler -> setBatVoltage(position);
 
 }
 
@@ -340,31 +349,31 @@ void MainWindow::on_pushButton_8_clicked()
 
 void MainWindow::on_speedSlider_11_sliderMoved(int position)
 {
-    m_CanHandler -> setBatCurrent((int16_t)position);
+    // m_CanHandler -> setBatCurrent((int16_t)position);
 }
 
 
 void MainWindow::on_speedSlider_12_sliderMoved(int position)
 {
-    m_CanHandler -> setLoCellTemp(position);
+    // m_CanHandler -> setLoCellTemp(position);
 }
 
 
 void MainWindow::on_speedSlider_13_sliderMoved(int position)
 {
 
-    int64_t fullValue = static_cast<int64_t>(position*10e11);
+    // int64_t fullValue = static_cast<int64_t>(position*10e11);
 
-    m_CanHandler -> setLat(fullValue);
+    // m_CanHandler -> setLat(fullValue);
 
 }
 
 
 void MainWindow::on_speedSlider_14_sliderMoved(int position)
 {
-    int64_t fullValue = static_cast<int64_t>(position*10e11);
+    // int64_t fullValue = static_cast<int64_t>(position*10e11);
 
-    m_CanHandler -> setLon(fullValue);
+    // m_CanHandler -> setLon(fullValue);
 }
 
 
@@ -389,7 +398,7 @@ void MainWindow::on_pushButton_9_clicked()
 void MainWindow::on_speedSlider_16_sliderMoved(int position)
 {
 
-    m_CanHandler -> setHiVoltage(position);
+    // m_CanHandler -> setHiVoltage(position);
 
 }
 
@@ -397,7 +406,7 @@ void MainWindow::on_speedSlider_16_sliderMoved(int position)
 void MainWindow::on_speedSlider_17_sliderMoved(int position)
 {
 
-    m_CanHandler -> setLoVoltage(position);
+    // m_CanHandler -> setLoVoltage(position);
 
 }
 
@@ -442,19 +451,19 @@ void MainWindow::on_pushButton_12_clicked()
 
 void MainWindow::on_rpmStarboardVoltage_2_sliderMoved(int position)
 {
-    m_CanHandler -> setChargerVoltage(position);
+    //m_CanHandler -> setChargerVoltage(position);
 }
 
 
 void MainWindow::on_CurrentStarboardSlider_2_sliderMoved(int position)
 {
-    m_CanHandler -> setChargerCurrent(position);
+    // m_CanHandler -> setChargerCurrent(position);
 }
 
 
 void MainWindow::on_speedSlider_18_sliderMoved(int position)
 {
-    m_CanHandler -> setTimeToFull((int16_t)position);
+    // m_CanHandler -> setTimeToFull((int16_t)position);
 }
 
 
@@ -483,13 +492,13 @@ void MainWindow::on_pushButton_13_clicked()
 
     m_CanHandler -> sendAlarmPackage(byteArray);
 
-    //int tempNumber = ui -> textEdit_2 -> toPlainText().toInt();
+    int tempNumber = ui -> textEdit_2 -> toPlainText().toInt();
 
-    //tempNumber++;
+    tempNumber++;
 
-    //ui -> textEdit_2 -> setText(QString::number(tempNumber));
+    ui -> textEdit_2 -> setText(QString::number(tempNumber));
 
-    //ui -> textEdit_3 -> setText("BMS" + QString::number(tempNumber));
+    ui -> textEdit_3 -> setText("BMS" + QString::number(tempNumber));
 
 
 
@@ -518,7 +527,7 @@ void MainWindow::on_pushButton_14_clicked()
 void MainWindow::on_speedSlider_19_sliderMoved(int position)
 {
 
-    m_CanHandler -> setDepth(static_cast<uint32_t>(position));
+    // m_CanHandler -> setDepth(static_cast<uint32_t>(position));
 
 }
 
@@ -618,7 +627,7 @@ void MainWindow::on_radioButton_2_clicked() //DCDC status FAULT pressed
 void MainWindow::on_speedSlider_20_sliderMoved(int position)
 {
 
-    m_CanHandler -> setDCDCVoltage(static_cast<uint16_t>(position));
+    // m_CanHandler -> setDCDCVoltage(static_cast<uint16_t>(position));
 
 }
 
@@ -626,7 +635,7 @@ void MainWindow::on_speedSlider_20_sliderMoved(int position)
 void MainWindow::on_speedSlider_21_sliderMoved(int position)
 {
 
-    m_CanHandler -> setDCDCCurrent(static_cast<int16_t>(position));
+    // m_CanHandler -> setDCDCCurrent(static_cast<int16_t>(position));
 
 }
 
@@ -686,7 +695,7 @@ void MainWindow::on_radioButton_4_clicked()
 void MainWindow::on_radioButton_5_clicked()
 {
 
-    m_CanHandler -> setVCUStatus(0);
+    m_CanHandler -> setVCUStatus(3);
 
 }
 
@@ -714,7 +723,7 @@ void MainWindow::on_pushButton_19_clicked()
 void MainWindow::on_rpmStarboardSlider_3_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger2VoltageL1((uint16_t)position);
+    // m_CanHandler -> setCharger2VoltageL1((uint16_t)position);
 
 }
 
@@ -722,7 +731,7 @@ void MainWindow::on_rpmStarboardSlider_3_sliderMoved(int position)
 void MainWindow::on_rpmStarboardVoltage_3_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger2VoltageL2((uint16_t)position);
+    // m_CanHandler -> setCharger2VoltageL2((uint16_t)position);
 
 }
 
@@ -730,7 +739,7 @@ void MainWindow::on_rpmStarboardVoltage_3_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_3_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger2VoltageL3((uint16_t)position);
+    // m_CanHandler -> setCharger2VoltageL3((uint16_t)position);
 
 }
 
@@ -738,7 +747,7 @@ void MainWindow::on_CurrentStarboardSlider_3_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_4_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger2Temperature1((uint8_t)position);
+    // m_CanHandler -> setCharger2Temperature1((uint8_t)position);
 
 }
 
@@ -766,7 +775,7 @@ void MainWindow::on_pushButton_20_clicked()
 void MainWindow::on_rpmStarboardSlider_4_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger3CurrentL1((int16_t)position);
+    // m_CanHandler -> setCharger3CurrentL1((int16_t)position);
 
 }
 
@@ -774,7 +783,7 @@ void MainWindow::on_rpmStarboardSlider_4_sliderMoved(int position)
 void MainWindow::on_rpmStarboardVoltage_4_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger3CurrentL2((int16_t)position);
+    // m_CanHandler -> setCharger3CurrentL2((int16_t)position);
 
 }
 
@@ -782,7 +791,7 @@ void MainWindow::on_rpmStarboardVoltage_4_sliderMoved(int position)
 void MainWindow::on_CurrentStarboardSlider_5_sliderMoved(int position)
 {
 
-    m_CanHandler -> setCharger3CurrentL3((int16_t)position);
+    // m_CanHandler -> setCharger3CurrentL3((int16_t)position);
 
 }
 
@@ -989,6 +998,609 @@ void MainWindow::on_pushButton_29_clicked()
 {
 
     m_CanHandler -> sendECUResponse();
+
+}
+
+void MainWindow::moveAllSliders()
+{
+
+    ui -> rpmPortSlider -> setValue(sliderMover*100);
+    ui -> voltagePort -> setValue(sliderMover*100);
+    ui -> currentPort -> setValue(sliderMover*10);
+    ui -> rpmStarboardSlider -> setValue(sliderMover*100);
+    ui -> rpmStarboardVoltage -> setValue(sliderMover*100);
+    ui -> CurrentStarboardSlider -> setValue(sliderMover*10);
+    ui -> speedSlider -> setValue(sliderMover*10);
+    ui -> speedSlider_2 -> setValue(sliderMover*10000);
+    ui -> speedSlider_3 -> setValue(sliderMover*10000);
+    ui -> speedSlider_5 -> setValue(sliderMover*100);
+    ui -> speedSlider_8 -> setValue(sliderMover*100);
+    ui -> speedSlider_6 -> setValue(sliderMover*100);
+    ui -> speedSlider_12 -> setValue(sliderMover*100);
+    ui -> speedSlider_7 -> setValue(sliderMover);
+    ui -> speedSlider_18 -> setValue(sliderMover*100);
+    ui -> speedSlider_4 -> setValue(sliderMover*100);
+    ui -> speedSlider_9 -> setValue(sliderMover*10);
+    ui -> speedSlider_10 -> setValue(sliderMover*10);
+    ui -> speedSlider_11 -> setValue(sliderMover*50);
+    ui -> speedSlider_19 -> setValue(sliderMover*1000);
+    ui -> speedSlider_13 -> setValue(sliderMover*1000);
+    ui -> speedSlider_14 -> setValue(sliderMover);
+    ui -> speedSlider_15 -> setValue(sliderMover*100);
+    ui -> speedSlider_16 -> setValue(sliderMover*100);
+    ui -> speedSlider_17 -> setValue(sliderMover*10);
+    ui -> rpmStarboardVoltage_2 -> setValue(sliderMover*10);
+    ui -> CurrentStarboardSlider_2 -> setValue(sliderMover*10);
+    ui -> rpmStarboardSlider_3 -> setValue(sliderMover*10);
+    ui -> rpmStarboardVoltage_3 -> setValue(sliderMover*10);
+    ui -> CurrentStarboardSlider_3 -> setValue(sliderMover*10);
+    ui -> CurrentStarboardSlider_4 -> setValue(sliderMover*10);
+    ui -> rpmStarboardSlider_4 -> setValue(sliderMover*10);
+    ui -> rpmStarboardVoltage_4 -> setValue(sliderMover);
+    ui -> CurrentStarboardSlider_5 -> setValue(sliderMover);
+    ui -> speedSlider_20 -> setValue(sliderMover*10);
+    ui -> speedSlider_21 -> setValue(sliderMover*10);
+
+    //QApplication::processEvents();
+
+    sliderMover++;
+
+}
+
+
+void MainWindow::on_pushButton_30_clicked()
+{
+
+    if(timer -> isActive()){
+
+        timer -> stop();
+
+    }else{
+
+        timer -> start(200);
+
+    }
+
+}
+
+
+void MainWindow::on_pushButton_31_clicked()
+{
+
+    ui -> rpmPortSlider -> setValue(0);
+    ui -> voltagePort -> setValue(0);
+    ui -> currentPort -> setValue(0);
+    ui -> rpmStarboardSlider -> setValue(0);
+    ui -> rpmStarboardVoltage -> setValue(0);
+    ui -> CurrentStarboardSlider -> setValue(0);
+    ui -> speedSlider -> setValue(0);
+    ui -> speedSlider_2 -> setValue(0);
+    ui -> speedSlider_3 -> setValue(0);
+    ui -> speedSlider_5 -> setValue(0);
+    ui -> speedSlider_8 -> setValue(0);
+    ui -> speedSlider_6 -> setValue(0);
+    ui -> speedSlider_12 -> setValue(0);
+    ui -> speedSlider_7 -> setValue(0);
+    ui -> speedSlider_18 -> setValue(0);
+    ui -> speedSlider_4 -> setValue(0);
+    ui -> speedSlider_9 -> setValue(0);
+    ui -> speedSlider_10 -> setValue(0);
+    ui -> speedSlider_11 -> setValue(0);
+    ui -> speedSlider_19 -> setValue(0);
+    ui -> speedSlider_13 -> setValue(0);
+    ui -> speedSlider_14 -> setValue(0);
+    ui -> speedSlider_15 -> setValue(0);
+    ui -> speedSlider_16 -> setValue(0);
+    ui -> speedSlider_17 -> setValue(0);
+    ui -> rpmStarboardVoltage_2 -> setValue(0);
+    ui -> CurrentStarboardSlider_2 -> setValue(0);
+    ui -> rpmStarboardSlider_3 -> setValue(0);
+    ui -> rpmStarboardVoltage_3 -> setValue(0);
+    ui -> CurrentStarboardSlider_3 -> setValue(0);
+    ui -> CurrentStarboardSlider_4 -> setValue(0);
+    ui -> rpmStarboardSlider_4 -> setValue(0);
+    ui -> rpmStarboardVoltage_4 -> setValue(0);
+    ui -> CurrentStarboardSlider_5 -> setValue(0);
+    ui -> speedSlider_20 -> setValue(0);
+    ui -> speedSlider_21 -> setValue(0);
+
+    sliderMover=0;
+
+
+}
+
+
+void MainWindow::on_rpmPortSlider_valueChanged(int value)
+{
+    m_CanHandler -> setPortRPM(value);
+}
+
+
+void MainWindow::on_voltagePort_valueChanged(int value)
+{
+    m_CanHandler -> setPortVoltage(value);
+
+
+
+    int power = (value/10) * ((ui -> currentPort -> value()) / 10);
+    ui -> calculatedPower -> setText(QString::number(power));
+}
+
+
+void MainWindow::on_currentPort_valueChanged(int value)
+{
+
+    qDebug()<<"Raw from slider: "<<value;
+    int16_t temp = static_cast<int16_t>(value);
+    m_CanHandler -> setPortCurrent(temp);
+
+    qDebug()<<"After cast: "<<temp;
+    qDebug()<<"Number written in hex after casting to int16_t: "<<QString::asprintf("%x", temp & 0xffff);
+    qDebug()<<"Number before casting in hex: "<<QString::asprintf("%x", value & 0xffff);
+
+
+    int power = (value/10) * ((ui -> voltagePort -> value()) / 10);
+    ui -> calculatedPower -> setText(QString::number(power));
+
+
+}
+
+
+void MainWindow::on_rpmStarboardSlider_valueChanged(int value)
+{
+
+    m_CanHandler -> setStbRPM(value);
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_valueChanged(int value)
+{
+
+    m_CanHandler -> setStbVoltage(value);
+
+    int power = (value/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    ui -> calculatedPowerStb -> setText(QString::number(power));
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_valueChanged(int value)
+{
+
+    m_CanHandler -> setStbCurrent(static_cast<int16_t>(value));
+
+    int power = (value/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    ui -> calculatedPowerStb -> setText(QString::number(power));
+
+}
+
+
+void MainWindow::on_speedSlider_valueChanged(int value)
+{
+    m_CanHandler -> setSpeed(value);
+}
+
+
+void MainWindow::on_speedSlider_2_valueChanged(int value)
+{
+
+    m_CanHandler -> setDistToEmpty(value);
+
+}
+
+
+void MainWindow::on_speedSlider_3_windowIconTextChanged(const QString &iconText)
+{
+
+}
+
+
+void MainWindow::on_speedSlider_3_valueChanged(int value)
+{
+
+    m_CanHandler -> setTimeToEmpty(value);
+
+}
+
+
+void MainWindow::on_speedSlider_5_valueChanged(int value)
+{
+
+    m_CanHandler -> setStbMotorTemp(value);
+
+}
+
+
+void MainWindow::on_speedSlider_8_valueChanged(int value)
+{
+
+    m_CanHandler -> setStbInverterTemp(value);
+
+}
+
+
+void MainWindow::on_speedSlider_6_valueChanged(int value)
+{
+    m_CanHandler -> setHiCellTemp(value);
+}
+
+
+void MainWindow::on_speedSlider_12_valueChanged(int value)
+{
+
+    m_CanHandler -> setLoCellTemp(value);
+
+}
+
+
+void MainWindow::on_speedSlider_7_valueChanged(int value)
+{
+
+    m_CanHandler -> setSOC(value);
+
+}
+
+
+void MainWindow::on_speedSlider_18_valueChanged(int value)
+{
+
+    m_CanHandler -> setTimeToFull((int16_t)value);
+
+}
+
+
+void MainWindow::on_speedSlider_4_valueChanged(int value)
+{
+
+    m_CanHandler -> setPortMotorTemp(value);
+
+}
+
+
+void MainWindow::on_speedSlider_9_valueChanged(int value)
+{
+
+    m_CanHandler -> setPortInverterTemp(value);
+
+}
+
+
+void MainWindow::on_speedSlider_10_valueChanged(int value)
+{
+
+    m_CanHandler -> setBatVoltage(value);
+
+}
+
+
+void MainWindow::on_speedSlider_11_valueChanged(int value)
+{
+
+    m_CanHandler -> setBatCurrent((int16_t)value);
+
+}
+
+
+void MainWindow::on_speedSlider_19_valueChanged(int value)
+{
+
+    m_CanHandler -> setDepth(static_cast<uint32_t>(value));
+
+}
+
+
+void MainWindow::on_speedSlider_13_valueChanged(int value)
+{
+
+    int64_t fullValue = static_cast<int64_t>(value*10e11);
+
+    m_CanHandler -> setLat(fullValue);
+
+}
+
+
+void MainWindow::on_speedSlider_14_valueChanged(int value)
+{
+
+    int64_t fullValue = static_cast<int64_t>(value*10e11);
+
+    m_CanHandler -> setLon(fullValue);
+
+}
+
+
+void MainWindow::on_speedSlider_15_sliderMoved(int position)
+{
+
+}
+
+
+void MainWindow::on_speedSlider_16_valueChanged(int value)
+{
+    m_CanHandler -> setHiVoltage(value);
+}
+
+
+void MainWindow::on_speedSlider_17_valueChanged(int value)
+{
+
+    m_CanHandler -> setLoVoltage(value);
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_2_valueChanged(int value)
+{
+    m_CanHandler -> setChargerVoltage(value);
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_2_valueChanged(int value)
+{
+
+    m_CanHandler -> setChargerCurrent(value);
+
+}
+
+
+void MainWindow::on_rpmStarboardSlider_3_valueChanged(int value)
+{
+
+    m_CanHandler -> setCharger2VoltageL1((uint16_t)value);
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_3_valueChanged(int value)
+{
+
+    m_CanHandler -> setCharger2VoltageL2((uint16_t)value);
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_3_valueChanged(int value)
+{
+    m_CanHandler -> setCharger2VoltageL3((uint16_t)value);
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_4_valueChanged(int value)
+{
+    m_CanHandler -> setCharger2Temperature1((uint8_t)value);
+}
+
+
+void MainWindow::on_rpmStarboardSlider_4_valueChanged(int value)
+{
+    m_CanHandler -> setCharger3CurrentL1((int16_t)value);
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_4_valueChanged(int value)
+{
+     m_CanHandler -> setCharger3CurrentL2((int16_t)value);
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_5_valueChanged(int value)
+{
+    m_CanHandler -> setCharger3CurrentL3((int16_t)value);
+}
+
+
+void MainWindow::on_speedSlider_20_valueChanged(int value)
+{
+    m_CanHandler -> setDCDCVoltage(static_cast<uint16_t>(value));
+}
+
+
+void MainWindow::on_speedSlider_21_valueChanged(int value)
+{
+    m_CanHandler -> setDCDCCurrent(static_cast<int16_t>(value));
+}
+
+
+void MainWindow::on_pushButton_32_clicked()
+{
+
+
+
+}
+
+
+void MainWindow::on_pushButton_33_clicked()//send trip button
+{
+
+    uint16_t time = ui -> textEdit_8 -> toPlainText().toInt();
+    uint16_t distance = (ui -> textEdit_9 -> toPlainText().toInt())*10;
+    uint16_t power = (ui -> textEdit_7 -> toPlainText().toInt())*10;
+    bool isSinceClear = ui -> checkBox -> isChecked();
+    bool isTotalClear = ui -> checkBox_2 -> isChecked();
+    m_CanHandler -> sendTripMessage(time, distance, power, isSinceClear, isTotalClear);
+
+}
+
+
+void MainWindow::on_radioButton_19_clicked()
+{
+
+    m_CanHandler -> setVCUStatus(5);
+
+}
+
+
+void MainWindow::on_radioButton_21_clicked()
+{
+
+    m_CanHandler -> setVCUDriveStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_20_clicked()
+{
+
+    m_CanHandler -> setVCUDriveStatus(1);
+
+}
+
+
+void MainWindow::on_radioButton_22_clicked()
+{
+
+    m_CanHandler -> setVCUStatus(0);
+
+}
+
+
+void MainWindow::on_radioButton_23_clicked()
+{
+    m_CanHandler -> setVCUStatus(2);
+}
+
+
+void MainWindow::on_pushButton_34_clicked()
+{
+
+    m_CanHandler -> toggleSendingThrottle1Status();
+
+    if(areWeSendingThrottle1Status){
+        areWeSendingThrottle1Status = false;
+        ui -> stbStatus_6 -> setText("Not sending");
+        ui -> stbStatus_6 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingThrottle1Status = true;
+        ui -> stbStatus_6 -> setText("Sending messages");
+        ui -> stbStatus_6 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+
+
+}
+
+
+void MainWindow::on_radioButton_24_clicked()
+{
+
+    m_CanHandler -> setThrottle1Status(1);
+
+}
+
+
+void MainWindow::on_radioButton_25_clicked()
+{
+
+    m_CanHandler -> setThrottle1Status(2);
+
+}
+
+
+void MainWindow::on_pushButton_35_clicked()
+{
+
+    m_CanHandler -> toggleSendingThrottle2Status();
+
+    if(areWeSendingThrottle2Status){
+        areWeSendingThrottle2Status = false;
+        ui -> stbStatus_7 -> setText("Not sending");
+        ui -> stbStatus_7 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingThrottle2Status = true;
+        ui -> stbStatus_7 -> setText("Sending messages");
+        ui -> stbStatus_7 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+}
+
+
+void MainWindow::on_radioButton_26_clicked()
+{
+
+    m_CanHandler -> setThrottle2Status(1);
+
+}
+
+
+void MainWindow::on_radioButton_27_clicked()
+{
+
+    m_CanHandler -> setThrottle2Status(2);
+
+}
+
+
+void MainWindow::on_checkBox_3_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setBatteryInternalPump(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_4_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setBatteryExternalPump(arg1);
+
+}
+
+void MainWindow::on_checkBox_5_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setCoolingValve(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_6_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setHeatingValve(arg1);
+
+}
+
+
+
+void MainWindow::on_checkBox_7_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setHeater(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_8_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setHeatExchange(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_4_clicked()
+{
+
+}
+
+
+void MainWindow::on_checkBox_9_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setMotorInternalPump(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_10_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setMotorExternalPump(arg1);
 
 }
 

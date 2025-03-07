@@ -13,6 +13,8 @@
 #include <QSerialPort>
 #include <cstdint>
 #include <QByteArray>
+#include "ecupumphandler.h"
+#include "pumphandler.h"
 
 class CanHandler : public QObject
 {
@@ -57,6 +59,10 @@ public:
     void toggleSendingCharger3Message();
 
     void toggleSendingPortMotorStatus();
+
+    void toggleSendingThrottle1Status();
+
+    void toggleSendingThrottle2Status();
 
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
@@ -111,6 +117,20 @@ public:
     void setMotorStatus(int status);
 
     void setVCUStatus(int status);
+    void setVCUDriveStatus(int status);
+
+    void setThrottle1Status(int status);
+    void setThrottle2Status(int status);
+
+    void setBatteryExternalPump(int set);
+    void setBatteryInternalPump(int set);
+    void setCoolingValve(int set);
+    void setHeatingValve(int set);
+    void setHeater(int set);
+    void setHeatExchange(int set);
+
+    void setMotorExternalPump(int set);
+    void setMotorInternalPump(int set);
 
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
@@ -127,6 +147,7 @@ public:
     void sendVCUResponse();
     void sendECUResponse();
 
+    void sendTripMessage(uint16_t time, uint16_t distance, uint16_t power, bool isResetSince, bool isResetTotal);
 
 
 
@@ -156,7 +177,8 @@ private:
 
     QSerialPort* port;
 
-
+    pumpHandler m_VCUPumpHandler;
+    ecuPumpHandler m_ECUPumpHandler;
     //End testing
     bool areWeSendingDCDCInfo{false};
     bool areWeSendingChargerInfo{false};
@@ -174,6 +196,8 @@ private:
     bool areWeSendingChargerMsg2{false};
     bool areWeSendingChargerMsg3{false};
     bool areWeSendingPortMotorStatus{false};
+    bool areWeSendingThrottle1Status{false};
+    bool areWeSendingThrottle2Status{false};
 
     void startCAN();
     void readAndProcessCANpodatke();
@@ -198,6 +222,8 @@ private:
     void sendChargerInfo2();
     void sendChargerInfo3();
     void sendPortMotorInfo();
+    void sendThrottle1Status();
+    void sendThrottle2Status();
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -245,6 +271,7 @@ private:
     QByteArray m_DCDCCurrent;
 
     QByteArray m_VCUStatus;
+    QByteArray m_VCUDriveStatus;
 
     QByteArray m_PortMotorStatus;
 
@@ -256,6 +283,9 @@ private:
     QByteArray m_ChargerInputCurrentL1;
     QByteArray m_ChargerInputCurrentL2;
     QByteArray m_ChargerInputCurrentL3;
+
+    QByteArray m_Throttle1Status;
+    QByteArray m_Throttle2Status;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

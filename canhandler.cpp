@@ -154,6 +154,9 @@ CanHandler::CanHandler(QObject *parent)
     m_VCUStatus.resize(1);
     m_VCUStatus[0] = 0x00;
 
+    m_VCUDriveStatus.resize(1);
+    m_VCUDriveStatus[0] = 0x00;
+
     m_ChargerInputVoltageL1.resize(2);
     m_ChargerInputVoltageL1[0] = 0x00;
     m_ChargerInputVoltageL1[1] = 0x00;
@@ -184,17 +187,23 @@ CanHandler::CanHandler(QObject *parent)
     m_PortMotorStatus.resize(1);
     m_PortMotorStatus[0] = 0x00;
 
+    m_Throttle1Status.resize(1);
+    m_Throttle1Status[0] = 0x00;
+
+    m_Throttle2Status.resize(1);
+    m_Throttle2Status[0] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
-    timer->start(500);
+    timer->start(500);//default: 500
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &CanHandler::sendStbRPMPackage);
-    timer2->start(500);
+    timer2->start(500);//default: 500
 
     QTimer *timer3 = new QTimer(this);
     connect(timer3, &QTimer::timeout, this, &CanHandler::sendSpeedPackage);
-    timer3->start(250); //Prob diffrent in normal conditions
+    timer3->start(250); //default: 250
 
     QTimer *timer4 = new QTimer(this);
     connect(timer4, &QTimer::timeout, this, &CanHandler::sendTripPackage);
@@ -251,6 +260,14 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer17 = new QTimer(this);
     connect(timer17, &QTimer::timeout, this, &CanHandler::sendPortMotorInfo);
     timer17 -> start(500);
+
+    QTimer *timer18 = new QTimer(this);
+    connect(timer18, &QTimer::timeout, this, &CanHandler::sendThrottle1Status);
+    timer18 -> start(500);
+
+    QTimer *timer19 = new QTimer(this);
+    connect(timer19, &QTimer::timeout, this, &CanHandler::sendThrottle2Status);
+    timer19 -> start(500);
 
 }
 
@@ -455,7 +472,7 @@ void CanHandler::sendHiCellPackage()
 
     payload1[0] = (uint8_t)(tripPackageCounter3 | 0x00);
     payload1[1] = 0x0f;
-    payload1[2] = 0x00;
+    payload1[2] = 0x41;
     payload1[3] = m_SOC[0];
     payload1[4] = m_TimeToFull[0];
     payload1[5] = m_TimeToFull[1];
@@ -927,6 +944,10 @@ void CanHandler::sendDepthPositionPackage()
     payload[2]=m_Depth[1];
     payload[3]=m_Depth[2];
     payload[4]=m_Depth[3];
+    // payload[1] = 0x11;
+    // payload[2] = 0x11;
+    // payload[3] = 0x00;
+    // payload[4] = 0x00;
     payload[5]=0xff;
     payload[6]=0xff;
     payload[7]=0xff;
@@ -1151,6 +1172,24 @@ void CanHandler::toggleSendingPortMotorStatus()
     if(areWeSendingPortMotorStatus){
         areWeSendingPortMotorStatus = false;
     }else areWeSendingPortMotorStatus = true;
+
+}
+
+void CanHandler::toggleSendingThrottle1Status()
+{
+
+    if(areWeSendingThrottle1Status){
+        areWeSendingThrottle1Status = false;
+    }else areWeSendingThrottle1Status = true;
+
+}
+
+void CanHandler::toggleSendingThrottle2Status()
+{
+
+    if(areWeSendingThrottle2Status){
+        areWeSendingThrottle2Status = false;
+    }else areWeSendingThrottle2Status = true;
 
 }
 
@@ -1787,7 +1826,7 @@ void CanHandler::sendMotorDirectionLeft()
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x30;
+    payload[0]=0x00;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x02;
@@ -1809,7 +1848,7 @@ void CanHandler::sendMotorDirectionRight()
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x30;
+    payload[0]=0x00;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x02;
@@ -1859,7 +1898,7 @@ void CanHandler::sendMotorPeakRPM(uint16_t rpm)
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x30;
+    payload[0]=0x00;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x04;
@@ -1921,15 +1960,18 @@ void CanHandler::sendLeverNFCDisabled()
 void CanHandler::sendVCUResponse()
 {
 
+    std::array<uint8_t, 3> bytesToSend;
+    bytesToSend = m_VCUPumpHandler.getArray();
+
     QCanBusFrame frame;
     frame.setFrameId(0x18FF9BD0);
     QByteArray payload;
     payload.resize(8);
     payload[0]=0x20;
     payload[1]=0x03;
-    payload[2]=0x00; //DRV byte 0
-    payload[3]=0x00; //DRV byte 1
-    payload[4]=0x00; //DRV byte 2
+    payload[2]=bytesToSend[0]; //DRV byte 0
+    payload[3]=bytesToSend[1]; //DRV byte 1
+    payload[4]=bytesToSend[2]; //DRV byte 2
     payload[5]=0x00;
     payload[6]=0x00;
     payload[7]=0x00;
@@ -1944,18 +1986,56 @@ void CanHandler::sendECUResponse()
 {
 
 
+    std::array<uint8_t, 3> tempECUArray = m_ECUPumpHandler.getArray();
+
     QCanBusFrame frame;
     frame.setFrameId(0x18FF9BD0);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x30;
+    payload[0]=0x00; //ECU is 0x00 now
     payload[1]=0x03;
-    payload[2]=0x00; //DRV byte 0
-    payload[3]=0x00; //DRV byte 1
-    payload[4]=0x00; //DRV byte 2
+    payload[2]=tempECUArray[0]; //DRV byte 0
+    payload[3]=tempECUArray[1]; //DRV byte 1
+    payload[4]=tempECUArray[2]; //DRV byte 2
     payload[5]=0x00;
     payload[6]=0x00;
     payload[7]=0x00;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendTripMessage(uint16_t time, uint16_t distance, uint16_t power, bool isResetSince, bool isResetTotal)
+{
+
+    uint8_t timeLowByte = time & 0xFF;
+    uint8_t timeHighByte = (time >> 8) & 0xFF;
+
+    uint8_t distanceLowByte = distance & 0xFF;
+    uint8_t distanceHighByte = (distance >> 8) & 0xFF;
+
+    uint8_t powerLowByte = power & 0xFF;
+    uint8_t powerHighByte = (power >> 8) & 0xFF;
+
+    uint8_t resetByte = 0x00;
+
+    if(isResetSince) resetByte += 0x01;
+    if(isResetTotal) resetByte += 0x02;
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF9018);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00; // node id
+    payload[1]=timeLowByte;
+    payload[2]=timeHighByte;
+    payload[3]=distanceLowByte;
+    payload[4]=distanceHighByte;
+    payload[5]=powerLowByte;
+    payload[6]=powerHighByte;
+    payload[7]=resetByte;
     frame.setPayload(payload);
 
     canDevice -> writeFrame(frame);
@@ -1997,7 +2077,7 @@ void CanHandler::sendVCUPackage()
     payload.resize(8);
     payload[0]=0x00;
     payload[1]=m_VCUStatus[0];
-    payload[2]=0x00;
+    payload[2]=m_VCUDriveStatus[0];
     payload[3]=0x00;
     payload[4]=0x00;
     payload[5]=0x00;
@@ -2093,6 +2173,58 @@ void CanHandler::sendPortMotorInfo()
 
 }
 
+void CanHandler::sendThrottle1Status()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF80FD);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x30;
+    payload[1]=m_Throttle1Status[0];
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingThrottle1Status){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
+void CanHandler::sendThrottle2Status()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18FF80FD);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x31;
+    payload[1]=m_Throttle2Status[0];
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingThrottle2Status){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
 void CanHandler::setDCDCStatus(int status){
 
     QByteArray bytes;
@@ -2140,5 +2272,159 @@ void CanHandler::setVCUStatus(int status)
 {
 
     m_VCUStatus[0] = status;
+
+}
+
+void CanHandler::setVCUDriveStatus(int status)
+{
+
+    m_VCUDriveStatus[0] = status;
+
+}
+
+void CanHandler::setThrottle1Status(int status)
+{
+
+    if(status == 1){//Unlocked inactive
+
+        m_Throttle1Status[0] = 0x01;
+
+    }else if(status == 2){//Unlocked active
+
+        m_Throttle1Status[0] = 0x03;
+
+    }
+
+}
+
+void CanHandler::setThrottle2Status(int status)
+{
+
+    if(status == 1){//Unlocked inactive
+
+        m_Throttle2Status[0] = 0x01;
+
+    }else if(status == 2){//Unlocked active
+
+        m_Throttle2Status[0] = 0x03;
+
+    }
+
+}
+
+void CanHandler::setBatteryExternalPump(int set)
+{
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnExternalPump();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffExternalPump();
+
+    }
+
+}
+
+void CanHandler::setBatteryInternalPump(int set)
+{
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnInternalPump();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffInternalPump();
+
+    }
+
+}
+
+void CanHandler::setCoolingValve(int set){
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnCoolingValve();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffCoolingValve();
+
+    }
+
+}
+
+void CanHandler::setHeatingValve(int set){
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnHeatingValve();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffHeatingValve();
+
+    }
+}
+
+void CanHandler::setHeater(int set)
+{
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnHeater();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffHeater();
+
+    }
+
+}
+
+void CanHandler::setHeatExchange(int set)
+{
+
+    if(set == 2){
+
+        m_VCUPumpHandler.turnOnHeatExchange();
+
+    }else if(set == 0){
+
+        m_VCUPumpHandler.turnOffHeatExchange();
+
+    }
+
+}
+
+void CanHandler::setMotorExternalPump(int set)
+{
+
+    if(set == 2){
+
+        m_ECUPumpHandler.turnOnExternalPump();
+
+    }else if(set == 0){
+
+        m_ECUPumpHandler.turnOffExternalPump();
+
+    }
+
+}
+
+void CanHandler::setMotorInternalPump(int set)
+{
+
+    if(set == 2){
+
+        m_ECUPumpHandler.turnOnInternalPump();
+
+    }else if(set == 0){
+
+        m_ECUPumpHandler.turnOffInternalPump();
+
+    }
 
 }
