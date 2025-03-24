@@ -1159,7 +1159,7 @@ void MainWindow::on_rpmStarboardVoltage_valueChanged(int value)
 
     m_CanHandler -> setStbVoltage(value);
 
-    int power = (value/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    int power = (value/10) * (ui -> CurrentStarboardSlider -> value() / 10);
     ui -> calculatedPowerStb -> setText(QString::number(power));
 
 }
@@ -1170,7 +1170,7 @@ void MainWindow::on_CurrentStarboardSlider_valueChanged(int value)
 
     m_CanHandler -> setStbCurrent(static_cast<int16_t>(value));
 
-    int power = (value/10) * ((ui -> CurrentStarboardSlider -> value()) / 10);
+    int power = (value/10) * (ui -> rpmStarboardVoltage -> value() / 10);
     ui -> calculatedPowerStb -> setText(QString::number(power));
 
 }
@@ -1601,6 +1601,36 @@ void MainWindow::on_checkBox_10_stateChanged(int arg1)
 {
 
     m_CanHandler -> setMotorExternalPump(arg1);
+
+}
+
+
+void MainWindow::on_pushButton_36_clicked()
+{
+
+    m_CanHandler -> sendVCUCommisionResponse();
+
+}
+
+
+void MainWindow::on_radioButton_28_clicked()
+{
+
+    m_CanHandler -> setVCUStatus(6);
+
+}
+
+
+void MainWindow::on_speedSlider_24_valueChanged(int value)
+{
+
+    m_CanHandler -> setPortCoolantTemp(value);//set m_PortMotorCoolantTemperature
+
+}
+
+
+void MainWindow::on_rpmStarboardVoltage_actionTriggered(int action)
+{
 
 }
 

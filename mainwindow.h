@@ -318,6 +318,14 @@ private slots:
 
     void on_checkBox_10_stateChanged(int arg1);
 
+    void on_pushButton_36_clicked();
+
+    void on_radioButton_28_clicked();
+
+    void on_speedSlider_24_valueChanged(int value);
+
+    void on_rpmStarboardVoltage_actionTriggered(int action);
+
 private:
     int sliderMover{0};
 

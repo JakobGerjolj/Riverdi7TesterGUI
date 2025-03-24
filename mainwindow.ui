@@ -221,7 +221,7 @@
       </rect>
      </property>
      <property name="maximum">
-      <number>4000</number>
+      <number>40000</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -259,7 +259,7 @@
       <number>-1000</number>
      </property>
      <property name="maximum">
-      <number>1000</number>
+      <number>10000</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -716,7 +716,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>400</y>
+      <y>380</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -744,9 +744,9 @@
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
-      <x>570</x>
-      <y>370</y>
-      <width>221</width>
+      <x>560</x>
+      <y>350</y>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -1034,7 +1034,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>480</y>
+      <y>430</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -1050,7 +1050,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>440</y>
+      <y>400</y>
       <width>261</width>
       <height>31</height>
      </rect>
@@ -2267,7 +2267,7 @@ PACKAGE</string>
      <rect>
       <x>580</x>
       <y>860</y>
-      <width>181</width>
+      <width>201</width>
       <height>61</height>
      </rect>
     </property>
@@ -2340,6 +2340,19 @@ PACKAGE</string>
      </property>
      <property name="text">
       <string>Locked</string>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="radioButton_28">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>40</y>
+       <width>91</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Commision</string>
      </property>
     </widget>
    </widget>
@@ -3593,7 +3606,7 @@ PACKAGE</string>
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>920</y>
+      <y>930</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -3960,6 +3973,80 @@ PACKAGE</string>
     </property>
     <property name="text">
      <string>External pump</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_36">
+    <property name="geometry">
+     <rect>
+      <x>1810</x>
+      <y>410</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SEND</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_80">
+    <property name="geometry">
+     <rect>
+      <x>1630</x>
+      <y>410</y>
+      <width>191</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Send VCU commision response</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_39">
+    <property name="geometry">
+     <rect>
+      <x>1630</x>
+      <y>430</y>
+      <width>271</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_38">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>450</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>PORT COOLANT TEMP</string>
+    </property>
+   </widget>
+   <widget class="QSlider" name="speedSlider_24">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>480</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>50000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>

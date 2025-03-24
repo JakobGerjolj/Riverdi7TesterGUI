@@ -76,6 +76,7 @@ public:
 
     void setPortMotorTemp(uint16_t temp);
     void setPortInverterTemp(uint16_t temp);
+    void setPortCoolantTemp(uint16_t temp);
 
     void setSpeed(uint16_t speed);
 
@@ -146,6 +147,8 @@ public:
 
     void sendVCUResponse();
     void sendECUResponse();
+
+    void sendVCUCommisionResponse();
 
     void sendTripMessage(uint16_t time, uint16_t distance, uint16_t power, bool isResetSince, bool isResetTotal);
 
@@ -243,6 +246,7 @@ private:
 
     QByteArray m_PortMotorTemp;
     QByteArray m_PortInverterTemp;
+    QByteArray m_PortCoolantTemperature;
 
     QByteArray m_HiCellTemp;
     QByteArray m_LoCellTemp;

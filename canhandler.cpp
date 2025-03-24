@@ -193,6 +193,10 @@ CanHandler::CanHandler(QObject *parent)
     m_Throttle2Status.resize(1);
     m_Throttle2Status[0] = 0x00;
 
+    m_PortCoolantTemperature.resize(2);
+    m_PortCoolantTemperature[0] = 0x00;
+    m_PortCoolantTemperature[1] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);//default: 500
@@ -472,7 +476,7 @@ void CanHandler::sendHiCellPackage()
 
     payload1[0] = (uint8_t)(tripPackageCounter3 | 0x00);
     payload1[1] = 0x0f;
-    payload1[2] = 0x41;
+    payload1[2] = 0x00;//0x41 is node id we tried for NT
     payload1[3] = m_SOC[0];
     payload1[4] = m_TimeToFull[0];
     payload1[5] = m_TimeToFull[1];
@@ -682,8 +686,8 @@ void CanHandler::sendPortMotorTempPackage()
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter2 | 0x01);
-    payload2[1] = 0x00;
-    payload2[2] = 0x00;
+    payload2[1] = m_PortCoolantTemperature[0];//Coolant temp byte 0
+    payload2[2] = m_PortCoolantTemperature[1];//Coolant temp byte 1
     payload2[3] = 0x00;
     payload2[4] = 0x00;
     payload2[5] = 0x00;
@@ -1307,6 +1311,18 @@ void CanHandler::setPortInverterTemp(uint16_t temp)
 
 }
 
+void CanHandler::setPortCoolantTemp(uint16_t temp)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] = static_cast<char>((uint8_t)(temp & 0xFF));
+    bytes[1] =  static_cast<char>((temp >> 8) & 0xFF);
+
+    m_PortCoolantTemperature = bytes;
+
+}
+
 void CanHandler::setSpeed(uint16_t speed){
 
     QByteArray bytes;
@@ -1873,7 +1889,7 @@ void CanHandler::sendMotorContinousRPM(uint16_t rpm)
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x30;
+    payload[0]=0x00;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x03;
@@ -2000,6 +2016,28 @@ void CanHandler::sendECUResponse()
     payload[5]=0x00;
     payload[6]=0x00;
     payload[7]=0x00;
+    frame.setPayload(payload);
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
+void CanHandler::sendVCUCommisionResponse()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x20;
+    payload[1]=0x03;
+    payload[2]=0x03;
+    payload[3]=0x01;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0xFF;
     frame.setPayload(payload);
 
     canDevice -> writeFrame(frame);
