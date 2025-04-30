@@ -197,6 +197,10 @@ CanHandler::CanHandler(QObject *parent)
     m_PortCoolantTemperature[0] = 0x00;
     m_PortCoolantTemperature[1] = 0x00;
 
+    m_RudderAngle.resize(2);
+    m_RudderAngle[0] = 0x00;
+    m_RudderAngle[1] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);//default: 500
@@ -272,6 +276,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer19 = new QTimer(this);
     connect(timer19, &QTimer::timeout, this, &CanHandler::sendThrottle2Status);
     timer19 -> start(500);
+
+    QTimer *timer20 = new QTimer(this);
+    connect(timer20, &QTimer::timeout, this, &CanHandler::sendRudderAngle);
+    timer20 -> start(100);
 
 }
 
@@ -797,6 +805,8 @@ void CanHandler::sendPositionPackage()
     payload1[2] = 0x00;
     payload1[3] = 0x26;//Date low byte
     payload1[4] = 0x4e;//Date high byte
+    // payload1[3] = 0xb6; date 400 days from up, replace to test maintenance marks as done and notifs
+    // payload1[4] = 0x4f;
     payload1[5] = 0x00;//Position time byte1
     payload1[6] = 0xc2;//Position time byte2
     payload1[7] = 0xeb;//Position time byte3
@@ -1194,6 +1204,15 @@ void CanHandler::toggleSendingThrottle2Status()
     if(areWeSendingThrottle2Status){
         areWeSendingThrottle2Status = false;
     }else areWeSendingThrottle2Status = true;
+
+}
+
+void CanHandler::toggleSendingRudderAngle()
+{
+
+    if(areWeSendingRudderAngle){
+        areWeSendingRudderAngle = false;
+    }else areWeSendingRudderAngle = true;
 
 }
 
@@ -1871,7 +1890,7 @@ void CanHandler::sendMotorDirectionRight()
     payload[4]=0x00;
     payload[5]=0x00;
     payload[6]=0x00;
-    payload[7]=0x02;
+    payload[7]=0x00;
     frame.setPayload(payload);
 
     canDevice -> writeFrame(frame);
@@ -2113,9 +2132,9 @@ void CanHandler::sendVCUPackage()
     frame.setFrameId(0x18FF9A27);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x00;
+    payload[0]=0x20;
     payload[1]=m_VCUStatus[0];
-    payload[2]=m_VCUDriveStatus[0];
+    payload[2]=0x00;
     payload[3]=0x00;
     payload[4]=0x00;
     payload[5]=0x00;
@@ -2123,10 +2142,29 @@ void CanHandler::sendVCUPackage()
     payload[7]=0x00;
     frame.setPayload(payload);
 
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x18FF9700);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0]=0x00;
+    payload2[1]=0x00;
+    payload2[2]=m_VCUDriveStatus[0];
+    payload2[3]=0x00;
+    payload2[4]=0x00;
+    payload2[5]=0x00;
+    payload2[6]=0x00;
+    payload2[7]=0x00;
+    frame2.setPayload(payload2);
+
+    //Also send ecu status message for modes
+
     if(areWeSendingVCUMsg){
 
         canDevice -> writeFrame(frame);
         sendToCL2000(frame);
+
+        canDevice -> writeFrame(frame2);
+        sendToCL2000(frame2);
 
     }
 
@@ -2263,6 +2301,32 @@ void CanHandler::sendThrottle2Status()
 
 }
 
+void CanHandler::sendRudderAngle()
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x09F10DFE);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=0x00;
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=m_RudderAngle[0]; //rudder angle low byte
+    payload[5]=m_RudderAngle[1]; //rudder angle high byte
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingRudderAngle){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
+
+}
+
 void CanHandler::setDCDCStatus(int status){
 
     QByteArray bytes;
@@ -2292,6 +2356,17 @@ void CanHandler::setDCDCCurrent(int16_t value){
     bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
     bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
     m_DCDCCurrent = bytes;
+
+}
+
+void CanHandler::setRudderAngle(int16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+    m_RudderAngle = bytes;
 
 }
 

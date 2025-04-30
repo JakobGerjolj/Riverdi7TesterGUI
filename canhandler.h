@@ -64,6 +64,8 @@ public:
 
     void toggleSendingThrottle2Status();
 
+    void toggleSendingRudderAngle();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -114,6 +116,8 @@ public:
     void setDCDCStatus(int status);
     void setDCDCVoltage(uint16_t value);
     void setDCDCCurrent(int16_t value);
+
+    void setRudderAngle(int16_t value);
 
     void setMotorStatus(int status);
 
@@ -201,6 +205,7 @@ private:
     bool areWeSendingPortMotorStatus{false};
     bool areWeSendingThrottle1Status{false};
     bool areWeSendingThrottle2Status{false};
+    bool areWeSendingRudderAngle{false};
 
     void startCAN();
     void readAndProcessCANpodatke();
@@ -227,6 +232,7 @@ private:
     void sendPortMotorInfo();
     void sendThrottle1Status();
     void sendThrottle2Status();
+    void sendRudderAngle();
 
     QByteArray m_PortRPMbytes;
     QByteArray m_PortVoltagebytes;
@@ -275,7 +281,7 @@ private:
     QByteArray m_DCDCCurrent;
 
     QByteArray m_VCUStatus;
-    QByteArray m_VCUDriveStatus;
+    QByteArray m_VCUDriveStatus; //Actually ECU drive status
 
     QByteArray m_PortMotorStatus;
 
@@ -290,6 +296,8 @@ private:
 
     QByteArray m_Throttle1Status;
     QByteArray m_Throttle2Status;
+
+    QByteArray m_RudderAngle;
 
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};

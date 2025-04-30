@@ -35,8 +35,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_6 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> stbStatus_7 -> setText("Not sending");
     ui -> stbStatus_7 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_8 -> setText("Not sending");
+    ui -> stbStatus_8 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
+
+    ui -> label_71 -> setText("0°");
 
     ui -> radioButton -> setChecked(true);
 
@@ -1434,7 +1438,7 @@ void MainWindow::on_radioButton_19_clicked()
 void MainWindow::on_radioButton_21_clicked()
 {
 
-    m_CanHandler -> setVCUDriveStatus(0);
+    m_CanHandler -> setVCUDriveStatus(1);
 
 }
 
@@ -1442,7 +1446,7 @@ void MainWindow::on_radioButton_21_clicked()
 void MainWindow::on_radioButton_20_clicked()
 {
 
-    m_CanHandler -> setVCUDriveStatus(1);
+    m_CanHandler -> setVCUDriveStatus(2);
 
 }
 
@@ -1630,6 +1634,46 @@ void MainWindow::on_speedSlider_24_valueChanged(int value)
 
 
 void MainWindow::on_rpmStarboardVoltage_actionTriggered(int action)
+{
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_6_valueChanged(int value)
+{
+
+    //send data to can handler
+
+    float calculatedAngle = ((float)value/10000) * (180 / M_PI);
+
+    ui -> label_71 -> setText(QString::number(calculatedAngle,'f',1));//change degrees on gui
+
+    m_CanHandler -> setRudderAngle((int16_t)value);
+
+}
+
+
+void MainWindow::on_pushButton_37_clicked()
+{
+
+    m_CanHandler -> toggleSendingRudderAngle();
+
+    if(areWeSendingRudderAngle){
+        areWeSendingRudderAngle = false;
+        ui -> stbStatus_8 -> setText("Not sending");
+        ui -> stbStatus_8 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingRudderAngle = true;
+        ui -> stbStatus_8 -> setText("Sending messages");
+        ui -> stbStatus_8 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+}
+
+
+void MainWindow::on_CurrentStarboardSlider_6_sliderMoved(int position)
 {
 
 }

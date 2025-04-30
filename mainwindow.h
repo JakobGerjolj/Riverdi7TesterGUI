@@ -7,7 +7,8 @@
 #include "canhandler.h"
 #include <QThread>
 #include <chrono>
-#include <unistd.h>  // For sleep
+#include <unistd.h>
+#include <QtMath>// For sleep
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -326,6 +327,12 @@ private slots:
 
     void on_rpmStarboardVoltage_actionTriggered(int action);
 
+    void on_CurrentStarboardSlider_6_valueChanged(int value);
+
+    void on_pushButton_37_clicked();
+
+    void on_CurrentStarboardSlider_6_sliderMoved(int position);
+
 private:
     int sliderMover{0};
 
@@ -350,6 +357,7 @@ private:
     bool areWeSendingPortMotorInfo{false};
     bool areWeSendingThrottle1Status{false};
     bool areWeSendingThrottle2Status{false};
+    bool areWeSendingRudderAngle{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };
