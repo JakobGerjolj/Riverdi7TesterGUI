@@ -37,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_7 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> stbStatus_8 -> setText("Not sending");
     ui -> stbStatus_8 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> stbStatus_9 -> setText("Not sending");
+    ui -> stbStatus_9 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
 
@@ -1183,6 +1185,12 @@ void MainWindow::on_CurrentStarboardSlider_valueChanged(int value)
 void MainWindow::on_speedSlider_valueChanged(int value)
 {
     m_CanHandler -> setSpeed(value);
+
+    float speedToShow = (float)value / 100;
+
+    ui -> label_84 -> setText("KN: " + QString::number(speedToShow * 1.94384, 'f', 1));
+
+    ui -> label_85 -> setText("KM: " + QString::number(((speedToShow * 1.94384)*1.852), 'f', 1));
 }
 
 
@@ -1675,6 +1683,53 @@ void MainWindow::on_pushButton_37_clicked()
 
 void MainWindow::on_CurrentStarboardSlider_6_sliderMoved(int position)
 {
+
+}
+
+
+void MainWindow::on_pushButton_38_clicked()
+{
+
+    m_CanHandler -> toggleSendingConsumption();
+
+    if(areWeSendingConsumption){
+        areWeSendingConsumption = false;
+        ui -> stbStatus_9 -> setText("Not sending");
+        ui -> stbStatus_9 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingConsumption = true;
+        ui -> stbStatus_9 -> setText("Sending messages");
+        ui -> stbStatus_9 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+
+
+}
+
+
+void MainWindow::on_pushButton_39_clicked()
+{
+
+    int Amperes = ui -> textEdit_10 -> toPlainText().toInt();
+
+    m_CanHandler -> sendCurrentShoreLimit(Amperes);
+
+}
+
+
+void MainWindow::on_checkBox_11_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setMotorExternal2Pump(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_12_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setMotorInternal2Pump(arg1);
 
 }
 

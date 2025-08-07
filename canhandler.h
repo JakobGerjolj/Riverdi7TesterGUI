@@ -66,6 +66,8 @@ public:
 
     void toggleSendingRudderAngle();
 
+    void toggleSendingConsumption();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -137,6 +139,9 @@ public:
     void setMotorExternalPump(int set);
     void setMotorInternalPump(int set);
 
+    void setMotorExternal2Pump(int set);
+    void setMotorInternal2Pump(int set);
+
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
 
@@ -157,7 +162,9 @@ public:
     void sendTripMessage(uint16_t time, uint16_t distance, uint16_t power, bool isResetSince, bool isResetTotal);
 
 
+    void sendCurrentShoreLimit(int Ampers);
 
+    void sendConsumption();
 
     //Testing CL2000
 
@@ -206,6 +213,7 @@ private:
     bool areWeSendingThrottle1Status{false};
     bool areWeSendingThrottle2Status{false};
     bool areWeSendingRudderAngle{false};
+    bool areWeSendingConsumption{false};
 
     void startCAN();
     void readAndProcessCANpodatke();

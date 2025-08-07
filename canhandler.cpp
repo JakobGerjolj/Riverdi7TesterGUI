@@ -281,6 +281,10 @@ CanHandler::CanHandler(QObject *parent)
     connect(timer20, &QTimer::timeout, this, &CanHandler::sendRudderAngle);
     timer20 -> start(100);
 
+    QTimer *timer21 = new QTimer(this);
+    connect(timer21, &QTimer::timeout, this, &CanHandler::sendConsumption);
+    timer21 -> start(500);
+
 }
 
 CanHandler::~CanHandler()
@@ -322,7 +326,7 @@ void CanHandler::startCAN(){
     // }
 
     //QSerialPort port("COM9");
-    port = new QSerialPort("COM9");
+    port = new QSerialPort("COM5");
     // port->setBaudRate(QSerialPort::Baud115200);
     // port->setDataBits(QSerialPort::Data8);
     //port->setStopBits(QSerialPort::OneStop);
@@ -958,10 +962,10 @@ void CanHandler::sendDepthPositionPackage()
     payload[2]=m_Depth[1];
     payload[3]=m_Depth[2];
     payload[4]=m_Depth[3];
-    // payload[1] = 0x11;
-    // payload[2] = 0x11;
-    // payload[3] = 0x00;
-    // payload[4] = 0x00;
+    // payload[1] = 0xff;
+    // payload[2] = 0xff;
+    // payload[3] = 0xff;
+    // payload[4] = 0xff;
     payload[5]=0xff;
     payload[6]=0xff;
     payload[7]=0xff;
@@ -1213,6 +1217,17 @@ void CanHandler::toggleSendingRudderAngle()
     if(areWeSendingRudderAngle){
         areWeSendingRudderAngle = false;
     }else areWeSendingRudderAngle = true;
+
+}
+
+void CanHandler::toggleSendingConsumption()
+{
+
+    //sendConsumption(); //to try with single shots
+
+    if(areWeSendingConsumption){
+        areWeSendingConsumption = false;
+    }else areWeSendingConsumption = true;
 
 }
 
@@ -2100,6 +2115,29 @@ void CanHandler::sendTripMessage(uint16_t time, uint16_t distance, uint16_t powe
 
 }
 
+void CanHandler::sendCurrentShoreLimit(int Ampers)
+{
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x18EFFD1D);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x10;
+    payload[1]=0x02;
+    payload[2]=0x02;
+    payload[3]=0x01;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=(uint8_t)Ampers;
+    frame.setPayload(payload);
+
+
+    canDevice -> writeFrame(frame);
+    sendToCL2000(frame);
+
+}
+
 void CanHandler::sendDCDCInfoPackage(){
 
     QCanBusFrame frame;
@@ -2541,3 +2579,108 @@ void CanHandler::setMotorInternalPump(int set)
     }
 
 }
+
+void CanHandler::setMotorExternal2Pump(int set){
+
+    if(set == 2){
+
+        m_ECUPumpHandler.turnOnExternal2Pump();
+
+    }else if(set == 0){
+
+        m_ECUPumpHandler.turnOffExternal2Pump();
+
+    }
+
+}
+
+void CanHandler::setMotorInternal2Pump(int set){
+
+    if(set == 2){
+
+        m_ECUPumpHandler.turnOnInternal2Pump();
+
+    }else if(set == 0){
+
+        m_ECUPumpHandler.turnOffInternal2Pump();
+
+    }
+
+}
+
+void CanHandler::sendConsumption(){
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x19F20100);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=0x1B;
+    payload[2]=0x00;
+    payload[3]=0x00;
+    payload[4]=0x00;
+    payload[5]=0x00;
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    QCanBusFrame frame2;
+    frame2.setFrameId(0x19F20100);
+    QByteArray payload2;
+    payload2.resize(8);
+    payload2[0]=0x01;
+    payload2[1]=0x00;
+    payload2[2]=0x00;
+    payload2[3]=0x00;
+    payload2[4]=0x90;//Fuel rate low byte
+    payload2[5]=0x00;//Fuel rate high byte
+    payload2[6]=0x00;
+    payload2[7]=0x00;
+    frame2.setPayload(payload2);
+
+    QCanBusFrame frame3;
+    frame3.setFrameId(0x19F20100);
+    QByteArray payload3;
+    payload3.resize(8);
+    payload3[0]=0x02;
+    payload3[1]=0x00;
+    payload3[2]=0x00;
+    payload3[3]=0x00;
+    payload3[4]=0x00;
+    payload3[5]=0x00;
+    payload3[6]=0x00;
+    payload3[7]=0x00;
+    frame3.setPayload(payload3);
+
+    QCanBusFrame frame4;
+    frame4.setFrameId(0x19F20100);
+    QByteArray payload4;
+    payload4.resize(8);
+    payload4[0]=0x03;
+    payload4[1]=0x00;
+    payload4[2]=0x00;
+    payload4[3]=0x00;
+    payload4[4]=0x00;
+    payload4[5]=0x00;
+    payload4[6]=0x00;
+    payload4[7]=0x00;
+    frame4.setPayload(payload4);
+
+    //Add boolean here and send on interval
+    if(areWeSendingConsumption){
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+        canDevice -> writeFrame(frame2);
+        sendToCL2000(frame2);
+
+        canDevice -> writeFrame(frame3);
+        sendToCL2000(frame3);
+
+        canDevice -> writeFrame(frame4);
+        sendToCL2000(frame4);
+    }
+
+}
+
+

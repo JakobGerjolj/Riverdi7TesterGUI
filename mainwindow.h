@@ -333,6 +333,14 @@ private slots:
 
     void on_CurrentStarboardSlider_6_sliderMoved(int position);
 
+    void on_pushButton_38_clicked();
+
+    void on_pushButton_39_clicked();
+
+    void on_checkBox_11_stateChanged(int arg1);
+
+    void on_checkBox_12_stateChanged(int arg1);
+
 private:
     int sliderMover{0};
 
@@ -358,6 +366,7 @@ private:
     bool areWeSendingThrottle1Status{false};
     bool areWeSendingThrottle2Status{false};
     bool areWeSendingRudderAngle{false};
+    bool areWeSendingConsumption{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };

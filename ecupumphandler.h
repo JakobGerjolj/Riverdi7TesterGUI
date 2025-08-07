@@ -43,6 +43,12 @@ public:
     void turnOnInternalPump();
     void turnOffInternalPump();
 
+    void turnOnExternal2Pump();
+    void turnOffExternal2Pump();
+
+    void turnOnInternal2Pump();
+    void turnOffInternal2Pump();
+
 
 private:
     ecuPumps pumpStatus{};

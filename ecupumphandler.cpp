@@ -59,3 +59,31 @@ void ecuPumpHandler::turnOffInternalPump()
     pumpStatus.out2_HS = 0;//fill when we know what out
 
 }
+
+void ecuPumpHandler::turnOnExternal2Pump()
+{
+
+    pumpStatus.out8_HS = 1;
+
+}
+
+void ecuPumpHandler::turnOffExternal2Pump()
+{
+
+    pumpStatus.out8_HS = 0;
+
+}
+
+void ecuPumpHandler::turnOnInternal2Pump()
+{
+
+    pumpStatus.out6_HS = 1;
+
+}
+
+void ecuPumpHandler::turnOffInternal2Pump()
+{
+
+    pumpStatus.out6_HS = 0;
+
+}
