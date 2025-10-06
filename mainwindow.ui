@@ -1069,7 +1069,7 @@
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>620</y>
+      <y>600</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -1162,7 +1162,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>660</y>
+      <y>630</y>
       <width>211</width>
       <height>31</height>
      </rect>
@@ -1181,7 +1181,7 @@
     <property name="geometry">
      <rect>
       <x>560</x>
-      <y>690</y>
+      <y>660</y>
       <width>261</width>
       <height>20</height>
      </rect>
@@ -1970,7 +1970,7 @@ PACKAGE</string>
     <property name="geometry">
      <rect>
       <x>720</x>
-      <y>710</y>
+      <y>680</y>
       <width>91</width>
       <height>24</height>
      </rect>
@@ -1983,7 +1983,7 @@ PACKAGE</string>
     <property name="geometry">
      <rect>
       <x>570</x>
-      <y>710</y>
+      <y>680</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -2012,7 +2012,7 @@ PACKAGE</string>
     <property name="geometry">
      <rect>
       <x>730</x>
-      <y>740</y>
+      <y>710</y>
       <width>91</width>
       <height>20</height>
      </rect>
@@ -2025,7 +2025,7 @@ PACKAGE</string>
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>730</y>
+      <y>700</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -3426,19 +3426,6 @@ on all sliders</string>
 to zero</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_32">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>860</y>
-      <width>191</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TURN EVERYTHING ON</string>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="textEdit_7">
     <property name="geometry">
      <rect>
@@ -4301,6 +4288,112 @@ PACKAGE</string>
     </property>
     <property name="text">
      <string>Int2 pump</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_86">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>730</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_13">
+    <property name="geometry">
+     <rect>
+      <x>687</x>
+      <y>730</y>
+      <width>121</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Too big number</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_87">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>860</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>WATER TEMPERATURE</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PortBatInfoLabel_6">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>870</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Not sending</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_32">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>910</y>
+      <width>91</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ON/OFF</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_31">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>940</y>
+      <width>561</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="speedSlider_25">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>910</y>
+      <width>211</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="maximum">
+     <number>50000</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>

@@ -68,6 +68,8 @@ public:
 
     void toggleSendingConsumption();
 
+    void toggleSendingWaterTemp();
+
     void setStbRPM(uint16_t rpm);
     void setStbVoltage(uint16_t voltage);
     void setStbCurrent(int16_t current);
@@ -142,6 +144,8 @@ public:
     void setMotorExternal2Pump(int set);
     void setMotorInternal2Pump(int set);
 
+    void setWaterTemperature(uint32_t value);
+
     void sendAlarmPackage(QByteArray data);
     void sendAlarmNotActivePackage(uint8_t type, uint16_t id);
 
@@ -164,6 +168,8 @@ public:
 
     void sendCurrentShoreLimit(int Ampers);
 
+    void sendWaterTemp();
+
     void sendConsumption();
 
     //Testing CL2000
@@ -174,6 +180,7 @@ public:
 
     void sendToCL2000(const QCanBusFrame &frame);
 
+    void setSendingMaxDepth(int arg);
 
     enum struct CRC16Type {
         CRC_16_IBM
@@ -214,6 +221,7 @@ private:
     bool areWeSendingThrottle2Status{false};
     bool areWeSendingRudderAngle{false};
     bool areWeSendingConsumption{false};
+    bool areWeSendingWaterTemp{false};
 
     void startCAN();
     void readAndProcessCANpodatke();
@@ -307,11 +315,15 @@ private:
 
     QByteArray m_RudderAngle;
 
+    QByteArray m_WaterTemp;
+
     uint8_t tripPackageCounter{0x00};
     uint8_t tripPackageCounter2{0x00};
     uint8_t tripPackageCounter3{0x00};
     uint8_t tripPackageCounter4{0x00};
     uint8_t tripPackageCounter5{0x00};
+
+    bool AmISendingMaxDepth{false};
 
 };
 

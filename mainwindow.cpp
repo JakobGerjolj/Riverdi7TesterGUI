@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> stbStatus_8 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> stbStatus_9 -> setText("Not sending");
     ui -> stbStatus_9 -> setStyleSheet("QLabel { background-color: red; }");
+    ui -> PortBatInfoLabel_6 -> setText("Not sending");
+    ui -> PortBatInfoLabel_6 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
 
@@ -1029,7 +1031,7 @@ void MainWindow::moveAllSliders()
     ui -> speedSlider_9 -> setValue(sliderMover*10);
     ui -> speedSlider_10 -> setValue(sliderMover*10);
     ui -> speedSlider_11 -> setValue(sliderMover*50);
-    ui -> speedSlider_19 -> setValue(sliderMover*1000);
+    ui -> speedSlider_19 -> setValue(sliderMover*10);
     ui -> speedSlider_13 -> setValue(sliderMover*1000);
     ui -> speedSlider_14 -> setValue(sliderMover);
     ui -> speedSlider_15 -> setValue(sliderMover*100);
@@ -1299,6 +1301,11 @@ void MainWindow::on_speedSlider_19_valueChanged(int value)
 
     m_CanHandler -> setDepth(static_cast<uint32_t>(value));
 
+    //Display the intended data on Qt
+    float IntendedDepth = (float)value * 0.01;
+
+    ui -> label_86 -> setText(QString::number(IntendedDepth));
+
 }
 
 
@@ -1416,8 +1423,24 @@ void MainWindow::on_speedSlider_21_valueChanged(int value)
 
 void MainWindow::on_pushButton_32_clicked()
 {
+    //Make toggle boolean in can handler
+    //Make boolean in mainwindow
 
 
+    m_CanHandler -> toggleSendingWaterTemp();
+
+    if(areWeSendingWaterTemp){
+        areWeSendingWaterTemp = false;
+        ui -> PortBatInfoLabel_6 -> setText("Not sending");
+        ui -> PortBatInfoLabel_6 -> setStyleSheet("QLabel { background-color: red; }");
+
+    }else{
+        areWeSendingWaterTemp = true;
+        ui -> PortBatInfoLabel_6 -> setText("Sending messages");
+        ui -> PortBatInfoLabel_6 -> setStyleSheet("QLabel { background-color: green; }");
+
+    }
+    //toggle here
 
 }
 
@@ -1730,6 +1753,22 @@ void MainWindow::on_checkBox_12_stateChanged(int arg1)
 {
 
     m_CanHandler -> setMotorInternal2Pump(arg1);
+
+}
+
+
+void MainWindow::on_checkBox_13_stateChanged(int arg1)
+{
+
+    m_CanHandler -> setSendingMaxDepth(arg1);//Send state to m_CanHandler
+
+}
+
+
+void MainWindow::on_speedSlider_25_valueChanged(int value)
+{
+
+    m_CanHandler -> setWaterTemperature(value);
 
 }
 

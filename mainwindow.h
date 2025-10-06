@@ -341,6 +341,10 @@ private slots:
 
     void on_checkBox_12_stateChanged(int arg1);
 
+    void on_checkBox_13_stateChanged(int arg1);
+
+    void on_speedSlider_25_valueChanged(int value);
+
 private:
     int sliderMover{0};
 
@@ -367,6 +371,7 @@ private:
     bool areWeSendingThrottle2Status{false};
     bool areWeSendingRudderAngle{false};
     bool areWeSendingConsumption{false};
+    bool areWeSendingWaterTemp{false};
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };

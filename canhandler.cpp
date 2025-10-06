@@ -201,6 +201,11 @@ CanHandler::CanHandler(QObject *parent)
     m_RudderAngle[0] = 0x00;
     m_RudderAngle[1] = 0x00;
 
+    m_WaterTemp.resize(3);
+    m_WaterTemp[0] = 0x00;
+    m_WaterTemp[1] = 0x00;
+    m_WaterTemp[2] = 0x00;
+
     QTimer *timer  = new QTimer(this);
     connect(timer, &QTimer::timeout,this, &CanHandler::sendPortRPMPackage);
     timer->start(500);//default: 500
@@ -284,6 +289,10 @@ CanHandler::CanHandler(QObject *parent)
     QTimer *timer21 = new QTimer(this);
     connect(timer21, &QTimer::timeout, this, &CanHandler::sendConsumption);
     timer21 -> start(500);
+
+    QTimer *timer22 = new QTimer(this);
+    connect(timer22, &QTimer::timeout, this, &CanHandler::sendWaterTemp);
+    timer22 -> start(2000);
 
 }
 
@@ -809,7 +818,7 @@ void CanHandler::sendPositionPackage()
     payload1[2] = 0x00;
     payload1[3] = 0x26;//Date low byte
     payload1[4] = 0x4e;//Date high byte
-    // payload1[3] = 0xb6; date 400 days from up, replace to test maintenance marks as done and notifs
+    // payload1[3] = 0xb6; //date 400 days from up, replace to test maintenance marks as done and notifs
     // payload1[4] = 0x4f;
     payload1[5] = 0x00;//Position time byte1
     payload1[6] = 0xc2;//Position time byte2
@@ -962,10 +971,17 @@ void CanHandler::sendDepthPositionPackage()
     payload[2]=m_Depth[1];
     payload[3]=m_Depth[2];
     payload[4]=m_Depth[3];
-    // payload[1] = 0xff;
-    // payload[2] = 0xff;
-    // payload[3] = 0xff;
-    // payload[4] = 0xff;
+
+
+    if(AmISendingMaxDepth){
+
+        payload[1] = 0xff;
+        payload[2] = 0xff;
+        payload[3] = 0xff;
+        payload[4] = 0xff;
+
+    }
+
     payload[5]=0xff;
     payload[6]=0xff;
     payload[7]=0xff;
@@ -1228,6 +1244,15 @@ void CanHandler::toggleSendingConsumption()
     if(areWeSendingConsumption){
         areWeSendingConsumption = false;
     }else areWeSendingConsumption = true;
+
+}
+
+void CanHandler::toggleSendingWaterTemp()
+{
+
+    if(areWeSendingWaterTemp){
+        areWeSendingWaterTemp = false;
+    }else areWeSendingWaterTemp = true;
 
 }
 
@@ -1808,6 +1833,22 @@ void CanHandler::sendToCL2000(const QCanBusFrame &frame)
 
 }
 
+void CanHandler::setSendingMaxDepth(int arg)
+{
+
+    if(arg == 2){
+
+        AmISendingMaxDepth = true;
+
+    }else if(arg == 0){
+
+        AmISendingMaxDepth = false;
+
+    }
+
+
+}
+
 uint16_t CanHandler::calculateCRC16(QByteArray data, CRC16Type crc16Type)
 {
     uint16_t const initial = 0x0000u;
@@ -1970,7 +2011,7 @@ void CanHandler::sendLeverNFCEnabled()
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x00;
+    payload[0]=0x30;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x03;
@@ -1992,7 +2033,7 @@ void CanHandler::sendLeverNFCDisabled()
     frame.setFrameId(0x18EFFD1D);
     QByteArray payload;
     payload.resize(8);
-    payload[0]=0x00;
+    payload[0]=0x30;
     payload[1]=0x03;
     payload[2]=0x02;
     payload[3]=0x03;
@@ -2135,6 +2176,33 @@ void CanHandler::sendCurrentShoreLimit(int Ampers)
 
     canDevice -> writeFrame(frame);
     sendToCL2000(frame);
+
+}
+
+void CanHandler::sendWaterTemp()
+{
+
+
+    QCanBusFrame frame;
+    frame.setFrameId(0x15FD0CFE);
+    QByteArray payload;
+    payload.resize(8);
+    payload[0]=0x00;
+    payload[1]=0x00;
+    payload[2]=0x00;
+    payload[3]=m_WaterTemp[0];
+    payload[4]=m_WaterTemp[1];
+    payload[5]=m_WaterTemp[2];
+    payload[6]=0x00;
+    payload[7]=0x00;
+    frame.setPayload(payload);
+
+    if(areWeSendingWaterTemp){
+
+        canDevice -> writeFrame(frame);
+        sendToCL2000(frame);
+
+    }
 
 }
 
@@ -2605,6 +2673,20 @@ void CanHandler::setMotorInternal2Pump(int set){
         m_ECUPumpHandler.turnOffInternal2Pump();
 
     }
+
+}
+
+void CanHandler::setWaterTemperature(uint32_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(8);
+
+    bytes[0] = static_cast<char>((value >> 0) & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((value >> 16) & 0xFF);
+
+    m_WaterTemp = bytes;
 
 }
 
