@@ -335,7 +335,7 @@ void CanHandler::startCAN(){
     // }
 
     //QSerialPort port("COM9");
-    port = new QSerialPort("COM5");
+    port = new QSerialPort("COM4");
     // port->setBaudRate(QSerialPort::Baud115200);
     // port->setDataBits(QSerialPort::Data8);
     //port->setStopBits(QSerialPort::OneStop);

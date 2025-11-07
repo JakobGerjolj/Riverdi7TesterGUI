@@ -24,10 +24,10 @@
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
@@ -55,7 +55,7 @@
       <number>18000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -90,7 +90,7 @@
       <number>16000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -151,7 +151,7 @@
       <number>40000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_4">
@@ -208,7 +208,7 @@
       <number>10000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QSlider" name="rpmStarboardVoltage">
@@ -224,7 +224,7 @@
       <number>40000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_6">
@@ -262,7 +262,7 @@
       <number>10000</number>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_7">
@@ -294,7 +294,7 @@
       </rect>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="Line" name="line_2">
@@ -307,7 +307,7 @@
       </rect>
      </property>
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_8">
@@ -359,7 +359,7 @@
       </rect>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
     <widget class="QLabel" name="label_51">
@@ -509,7 +509,7 @@
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -548,7 +548,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_4">
@@ -561,7 +561,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
@@ -609,7 +609,7 @@
      <number>100000000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="tripSendingLabel">
@@ -651,7 +651,7 @@
      <number>10000000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_14">
@@ -683,7 +683,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="PortMotorTempLabel">
@@ -725,7 +725,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_5">
@@ -770,7 +770,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_7">
@@ -783,7 +783,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_16">
@@ -818,7 +818,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_17">
@@ -905,7 +905,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="TempPackageLabel">
@@ -944,7 +944,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="Line" name="line_9">
@@ -957,7 +957,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_20">
@@ -992,7 +992,7 @@
      <number>200</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_21">
@@ -1027,7 +1027,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="speedSlider_9">
@@ -1043,7 +1043,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_22">
@@ -1155,7 +1155,7 @@
      <number>4000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="speedSlider_11">
@@ -1174,7 +1174,7 @@
      <number>1000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_11">
@@ -1187,7 +1187,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_26">
@@ -1222,7 +1222,7 @@
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_27">
@@ -1318,7 +1318,7 @@
      <number>9223372</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
     <property name="invertedAppearance">
      <bool>false</bool>
@@ -1343,7 +1343,7 @@
      <number>0</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_12">
@@ -1356,7 +1356,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="Line" name="line_13">
@@ -1369,7 +1369,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_30">
@@ -1443,7 +1443,7 @@
      <number>100</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_14">
@@ -1456,7 +1456,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="speedSlider_16">
@@ -1472,7 +1472,7 @@
      <number>60000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_32">
@@ -1565,7 +1565,7 @@
      <number>60000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_15">
@@ -1578,7 +1578,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_35">
@@ -1658,7 +1658,7 @@
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="CurrentStarboardSlider_2">
@@ -1677,7 +1677,7 @@
      <number>1000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="stbStatus_2">
@@ -1703,7 +1703,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_39">
@@ -1741,7 +1741,7 @@
      <number>32000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEdit">
@@ -1866,7 +1866,7 @@
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_13">
@@ -1963,7 +1963,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_15">
@@ -2005,7 +2005,7 @@ PACKAGE</string>
      <number>40000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="PortBatInfoLabel_3">
@@ -2050,7 +2050,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_16">
@@ -2137,7 +2137,7 @@ PACKAGE</string>
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_20">
@@ -2150,7 +2150,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="speedSlider_21">
@@ -2169,7 +2169,7 @@ PACKAGE</string>
      <number>1000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_50">
@@ -2259,7 +2259,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QFrame" name="frame_2">
@@ -2272,10 +2272,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_4">
      <property name="geometry">
@@ -2420,7 +2420,7 @@ PACKAGE</string>
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_19">
@@ -2481,7 +2481,7 @@ PACKAGE</string>
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="CurrentStarboardSlider_3">
@@ -2500,7 +2500,7 @@ PACKAGE</string>
      <number>10000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="CurrentStarboardSlider_4">
@@ -2519,7 +2519,7 @@ PACKAGE</string>
      <number>200</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_59">
@@ -2551,7 +2551,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_23">
@@ -2564,7 +2564,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="QLabel" name="stbStatus_4">
@@ -2628,7 +2628,7 @@ PACKAGE</string>
      <number>8000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_62">
@@ -2679,7 +2679,7 @@ PACKAGE</string>
      <number>8000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_63">
@@ -2717,7 +2717,7 @@ PACKAGE</string>
      <number>8000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_24">
@@ -2730,7 +2730,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_21">
@@ -2782,10 +2782,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_6">
      <property name="geometry">
@@ -2853,7 +2853,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QFrame" name="frame_4">
@@ -2866,10 +2866,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton">
      <property name="geometry">
@@ -2949,10 +2949,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_15">
      <property name="geometry">
@@ -3020,10 +3020,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_11">
      <property name="geometry">
@@ -3133,7 +3133,7 @@ PACKAGE</string>
      <number>4000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_24">
@@ -3172,7 +3172,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_67">
@@ -3239,7 +3239,7 @@ PACKAGE</string>
      <number>4000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_69">
@@ -3265,7 +3265,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_28">
@@ -3278,7 +3278,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="Line" name="line_29">
@@ -3291,7 +3291,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_26">
@@ -3343,7 +3343,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_72">
@@ -3395,7 +3395,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_30">
@@ -3547,7 +3547,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="Line" name="line_34">
@@ -3560,7 +3560,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox">
@@ -3599,10 +3599,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_20">
      <property name="geometry">
@@ -3654,7 +3654,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QFrame" name="frame_8">
@@ -3667,10 +3667,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_24">
      <property name="geometry">
@@ -3748,10 +3748,10 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Shape::StyledPanel</enum>
     </property>
     <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <enum>QFrame::Shadow::Raised</enum>
     </property>
     <widget class="QRadioButton" name="radioButton_26">
      <property name="geometry">
@@ -3816,7 +3816,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_79">
@@ -3920,7 +3920,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_38">
@@ -3933,7 +3933,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <enum>Qt::Orientation::Vertical</enum>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_9">
@@ -3998,7 +3998,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_38">
@@ -4033,7 +4033,7 @@ PACKAGE</string>
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="Line" name="line_40">
@@ -4046,7 +4046,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_81">
@@ -4104,7 +4104,7 @@ PACKAGE</string>
      <number>32767</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="label_71">
@@ -4126,7 +4126,7 @@ PACKAGE</string>
      <string>&lt;Deegres&gt;</string>
     </property>
     <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <set>Qt::AlignmentFlag::AlignCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_38">
@@ -4152,7 +4152,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QLabel" name="stbStatus_9">
@@ -4377,7 +4377,7 @@ PACKAGE</string>
      </rect>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
    <widget class="QSlider" name="speedSlider_25">
@@ -4393,7 +4393,7 @@ PACKAGE</string>
      <number>50000</number>
     </property>
     <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+     <enum>Qt::Orientation::Horizontal</enum>
     </property>
    </widget>
   </widget>
@@ -4403,11 +4403,23 @@ PACKAGE</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>21</height>
+     <height>17</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuSelect_port">
+    <property name="title">
+     <string>Connect</string>
+    </property>
+    <addaction name="actionConnect"/>
+   </widget>
+   <addaction name="menuSelect_port"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

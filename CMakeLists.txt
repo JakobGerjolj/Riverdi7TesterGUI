@@ -26,6 +26,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         canhandler.h canhandler.cpp
         pumphandler.h pumphandler.cpp
         ecupumphandler.h ecupumphandler.cpp
+
+        connectdialog.h connectdialog.cpp connectdialog.ui
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET shipSimulator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

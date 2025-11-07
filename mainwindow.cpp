@@ -1772,3 +1772,35 @@ void MainWindow::on_speedSlider_25_valueChanged(int value)
 
 }
 
+
+void MainWindow::on_actionConnect_triggered()
+{
+
+    //Open the dialogue for connection
+
+    if (QCanBus::instance()->plugins().contains(QStringLiteral("peakcan"))) {
+        qDebug() << "Peakcan plugin is available";
+        // plugin available
+    }
+
+    Connectdialog* dialog = new Connectdialog;
+    dialog -> open();
+
+    if(dialog->exec() == QDialog::Accepted){
+
+
+
+        qDebug() << "Dialog accepted";
+        qDebug() << "Plugin: " << dialog ->getPlugin();
+        qDebug() << "Port: " << dialog -> getPort();
+
+        //we send this to can handler and he starts the new connection
+
+        //also we make it persistant with settings
+
+    }
+
+
+
+}
+

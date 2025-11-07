@@ -9,6 +9,7 @@
 #include <chrono>
 #include <unistd.h>
 #include <QtMath>// For sleep
+#include "connectdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -345,6 +346,8 @@ private slots:
 
     void on_speedSlider_25_valueChanged(int value);
 
+    void on_actionConnect_triggered();
+
 private:
     int sliderMover{0};
 
@@ -372,6 +375,10 @@ private:
     bool areWeSendingRudderAngle{false};
     bool areWeSendingConsumption{false};
     bool areWeSendingWaterTemp{false};
+
+    QString canPlugin;
+    QString port;
+
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;
 };
