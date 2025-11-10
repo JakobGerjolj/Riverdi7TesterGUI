@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <QtMath>// For sleep
 #include "connectdialog.h"
+#include <QSettings>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -376,8 +377,10 @@ private:
     bool areWeSendingConsumption{false};
     bool areWeSendingWaterTemp{false};
 
-    QString canPlugin;
-    QString port;
+    QString canPlugin{"SavvyCAN"};
+    QString portName{"COM0"};
+
+    QSettings* settings;
 
     CanHandler* m_CanHandler;
     Ui::MainWindow *ui;

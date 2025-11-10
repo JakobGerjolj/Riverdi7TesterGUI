@@ -8,6 +8,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     m_CanHandler = new CanHandler;
 
+    settings = new QSettings("NT Systems", "Ship module simulator");
+
+    m_CanHandler->pluginName = settings->value("pluginName", "SavvyCAN").toString();
+    m_CanHandler->portName = settings->value("portName", "COM0").toString();
+    qDebug()<<"Saved plugin: " << settings->value("pluginName", "SavvyCAN").toString();
+    qDebug()<<"Saved port: " << settings->value("portName", "COM0").toString();
+    m_CanHandler->startCAN();
+
     ui -> sendingStatus -> setStyleSheet("QLabel { background-color : red; }");
     ui -> stbStatus -> setStyleSheet("QLabel { background-color : red; }");
     ui -> speedSendingStatus -> setStyleSheet("QLabel { background-color : red; }");
@@ -56,6 +64,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete settings;
     delete m_CanHandler;
     delete ui;
 }
@@ -1793,6 +1802,16 @@ void MainWindow::on_actionConnect_triggered()
         qDebug() << "Dialog accepted";
         qDebug() << "Plugin: " << dialog ->getPlugin();
         qDebug() << "Port: " << dialog -> getPort();
+
+        settings->setValue("pluginName", dialog ->getPlugin());
+        settings->setValue("portName", dialog ->getPort());
+
+
+
+        m_CanHandler->pluginName = dialog -> getPlugin();
+        m_CanHandler->portName = dialog -> getPort();
+        m_CanHandler->startCAN();
+
 
         //we send this to can handler and he starts the new connection
 

@@ -26,6 +26,14 @@ public:
     void setPortVoltage(uint16_t voltage);
     void setPortCurrent(int16_t current);
 
+    QString pluginName;
+    QString portName;
+
+    bool isSavvyConnected{false};
+    bool isCanDeviceSetup{false};
+
+    void startCAN();
+
     void toggleSendingDepthInfo();
 
     void toggleSendingChargerInfo();
@@ -198,6 +206,8 @@ private:
 
     QSerialPort* port;
 
+
+
     pumpHandler m_VCUPumpHandler;
     ecuPumpHandler m_ECUPumpHandler;
     //End testing
@@ -223,7 +233,7 @@ private:
     bool areWeSendingConsumption{false};
     bool areWeSendingWaterTemp{false};
 
-    void startCAN();
+
     void readAndProcessCANpodatke();
     QCanBusDevice *canDevice;
 

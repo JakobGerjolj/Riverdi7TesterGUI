@@ -1,12 +1,14 @@
 #include "canhandler.h"
 #include <QDebug>
+#include <qvariant.h>
 
 CanHandler::CanHandler(QObject *parent)
     : QObject{parent}
 {
     //canDevice -> disconnectDevice();
-    this -> startCAN();
+    // this -> startCAN();
 
+    port = new QSerialPort;
 
     m_PortRPMbytes.resize(2);
     m_PortRPMbytes[0] = 0x00;
@@ -306,121 +308,68 @@ CanHandler::~CanHandler()
 
 void CanHandler::startCAN(){
 
-    //clx000can
-
-    // QList<QCanBusDeviceInfo> result;
-
-    // static QString const description("CLX000");
-
-    //ssh with rasp solution?
-
-    // Find all available USB-CDC devices.
-    // auto allAvailablePorts = QSerialPortInfo::availablePorts();
-
-    // for(auto const& portInfo: allAvailablePorts) {
-    //     // Remove all non-CDC ports.
-    //     if(!portInfo.hasVendorIdentifier() || !portInfo.hasProductIdentifier()) {
-    //         continue;
-    //     }
-
-    //     // Take only devices matching the USB identifier of the CLX000 CDC mode.
-    //     if( (portInfo.vendorIdentifier() != quint16(0x1CBEu)) ||
-    //         (portInfo.productIdentifier() != quint16(0x021Au)) ) {
-    //         continue;
-    //     }
-
-
-    //     qDebug() << "CLX000CanBus - found device" << portInfo.portName() << portInfo.serialNumber();
-
-    // }
-
-    //QSerialPort port("COM9");
-    port = new QSerialPort("COM4");
-    // port->setBaudRate(QSerialPort::Baud115200);
-    // port->setDataBits(QSerialPort::Data8);
-    //port->setStopBits(QSerialPort::OneStop);
-    //port->setFlowControl(QSerialPort::NoFlowControl);
-    // port->setReadBufferSize(1024*1024*10);
-
-    // port->setBaudRate(QSerialPort::Baud115200);
-    // port->setDataBits(QSerialPort::Data8);
-    //port->setStopBits(QSerialPort::OneStop);
-    //port->setFlowControl(QSerialPort::NoFlowControl);
-    // port->setReadBufferSize(1024*1024*10);
-
-
-    if(!port->open(QSerialPort::OpenModeFlag::ReadWrite)){
-        qDebug() << "Failed to open port" << port->portName() << ", error:" << port->errorString();
+    if(port->isOpen()){
+        port->close();
 
     }
 
+    if(pluginName == "SavvyCAN"){
+
+        port -> setPortName(portName);
+
+        if(isCanDeviceSetup) {
+            canDevice->disconnectDevice();
+            qDebug() << "CAN device disconnected!";
+            isCanDeviceSetup = false;
+        }
+
+        if(!port->open(QSerialPort::OpenModeFlag::ReadWrite)){
+            qDebug() << "Failed to open port" << port->portName() << ", error:" << port->errorString();
+            isSavvyConnected = false;//if we fail to open port do not send
+            return;
+        }
 
 
+        isSavvyConnected = true;
+        isCanDeviceSetup = false;
 
-    //connect(port,SIGNAL(readyRead()), this, SLOT(testingData));
+    }else if(pluginName == "PeakCAN"){
+        isSavvyConnected = false;
 
-    // QCanBusFrame frame1;
-    // frame1.setFrameId(0x1DF20300);
-    // QByteArray payload1;
-    // payload1.resize(8);
+        if(isCanDeviceSetup) {
+            canDevice->disconnectDevice();
+            qDebug() << "CAN device disconnected!";
+            isCanDeviceSetup = false;
+        }
 
-    // payload1[0] = 0x12;
-    // payload1[1] = 0x0f;
-    // payload1[2] = 0x00;
-    // payload1[3] = 0x34;
-    // payload1[4] = 0x00;
-    // payload1[5] = 0x00;
-    // payload1[6] = 0x56;
-    // payload1[7] = 0x78;
-    // frame1.setPayload(payload1);
-
-    // for(int i=0;i<5;i++){
-    //     qDebug()<<"Writting package number: " << i;
-    //     sendToCL2000(frame1);}
-
-    // QByteArray test;
+        QString errorString;
 
 
+        // canDevice -> BitRateKey;
 
-    // test.resize(24);
-    // test[0] = 0x7e;
-    // test[1] = 0x01;
-    // test[2] = 0x66;
-    // test[3] = 0x8d;
-    // test[4] = 0x05;
-    // test[5] = 0x7a;
-    // test[6] = 0x03;
-    // test[7] = 0x22;
-    // test[8] = 0x29;
-    // test[9] = 0xf5; //7e 01 66 8d 05 7a 03 22 29 f5 03 00 08 01 fc ff ff 00 00 ff ff 6f f8 7e
-    // test[10] = 0x03;
-    // test[11] = 0x00;
-    // test[12] = 0x08;
-    // test[13] = 0x01;
-    // test[14] = 0xfc;
-    // test[15] = 0xff;
-    // test[16] = 0xff;
-    // test[17] = 0x00;
-    // test[18] = 0x00;
-    // test[19] = 0xff;
-    // test[20] = 0xff;
-    // test[21] = 0x6f;
-    // test[22] = 0xf8;
-    // test[23] = 0x7e;
+        canDevice = QCanBus::instance()->createDevice("peakcan", portName, &errorString);
 
-    // port->write(test);
+        QVariant bitrate = 250000;
 
-
-    qDebug() << "Written something to serial, lets try";
-    //Above we experiment with cl2000
-    const QString pluginName = "virtualcan"; //clx000can
-
-    canDevice = QCanBus::instance()->createDevice(pluginName, "can0");
-    if (canDevice && canDevice->connectDevice()) {
-        qDebug() << "Connected to CAN bus";
+        canDevice-> setConfigurationParameter(QCanBusDevice::BitRateKey, bitrate);
         connect(canDevice, &QCanBusDevice::framesReceived, this, &CanHandler::readAndProcessCANpodatke);
-    } else {
-        qDebug() << "Failed to connect to CAN bus";
+
+        if (canDevice && canDevice->connectDevice()) {
+            qDebug() << "Connected to CAN bus";
+
+
+            isCanDeviceSetup = true;
+        } else {
+            qDebug() << "Failed to connect to CAN bus";
+            qDebug() << "Error: " << errorString;
+            isCanDeviceSetup = false;
+        }
+
+        // QVariant bitrate = 250000;
+
+        // canDevice-> setConfigurationParameter(QCanBusDevice::BitRateKey, bitrate);
+        // canDevice -> BitRateKey;
+
     }
 
 }
@@ -457,7 +406,7 @@ void CanHandler::sendChargerInfo()
     frame.setPayload(payload);
 
     if(areWeSendingChargerInfo){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 
@@ -481,7 +430,7 @@ void CanHandler::sendCellVoltage()
     frame.setPayload(payload);
 
     if(areWeSendingCellVoltage){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 
@@ -534,9 +483,9 @@ void CanHandler::sendHiCellPackage()
     frame3.setPayload(payload3);
 
     if(areWeSendingHiCellTemp){
-        canDevice -> writeFrame(frame1);
-        canDevice -> writeFrame(frame2);
-        canDevice -> writeFrame(frame3);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame1);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame3);
 
         sendToCL2000(frame1);
         sendToCL2000(frame2);
@@ -567,7 +516,7 @@ void CanHandler::sendPortRPMPackage(){
     frame.setPayload(payload);
 
     if(areWeSendingPortMsg){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 
@@ -593,7 +542,7 @@ void CanHandler::sendStbRPMPackage()
     frame.setPayload(payload);
 
     if(areWeSendingStbMsg){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);    }
 
 }
@@ -617,7 +566,7 @@ void CanHandler::sendSpeedPackage()
     frame.setPayload(payload);
 
     if(areWeSendingSpeedMsg){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 }
@@ -669,9 +618,9 @@ void CanHandler::sendTripPackage()
     frame3.setPayload(payload3);
 
     if(areWeSendingTripMsg){
-        canDevice -> writeFrame(frame1);
-        canDevice -> writeFrame(frame2);
-        canDevice -> writeFrame(frame3);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame1);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame3);
 
         sendToCL2000(frame1);
         sendToCL2000(frame2);
@@ -717,8 +666,8 @@ void CanHandler::sendPortMotorTempPackage()
     frame2.setPayload(payload2);
 
     if(areWeSendingPortMotorTemp){
-        canDevice -> writeFrame(frame1);
-        canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame1);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
 
         sendToCL2000(frame1);
         sendToCL2000(frame2);
@@ -765,8 +714,8 @@ void CanHandler::sendStbMotorTempPackage()
     frame2.setPayload(payload2);
 
     if(areWeSendingStbMotorTemp){
-        canDevice -> writeFrame(frame1);
-        canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame1);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
 
         sendToCL2000(frame1);
         sendToCL2000(frame2);
@@ -798,7 +747,7 @@ void CanHandler::sendBatInfoPackage()
     frame.setPayload(payload);
 
     if(areWeSendingBatInfo){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 
@@ -933,6 +882,8 @@ void CanHandler::sendPositionPackage()
     //Here we might have to add another package so that it is 7 like in the standard pdf and just not detect the last on stm
 
     if(areWeSendingPosition){
+
+        if(isCanDeviceSetup){
         canDevice -> writeFrame(frame1);
         canDevice -> writeFrame(frame2);
         canDevice -> writeFrame(frame3);
@@ -940,6 +891,7 @@ void CanHandler::sendPositionPackage()
         canDevice -> writeFrame(frame5);
         canDevice -> writeFrame(frame6);
         canDevice -> writeFrame(frame7);
+        }
         //canDevice -> writeFrame(frame8);
 
         sendToCL2000(frame1);
@@ -988,7 +940,7 @@ void CanHandler::sendDepthPositionPackage()
     frame.setPayload(payload);
 
     if(areWeSendingDepthMsg){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
     }
 
@@ -1825,6 +1777,7 @@ void CanHandler::transformCanPackage(const QCanBusFrame &frame, QByteArray &pack
 
 void CanHandler::sendToCL2000(const QCanBusFrame &frame)
 {
+    if(!isSavvyConnected) return;
 
     QByteArray packedFrame;
     transformCanPackage(frame, packedFrame);
@@ -1904,7 +1857,7 @@ void CanHandler::sendAlarmNotActivePackage(uint8_t type, uint16_t id){
     frame.setPayload(payload);
 
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 
@@ -1927,7 +1880,7 @@ void CanHandler::sendMotorDirectionLeft()
     payload[7]=0x01;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -1949,7 +1902,7 @@ void CanHandler::sendMotorDirectionRight()
     payload[7]=0x00;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -1974,7 +1927,7 @@ void CanHandler::sendMotorContinousRPM(uint16_t rpm)
     payload[7]=highByte;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -1999,7 +1952,7 @@ void CanHandler::sendMotorPeakRPM(uint16_t rpm)
     payload[7]=highByte;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2021,7 +1974,7 @@ void CanHandler::sendLeverNFCEnabled()
     payload[7]=0x01;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2043,7 +1996,7 @@ void CanHandler::sendLeverNFCDisabled()
     payload[7]=0x00;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2068,7 +2021,7 @@ void CanHandler::sendVCUResponse()
     payload[7]=0x00;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2093,7 +2046,7 @@ void CanHandler::sendECUResponse()
     payload[7]=0x00;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2115,7 +2068,7 @@ void CanHandler::sendVCUCommisionResponse()
     payload[7]=0xFF;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2151,7 +2104,7 @@ void CanHandler::sendTripMessage(uint16_t time, uint16_t distance, uint16_t powe
     payload[7]=resetByte;
     frame.setPayload(payload);
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2174,7 +2127,7 @@ void CanHandler::sendCurrentShoreLimit(int Ampers)
     frame.setPayload(payload);
 
 
-    canDevice -> writeFrame(frame);
+    if(isCanDeviceSetup) canDevice -> writeFrame(frame);
     sendToCL2000(frame);
 
 }
@@ -2199,7 +2152,7 @@ void CanHandler::sendWaterTemp()
 
     if(areWeSendingWaterTemp){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2224,7 +2177,7 @@ void CanHandler::sendDCDCInfoPackage(){
 
     if(areWeSendingDCDCInfo){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2266,10 +2219,10 @@ void CanHandler::sendVCUPackage()
 
     if(areWeSendingVCUMsg){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
-        canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
         sendToCL2000(frame2);
 
     }
@@ -2296,7 +2249,7 @@ void CanHandler::sendChargerInfo2()
 
     if(areWeSendingChargerMsg2){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2322,7 +2275,7 @@ void CanHandler::sendChargerInfo3()
 
     if(areWeSendingChargerMsg3){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2348,7 +2301,7 @@ void CanHandler::sendPortMotorInfo()
 
     if(areWeSendingPortMotorStatus){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2374,7 +2327,7 @@ void CanHandler::sendThrottle1Status()
 
     if(areWeSendingThrottle1Status){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2400,7 +2353,7 @@ void CanHandler::sendThrottle2Status()
 
     if(areWeSendingThrottle2Status){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2426,7 +2379,7 @@ void CanHandler::sendRudderAngle()
 
     if(areWeSendingRudderAngle){
 
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
     }
@@ -2750,16 +2703,16 @@ void CanHandler::sendConsumption(){
 
     //Add boolean here and send on interval
     if(areWeSendingConsumption){
-        canDevice -> writeFrame(frame);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame);
         sendToCL2000(frame);
 
-        canDevice -> writeFrame(frame2);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame2);
         sendToCL2000(frame2);
 
-        canDevice -> writeFrame(frame3);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame3);
         sendToCL2000(frame3);
 
-        canDevice -> writeFrame(frame4);
+        if(isCanDeviceSetup) canDevice -> writeFrame(frame4);
         sendToCL2000(frame4);
     }
 
