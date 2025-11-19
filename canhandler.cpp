@@ -106,6 +106,12 @@ CanHandler::CanHandler(QObject *parent)
     m_Lon[6] = 0x00;
     m_Lon[7] = 0x00;
 
+    m_Time.resize(4);
+    m_Time[0] = 0x00;
+    m_Time[1] = 0x00;
+    m_Time[2] = 0x00;
+    m_Time[3] = 0x00;
+
     m_HiCellVoltage.resize(2);
     m_HiCellVoltage[0] = 0x00;
     m_HiCellVoltage[1] = 0x00;
@@ -769,9 +775,9 @@ void CanHandler::sendPositionPackage()
     payload1[4] = 0x4e;//Date high byte
     // payload1[3] = 0xb6; //date 400 days from up, replace to test maintenance marks as done and notifs
     // payload1[4] = 0x4f;
-    payload1[5] = 0x00;//Position time byte1
-    payload1[6] = 0xc2;//Position time byte2
-    payload1[7] = 0xeb;//Position time byte3
+    payload1[5] = m_Time[0];//Position time byte1
+    payload1[6] = m_Time[1];//Position time byte2
+    payload1[7] = m_Time[2];//Position time byte3
     frame1.setPayload(payload1);
 
     QCanBusFrame frame2;
@@ -780,7 +786,7 @@ void CanHandler::sendPositionPackage()
     QByteArray payload2;
     payload2.resize(8);
     payload2[0] = (uint8_t)(tripPackageCounter5 | 0x01);
-    payload2[1] = 0x0b;//Position time byte4
+    payload2[1] = m_Time[3];//Position time byte4
     payload2[2] = m_Lat[0];
     payload2[3] = m_Lat[1];
     payload2[4] = m_Lat[2];
@@ -1449,6 +1455,20 @@ void CanHandler::setLon(int64_t value)
     bytes[7] = static_cast<char>((value >> 56) & 0xFF);
 
     m_Lon = bytes;
+
+}
+
+void CanHandler::setTime(uint32_t value) //gps time of day
+{
+
+    QByteArray bytes;
+    bytes.resize(4);
+    bytes[0] = static_cast<char>(value & 0xFF);
+    bytes[1] = static_cast<char>((value >> 8) & 0xFF);
+    bytes[2] = static_cast<char>((value >> 16) & 0xFF);
+    bytes[3] = static_cast<char>((value >> 24) & 0xFF);
+
+    m_Time = bytes;
 
 }
 

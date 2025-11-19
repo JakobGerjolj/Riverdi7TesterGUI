@@ -349,7 +349,12 @@ private slots:
 
     void on_actionConnect_triggered();
 
+    void on_speedSlider_26_valueChanged(int value);
+
 private:
+
+    QString getTimeOfDayFromSeconds(int seconds);
+
     int sliderMover{0};
 
     QTimer *timer;

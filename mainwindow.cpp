@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> PortBatInfoLabel_6 -> setStyleSheet("QLabel { background-color: red; }");
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
+    ui -> label_89 -> setText("00:00:00");
 
     ui -> label_71 -> setText("0°");
 
@@ -1057,6 +1058,8 @@ void MainWindow::moveAllSliders()
     ui -> CurrentStarboardSlider_5 -> setValue(sliderMover);
     ui -> speedSlider_20 -> setValue(sliderMover*10);
     ui -> speedSlider_21 -> setValue(sliderMover*10);
+    if(sliderMover % 5 == 0) ui -> speedSlider_26 -> setValue((sliderMover/5)*10000);
+
 
     //QApplication::processEvents();
 
@@ -1820,6 +1823,34 @@ void MainWindow::on_actionConnect_triggered()
     }
 
 
+
+}
+
+
+void MainWindow::on_speedSlider_26_valueChanged(int value)
+{
+
+    qDebug() << "Time value: " << value;
+
+    m_CanHandler -> setTime((uint32_t)value);
+    ui -> label_89 -> setText(getTimeOfDayFromSeconds(value/10000));
+
+}
+
+QString MainWindow::getTimeOfDayFromSeconds(int seconds)
+{
+
+    int hours = seconds / 3600;
+    int minutes = (seconds % 3600) / 60;
+    int secs = seconds % 60;
+
+    //also save seconds to can handler so we can send them
+
+    // Format as hh:mm:ss with leading zeros
+    return QStringLiteral("%1:%2:%3")
+        .arg(hours, 2, 10, QChar('0'))
+        .arg(minutes, 2, 10, QChar('0'))
+        .arg(secs, 2, 10, QChar('0'));
 
 }
 

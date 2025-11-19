@@ -104,6 +104,7 @@ public:
 
     void setLat(int64_t value);
     void setLon(int64_t value);
+    void setTime(uint32_t value);
 
     void setHiVoltage(uint16_t value);
     void setLoVoltage(uint16_t value);
@@ -290,6 +291,7 @@ private:
 
     QByteArray m_Lat;
     QByteArray m_Lon;
+    QByteArray m_Time;
 
     QByteArray m_HiCellVoltage;
     QByteArray m_LoCellVoltage;
