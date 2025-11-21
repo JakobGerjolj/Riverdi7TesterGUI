@@ -112,6 +112,10 @@ CanHandler::CanHandler(QObject *parent)
     m_Time[2] = 0x00;
     m_Time[3] = 0x00;
 
+    m_Date.resize(2);
+    m_Date[0] = 0x00;
+    m_Date[1] = 0x00;
+
     m_HiCellVoltage.resize(2);
     m_HiCellVoltage[0] = 0x00;
     m_HiCellVoltage[1] = 0x00;
@@ -771,8 +775,8 @@ void CanHandler::sendPositionPackage()
     payload1[0] = (uint8_t)(tripPackageCounter5 | 0x00);
     payload1[1] = 0x00;//How many bytes we are sending
     payload1[2] = 0x00;
-    payload1[3] = 0x26;//Date low byte
-    payload1[4] = 0x4e;//Date high byte
+    payload1[3] = m_Date[0];//Date low byte
+    payload1[4] = m_Date[1];//Date high byte
     // payload1[3] = 0xb6; //date 400 days from up, replace to test maintenance marks as done and notifs
     // payload1[4] = 0x4f;
     payload1[5] = m_Time[0];//Position time byte1
@@ -1469,6 +1473,18 @@ void CanHandler::setTime(uint32_t value) //gps time of day
     bytes[3] = static_cast<char>((value >> 24) & 0xFF);
 
     m_Time = bytes;
+
+}
+
+void CanHandler::setDate(uint16_t value)
+{
+
+    QByteArray bytes;
+    bytes.resize(2);
+    bytes[0] =  static_cast<char>((uint8_t)(value & 0xFF));
+    bytes[1] =  static_cast<char>((value >> 8) & 0xFF);
+
+    m_Date = bytes;
 
 }
 

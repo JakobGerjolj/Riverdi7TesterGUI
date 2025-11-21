@@ -351,6 +351,8 @@ private slots:
 
     void on_speedSlider_26_valueChanged(int value);
 
+    void on_speedSlider_27_valueChanged(int value);
+
 private:
 
     QString getTimeOfDayFromSeconds(int seconds);

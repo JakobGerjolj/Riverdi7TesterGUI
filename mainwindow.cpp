@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <QDate>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -52,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui -> label_67 -> setText(QString::number(0) + " RPM");
     ui -> label_68 -> setText(QString::number(0) + " RPM");
     ui -> label_89 -> setText("00:00:00");
+    QDate date = QDate(1970, 1, 1).addDays(0);
+    ui -> label_91 -> setText(date.toString());
 
     ui -> label_71 -> setText("0°");
 
@@ -1851,6 +1855,18 @@ QString MainWindow::getTimeOfDayFromSeconds(int seconds)
         .arg(hours, 2, 10, QChar('0'))
         .arg(minutes, 2, 10, QChar('0'))
         .arg(secs, 2, 10, QChar('0'));
+
+}
+
+
+void MainWindow::on_speedSlider_27_valueChanged(int value)
+{
+
+    m_CanHandler -> setDate((uint16_t)value);
+
+    QDate date = QDate(1970, 1, 1).addDays(value);
+
+    ui -> label_91 -> setText(date.toString());
 
 }
 
