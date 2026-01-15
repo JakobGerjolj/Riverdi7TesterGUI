@@ -679,7 +679,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="maximum">
-       <number>10000000</number>
+       <number>100000000</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_61">
@@ -4218,7 +4218,7 @@ to zero</string>
        </rect>
       </property>
       <property name="maximum">
-       <number>864000000</number>
+       <number>86400000</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_89">
