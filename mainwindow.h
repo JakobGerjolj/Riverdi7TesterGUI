@@ -353,6 +353,62 @@ private slots:
 
     void on_speedSlider_27_valueChanged(int value);
 
+    void on_ecuOut_1_stateChanged(int arg1);
+
+    void on_ecuOut_2_stateChanged(int arg1);
+
+    void on_ecuOut_3_stateChanged(int arg1);
+
+    void on_ecuOut_4_stateChanged(int arg1);
+
+    void on_ecuOut_5_stateChanged(int arg1);
+
+    void on_ecuOut_6_stateChanged(int arg1);
+
+    void on_ecuOut_7_stateChanged(int arg1);
+
+    void on_ecuOut_8_stateChanged(int arg1);
+
+    void on_ecuOut_9_stateChanged(int arg1);
+
+    void on_ecuOut_10_stateChanged(int arg1);
+
+    void on_ecuOut_11_stateChanged(int arg1);
+
+    void on_ecuOut_12_stateChanged(int arg1);
+
+    void on_ecuOut_13_stateChanged(int arg1);
+
+    void on_ecuOut_14_stateChanged(int arg1);
+
+    void on_vcuOut_1_stateChanged(int arg1);
+
+    void on_vcuOut_2_stateChanged(int arg1);
+
+    void on_vcuOut_3_stateChanged(int arg1);
+
+    void on_vcuOut_4_stateChanged(int arg1);
+
+    void on_vcuOut_5_stateChanged(int arg1);
+
+    void on_vcuOut_6_stateChanged(int arg1);
+
+    void on_vcuOut_7_stateChanged(int arg1);
+
+    void on_vcuOut_8_stateChanged(int arg1);
+
+    void on_vcuOut_9_stateChanged(int arg1);
+
+    void on_vcuOut_10_stateChanged(int arg1);
+
+    void on_vcuOut_11_stateChanged(int arg1);
+
+    void on_vcuOut_12_stateChanged(int arg1);
+
+    void on_vcuOut_13_stateChanged(int arg1);
+
+    void on_vcuOut_14_stateChanged(int arg1);
+
 private:
 
     QString getTimeOfDayFromSeconds(int seconds);

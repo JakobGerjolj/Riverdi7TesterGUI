@@ -133,6 +133,12 @@ public:
 
     void setRudderAngle(int16_t value);
 
+    void setEcuPumpOn(int out);
+    void setEcuPumpOff(int out);
+
+    void setVcuPumpOn(int out);
+    void setVcuPumpOff(int out);
+
     void setMotorStatus(int status);
 
     void setVCUStatus(int status);
@@ -196,7 +202,8 @@ public:
         CRC_16_IBM
     };
 
-
+    pumpHandler m_VCUPumpHandler;
+    ecuPumpHandler m_ECUPumpHandler;
 
     uint16_t calculateCRC16(QByteArray data, CRC16Type crc16Type = CRC16Type::CRC_16_IBM);
 
@@ -210,8 +217,7 @@ private:
 
 
 
-    pumpHandler m_VCUPumpHandler;
-    ecuPumpHandler m_ECUPumpHandler;
+
     //End testing
     bool areWeSendingDCDCInfo{false};
     bool areWeSendingChargerInfo{false};

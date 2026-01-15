@@ -2754,4 +2754,29 @@ void CanHandler::sendConsumption(){
 
 }
 
+void CanHandler::setEcuPumpOn(int out){
+
+    m_ECUPumpHandler.setOut(out);
+
+}
+
+void CanHandler::setEcuPumpOff(int out){
+
+    m_ECUPumpHandler.resetOut(out);
+
+}
+
+void CanHandler::setVcuPumpOn(int out){
+
+    m_VCUPumpHandler.setOut(out);
+
+}
+
+
+void CanHandler::setVcuPumpOff(int out){
+
+    m_VCUPumpHandler.resetOut(out);
+
+}
+
 

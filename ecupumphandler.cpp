@@ -87,3 +87,145 @@ void ecuPumpHandler::turnOffInternal2Pump()
     pumpStatus.out6_HS = 0;
 
 }
+
+void ecuPumpHandler::setOut(int out_number)
+{
+
+    switch(out_number){
+
+    case 1:
+        setOut1HS();
+        break;
+
+    case 2:
+        setOut2HS();
+        break;
+
+    case 3:
+        setOut3HS();
+        break;
+
+    case 4:
+        setOut4HS();
+        break;
+
+    case 5:
+        setOut5HS();
+        break;
+
+    case 6:
+        setOut6HS();
+        break;
+
+    case 7:
+        setOut7HS();
+        break;
+
+    case 8:
+        setOut8HS();
+        break;
+
+    case 9:
+        setOut9HS();
+        break;
+
+    case 10:
+        setOut10HS();
+        break;
+
+    case 11:
+        //Diffrent out handle later
+        break;
+
+    case 12:
+        //Diffrent out handle later
+        break;
+
+    case 13:
+        //Diffrent out handle later
+        break;
+
+    case 14:
+        //Diffrent out handle later
+        break;
+
+    default:
+        return;
+        break;
+
+    }
+
+    return;
+
+}
+
+void ecuPumpHandler::resetOut(int out_number)
+{
+
+    switch(out_number){
+
+    case 1:
+        resetOut1HS();
+        break;
+
+    case 2:
+        resetOut2HS();
+        break;
+
+    case 3:
+        resetOut3HS();
+        break;
+
+    case 4:
+        resetOut4HS();
+        break;
+
+    case 5:
+        resetOut5HS();
+        break;
+
+    case 6:
+        resetOut6HS();
+        break;
+
+    case 7:
+        resetOut7HS();
+        break;
+
+    case 8:
+        resetOut8HS();
+        break;
+
+    case 9:
+        resetOut9HS();
+        break;
+
+    case 10:
+        resetOut10HS();
+        break;
+
+    case 11:
+        //Diffrent out handle later
+        break;
+
+    case 12:
+        //Diffrent out handle later
+        break;
+
+    case 13:
+        //Diffrent out handle later
+        break;
+
+    case 14:
+        //Diffrent out handle later
+        break;
+
+    default:
+        return;
+        break;
+
+    }
+
+
+}
+

@@ -1870,3 +1870,455 @@ void MainWindow::on_speedSlider_27_valueChanged(int value)
 
 }
 
+
+void MainWindow::on_ecuOut_1_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(1);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(1);
+
+    }
+
+
+}
+
+
+void MainWindow::on_ecuOut_2_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(2);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(2);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_3_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(3);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(3);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_4_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(4);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(4);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_5_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(5);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(5);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_6_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(6);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(6);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_7_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(7);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(7);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_8_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(8);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(8);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_9_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(9);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(9);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_10_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(10);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(10);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_11_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(11);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(11);
+
+    }
+
+}
+
+
+void MainWindow::on_ecuOut_12_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(12);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(12);
+
+    }
+
+
+}
+
+
+void MainWindow::on_ecuOut_13_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(13);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(13);
+
+    }
+
+
+}
+
+
+void MainWindow::on_ecuOut_14_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_ECUPumpHandler.setOut(14);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_ECUPumpHandler.resetOut(14);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_1_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(1);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(1);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_2_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(2);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(2);
+
+    }
+
+
+}
+
+
+void MainWindow::on_vcuOut_3_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(3);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(3);
+
+    }
+
+
+}
+
+
+void MainWindow::on_vcuOut_4_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(4);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(4);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_5_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(5);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(5);
+
+    }
+
+}
+
+void MainWindow::on_vcuOut_6_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(6);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(6);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_7_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(7);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(7);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_8_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(8);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(8);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_9_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(9);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(9);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_10_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(10);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(10);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_11_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(11);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(11);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_12_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(12);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(12);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_13_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(13);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(13);
+
+    }
+
+}
+
+
+void MainWindow::on_vcuOut_14_stateChanged(int arg1)
+{
+
+    if(arg1 == 2){
+
+        m_CanHandler -> m_VCUPumpHandler.setOut(14);
+
+    }else if(arg1 == 0){
+
+        m_CanHandler -> m_VCUPumpHandler.resetOut(14);
+
+    }
+
+}
+

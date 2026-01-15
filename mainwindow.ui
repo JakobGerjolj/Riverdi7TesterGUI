@@ -37,7 +37,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>1909</width>
+       <width>1905</width>
        <height>2000</height>
       </rect>
      </property>
@@ -77,9 +77,6 @@
       </property>
       <property name="maximum">
        <number>50000</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_80">
@@ -269,7 +266,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_24">
        <property name="geometry">
@@ -322,20 +319,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_10">
-      <property name="geometry">
-       <rect>
-        <x>1380</x>
-        <y>510</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>External pump</string>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_9">
@@ -348,7 +332,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="PortMotorTempLabel_2">
@@ -511,7 +495,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_7">
@@ -538,9 +522,6 @@ on all sliders</string>
       </property>
       <property name="maximum">
        <number>60000</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_24">
@@ -588,17 +569,17 @@ on all sliders</string>
        <string>X</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_6">
+     <widget class="QCheckBox" name="vcuOut_3">
       <property name="geometry">
        <rect>
         <x>1640</x>
         <y>310</y>
-        <width>171</width>
+        <width>51</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Heating valve</string>
+       <string>Out 3</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_81">
@@ -732,9 +713,6 @@ on all sliders</string>
       <property name="maximum">
        <number>50000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="QLabel" name="label_56">
       <property name="geometry">
@@ -765,7 +743,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="speedSlider_20">
@@ -879,7 +857,7 @@ on all sliders</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="speedSlider_5">
@@ -1003,9 +981,6 @@ PACKAGE</string>
       <property name="maximum">
        <number>50000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="QLabel" name="label_36">
       <property name="geometry">
@@ -1030,7 +1005,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QLabel" name="label_2">
        <property name="geometry">
@@ -1266,7 +1241,7 @@ PACKAGE</string>
         </rect>
        </property>
        <property name="orientation">
-        <enum>Qt::Orientation::Vertical</enum>
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
       <widget class="Line" name="line_2">
@@ -1279,7 +1254,7 @@ PACKAGE</string>
         </rect>
        </property>
        <property name="orientation">
-        <enum>Qt::Orientation::Vertical</enum>
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
       <widget class="QLabel" name="label_8">
@@ -1331,7 +1306,7 @@ PACKAGE</string>
         </rect>
        </property>
        <property name="orientation">
-        <enum>Qt::Orientation::Vertical</enum>
+        <enum>Qt::Vertical</enum>
        </property>
       </widget>
       <widget class="QLabel" name="label_51">
@@ -1438,9 +1413,6 @@ PACKAGE</string>
       </property>
       <property name="maximum">
        <number>9223372</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <property name="invertedAppearance">
        <bool>false</bool>
@@ -1644,7 +1616,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_32">
@@ -1657,7 +1629,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_6">
@@ -1670,7 +1642,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="CurrentStarboardSlider_3">
@@ -1744,7 +1716,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton">
        <property name="geometry">
@@ -1918,7 +1890,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_6">
        <property name="geometry">
@@ -2036,7 +2008,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_20">
        <property name="geometry">
@@ -2107,7 +2079,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_38">
@@ -2158,7 +2130,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QTextEdit" name="textEdit_5">
@@ -2202,17 +2174,17 @@ PACKAGE</string>
        <string>Charger status msg 3</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_3">
+     <widget class="QCheckBox" name="vcuOut_2">
       <property name="geometry">
        <rect>
         <x>1640</x>
         <y>290</y>
-        <width>171</width>
+        <width>51</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Internal battery pump</string>
+       <string>Out 2</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_64">
@@ -2238,7 +2210,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="rpmStarboardSlider_4">
@@ -2328,7 +2300,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_4">
        <property name="geometry">
@@ -2419,7 +2391,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_15">
        <property name="geometry">
@@ -2487,7 +2459,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_11">
@@ -2500,7 +2472,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_50">
@@ -2545,7 +2517,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_13">
@@ -2781,7 +2753,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_29">
@@ -2813,7 +2785,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_26">
        <property name="geometry">
@@ -2867,9 +2839,6 @@ PACKAGE</string>
       <property name="maximum">
        <number>60000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="QLabel" name="label_79">
       <property name="geometry">
@@ -2907,7 +2876,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="CurrentStarboardSlider_5">
@@ -2936,7 +2905,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="speedSlider">
@@ -3014,33 +2983,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_9">
-      <property name="geometry">
-       <rect>
-        <x>1380</x>
-        <y>540</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Internal pump</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_11">
-      <property name="geometry">
-       <rect>
-        <x>1500</x>
-        <y>510</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ext2 pump</string>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_23">
@@ -3074,9 +3017,6 @@ PACKAGE</string>
       <property name="maximum">
        <number>40000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="Line" name="line_20">
       <property name="geometry">
@@ -3088,7 +3028,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_5">
@@ -3101,7 +3041,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_15">
@@ -3143,7 +3083,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QSlider" name="speedSlider_24">
@@ -3158,9 +3098,6 @@ PACKAGE</string>
       <property name="maximum">
        <number>50000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="Line" name="line_40">
       <property name="geometry">
@@ -3172,7 +3109,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_18">
@@ -3185,7 +3122,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_68">
@@ -3249,7 +3186,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_12">
@@ -3262,7 +3199,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_19">
@@ -3340,7 +3277,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_15">
@@ -3353,7 +3290,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_10">
@@ -3379,7 +3316,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_8">
@@ -3392,20 +3329,20 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_4">
+     <widget class="QCheckBox" name="vcuOut_1">
       <property name="geometry">
        <rect>
         <x>1640</x>
         <y>270</y>
-        <width>171</width>
+        <width>51</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>External battery pump</string>
+       <string>Out 1</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_66">
@@ -3431,20 +3368,20 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_5">
+     <widget class="QCheckBox" name="vcuOut_4">
       <property name="geometry">
        <rect>
         <x>1640</x>
         <y>330</y>
-        <width>171</width>
+        <width>51</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Cooling valve</string>
+       <string>Out 4</string>
       </property>
      </widget>
      <widget class="QFrame" name="frame_6">
@@ -3457,7 +3394,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Shape::NoFrame</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <widget class="QRadioButton" name="radioButton_11">
        <property name="geometry">
@@ -3541,17 +3478,17 @@ PACKAGE</string>
        <string>ON/OFF</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_7">
+     <widget class="QCheckBox" name="vcuOut_5">
       <property name="geometry">
        <rect>
-        <x>1640</x>
-        <y>350</y>
-        <width>171</width>
+        <x>1700</x>
+        <y>270</y>
+        <width>61</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Heater</string>
+       <string>Out 5</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_33">
@@ -3631,9 +3568,6 @@ PACKAGE</string>
       <property name="value">
        <number>0</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="Line" name="line_13">
       <property name="geometry">
@@ -3645,7 +3579,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_16">
@@ -3658,7 +3592,7 @@ PACKAGE</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_8">
@@ -3766,7 +3700,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_24">
@@ -3863,7 +3797,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_12">
@@ -3915,7 +3849,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="Line" name="line_17">
@@ -3928,7 +3862,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_32">
@@ -3954,7 +3888,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QLabel" name="label_57">
@@ -4066,19 +4000,6 @@ to zero</string>
        <string>SEND</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_12">
-      <property name="geometry">
-       <rect>
-        <x>1500</x>
-        <y>540</y>
-        <width>101</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Int2 pump</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="label_28">
       <property name="geometry">
        <rect>
@@ -4115,7 +4036,7 @@ to zero</string>
        </rect>
       </property>
       <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButton_3">
@@ -4176,17 +4097,17 @@ to zero</string>
        <string>Send ECU response</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox_8">
+     <widget class="QCheckBox" name="vcuOut_6">
       <property name="geometry">
        <rect>
-        <x>1640</x>
-        <y>370</y>
-        <width>171</width>
+        <x>1700</x>
+        <y>290</y>
+        <width>61</width>
         <height>22</height>
        </rect>
       </property>
       <property name="text">
-       <string>Air heat exchange</string>
+       <string>Out 6</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_87">
@@ -4299,9 +4220,6 @@ to zero</string>
       <property name="maximum">
        <number>864000000</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="QLabel" name="label_89">
       <property name="geometry">
@@ -4353,9 +4271,6 @@ to zero</string>
       <property name="maximum">
        <number>65535</number>
       </property>
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
      </widget>
      <widget class="QLabel" name="label_90">
       <property name="geometry">
@@ -4395,6 +4310,292 @@ to zero</string>
        <string/>
       </property>
      </widget>
+     <widget class="QCheckBox" name="vcuOut_7">
+      <property name="geometry">
+       <rect>
+        <x>1700</x>
+        <y>310</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 7</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_8">
+      <property name="geometry">
+       <rect>
+        <x>1700</x>
+        <y>330</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 8</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_12">
+      <property name="geometry">
+       <rect>
+        <x>1760</x>
+        <y>330</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 12</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_10">
+      <property name="geometry">
+       <rect>
+        <x>1760</x>
+        <y>290</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 10</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_9">
+      <property name="geometry">
+       <rect>
+        <x>1760</x>
+        <y>270</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 9</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_11">
+      <property name="geometry">
+       <rect>
+        <x>1760</x>
+        <y>310</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 11</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_13">
+      <property name="geometry">
+       <rect>
+        <x>1830</x>
+        <y>270</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 13</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="vcuOut_14">
+      <property name="geometry">
+       <rect>
+        <x>1830</x>
+        <y>290</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 14</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_9">
+      <property name="geometry">
+       <rect>
+        <x>1490</x>
+        <y>500</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 9</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_1">
+      <property name="geometry">
+       <rect>
+        <x>1370</x>
+        <y>500</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 1</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_11">
+      <property name="geometry">
+       <rect>
+        <x>1490</x>
+        <y>540</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 11</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_4">
+      <property name="geometry">
+       <rect>
+        <x>1370</x>
+        <y>560</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 4</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_13">
+      <property name="geometry">
+       <rect>
+        <x>1560</x>
+        <y>500</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 13</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_8">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>560</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 8</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_6">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>520</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 6</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_3">
+      <property name="geometry">
+       <rect>
+        <x>1370</x>
+        <y>540</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 3</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_12">
+      <property name="geometry">
+       <rect>
+        <x>1490</x>
+        <y>560</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 12</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_5">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>500</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 5</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_10">
+      <property name="geometry">
+       <rect>
+        <x>1490</x>
+        <y>520</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 10</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_14">
+      <property name="geometry">
+       <rect>
+        <x>1560</x>
+        <y>520</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 14</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_2">
+      <property name="geometry">
+       <rect>
+        <x>1370</x>
+        <y>520</y>
+        <width>51</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 2</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="ecuOut_7">
+      <property name="geometry">
+       <rect>
+        <x>1430</x>
+        <y>540</y>
+        <width>61</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Out 7</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -4404,7 +4605,7 @@ to zero</string>
      <x>0</x>
      <y>0</y>
      <width>1920</width>
-     <height>17</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuSelect_port">
